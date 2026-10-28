@@ -1002,38 +1002,139 @@
           </p>
         </div>
 
-        <div class="grid">
-          <div class="card">
-            <h3>👔 Góc nhìn CEO</h3>
-            <table style="font-size:0.85rem;">
-              <tr><th></th><th>PA1</th><th>PA2</th><th>PA3</th></tr>
-              <tr><td>ROI ngắn hạn</td><td>✅ Tốt</td><td>⚠️ TB</td><td>❌ Âm</td></tr>
-              <tr><td>ROI dài hạn</td><td>❌ Kém</td><td>✅ Khá</td><td>✅ Tốt nhất</td></tr>
-              <tr><td>Lợi thế cạnh tranh</td><td>❌ Không</td><td>🟡 Có</td><td>✅ Cao</td></tr>
-              <tr><td>Vendor lock-in</td><td>🔴 Cao</td><td>🟡 TB</td><td>🟢 Thấp</td></tr>
-            </table>
-          </div>
-          <div class="card">
-            <h3>💻 Góc nhìn Kỹ thuật</h3>
-            <table style="font-size:0.85rem;">
-              <tr><th></th><th>PA1</th><th>PA2</th><th>PA3</th></tr>
-              <tr><td>Kiểm soát code</td><td>❌</td><td>🟡 Có</td><td>✅ Full</td></tr>
-              <tr><td>Tech stack</td><td>❌ FSS chọn</td><td>🟡 Kế thừa</td><td>✅ Tự chọn</td></tr>
-              <tr><td>Technical debt</td><td>❌ Không trả được</td><td>🟡 Kế thừa</td><td>✅ Không có</td></tr>
-              <tr><td>Xây team</td><td>❌</td><td>✅</td><td>✅</td></tr>
-            </table>
-          </div>
-          <div class="card">
-            <h3>📊 Góc nhìn Kinh doanh</h3>
-            <table style="font-size:0.85rem;">
-              <tr><th></th><th>PA1</th><th>PA2</th><th>PA3</th></tr>
-              <tr><td>Time-to-market</td><td>❌ 2-6 tháng</td><td>✅ 2-4 tuần</td><td>✅ 2-4 tuần*</td></tr>
-              <tr><td>Tích hợp Agribank</td><td>❌ Khó</td><td>✅ Linh hoạt</td><td>✅ Tối ưu</td></tr>
-              <tr><td>Personalization</td><td>❌</td><td>✅</td><td>✅</td></tr>
-              <tr><td>A/B Testing</td><td>❌</td><td>✅</td><td>✅</td></tr>
-            </table>
-            <p style="font-size:0.75rem;color:var(--text-secondary);">*Sau khi build xong (6-9 tháng)</p>
-          </div>
+        <div class="card">
+          <h3>👔 Góc nhìn Lãnh đạo (CEO)</h3>
+          <table style="font-size:0.85rem;">
+            <tr><th></th><th>PA1: Vendor</th><th>PA2: Mua source</th><th>PA3: Tự xây</th><th style="background:var(--accent-light);">PA4: Kết hợp</th></tr>
+            <tr>
+              <td><strong>Lợi nhuận ngắn hạn</strong></td>
+              <td>✅ Tốt (không đầu tư)</td>
+              <td>⚠️ Trung bình</td>
+              <td>❌ Âm (đang đầu tư)</td>
+              <td>✅ Khá (ra sản phẩm sớm)</td>
+            </tr>
+            <tr>
+              <td><strong>Lợi nhuận dài hạn</strong></td>
+              <td>❌ Kém</td>
+              <td>✅ Khá</td>
+              <td>✅ Tốt nhất</td>
+              <td>✅ Tốt</td>
+            </tr>
+            <tr>
+              <td><strong>Lợi thế cạnh tranh</strong></td>
+              <td>❌ Không có</td>
+              <td>🟡 Một phần</td>
+              <td>✅ Cao</td>
+              <td>✅ Cao (tích hợp Agribank)</td>
+            </tr>
+            <tr>
+              <td><strong>Phụ thuộc đối tác</strong></td>
+              <td>🔴 Cao</td>
+              <td>🟡 Trung bình</td>
+              <td>🟢 Thấp</td>
+              <td>🟢 Giảm dần</td>
+            </tr>
+            <tr>
+              <td><strong>Rủi ro</strong></td>
+              <td>🟢 Thấp</td>
+              <td>🟡 Trung bình</td>
+              <td>🔴 Cao</td>
+              <td>🟢 Thấp → Trung bình</td>
+            </tr>
+          </table>
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:8px;">
+            <strong>Ghi chú:</strong> PA4 cho phép chứng minh năng lực với Ban lãnh đạo qua sản phẩm nhỏ (4-5 tháng) trước khi đầu tư lớn.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>💻 Góc nhìn Kỹ thuật</h3>
+          <table style="font-size:0.85rem;">
+            <tr><th></th><th>PA1: Vendor</th><th>PA2: Mua source</th><th>PA3: Tự xây</th><th style="background:var(--accent-light);">PA4: Kết hợp</th></tr>
+            <tr>
+              <td><strong>Kiểm soát mã nguồn</strong></td>
+              <td>❌ Không</td>
+              <td>🟡 Một phần</td>
+              <td>✅ Hoàn toàn</td>
+              <td>✅ Dần dần (web → app)</td>
+            </tr>
+            <tr>
+              <td><strong>Công nghệ sử dụng</strong></td>
+              <td>❌ Đối tác chọn</td>
+              <td>🟡 Kế thừa cũ</td>
+              <td>✅ Tự chọn mới</td>
+              <td>✅ Tự chọn từ đầu</td>
+            </tr>
+            <tr>
+              <td><strong>Nợ kỹ thuật</strong></td>
+              <td>❌ Không trả được</td>
+              <td>🟡 Kế thừa</td>
+              <td>✅ Không có</td>
+              <td>✅ Không có</td>
+            </tr>
+            <tr>
+              <td><strong>Xây dựng đội ngũ</strong></td>
+              <td>❌ Không</td>
+              <td>✅ Có</td>
+              <td>✅ Có (áp lực cao)</td>
+              <td>✅ Có (từ từ)</td>
+            </tr>
+            <tr>
+              <td><strong>Học nghiệp vụ</strong></td>
+              <td>❌ Không</td>
+              <td>🟡 Qua code cũ</td>
+              <td>🟡 Vừa làm vừa học</td>
+              <td>✅ Học qua dự án nhỏ trước</td>
+            </tr>
+          </table>
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:8px;">
+            <strong>Ghi chú:</strong> PA4 giúp đội ngũ học nghiệp vụ chứng khoán qua dự án nhỏ (web) trước khi làm dự án lớn (app).
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>📊 Góc nhìn Kinh doanh</h3>
+          <table style="font-size:0.85rem;">
+            <tr><th></th><th>PA1: Vendor</th><th>PA2: Mua source</th><th>PA3: Tự xây</th><th style="background:var(--accent-light);">PA4: Kết hợp</th></tr>
+            <tr>
+              <td><strong>Thời gian ra tính năng mới</strong></td>
+              <td>❌ 2-6 tháng/tính năng</td>
+              <td>✅ 2-4 tuần</td>
+              <td>✅ 2-4 tuần (sau 6-9 tháng)</td>
+              <td>✅ 2-4 tuần (sau 4-5 tháng)</td>
+            </tr>
+            <tr>
+              <td><strong>Tích hợp Agribank</strong></td>
+              <td>❌ Khó</td>
+              <td>✅ Linh hoạt</td>
+              <td>✅ Tối ưu (sau 6-9 tháng)</td>
+              <td>✅ Ngay từ đầu</td>
+            </tr>
+            <tr>
+              <td><strong>Tiếp cận 41K nhân viên Agribank</strong></td>
+              <td>❌ Không</td>
+              <td>🟡 Có thể</td>
+              <td>✅ Sau 6-9 tháng</td>
+              <td>✅ Sau 4-5 tháng</td>
+            </tr>
+            <tr>
+              <td><strong>Cá nhân hóa trải nghiệm</strong></td>
+              <td>❌ Không</td>
+              <td>✅ Có</td>
+              <td>✅ Có</td>
+              <td>✅ Có</td>
+            </tr>
+            <tr>
+              <td><strong>Thử nghiệm A/B</strong></td>
+              <td>❌ Không</td>
+              <td>✅ Có</td>
+              <td>✅ Có</td>
+              <td>✅ Có</td>
+            </tr>
+          </table>
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:8px;">
+            <strong>Ghi chú:</strong> PA4 ưu tiên kênh Agribank trước - nơi có sẵn 41.000 nhân viên và hàng triệu khách hàng tiềm năng.
+          </p>
         </div>
 
         <div class="card" style="border:2px solid var(--accent);">
