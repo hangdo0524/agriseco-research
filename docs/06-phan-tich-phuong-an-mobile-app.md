@@ -7,6 +7,9 @@ authors:
   - date: 2026-10-28
     email: "hang.do@difisoft.com"
     change: "Cập nhật bảng so sánh 5 tiêu chí nhất quán, sắp xếp lại bố cục"
+  - date: 2026-10-28
+    email: "hang.do@difisoft.com"
+    change: "Bổ sung thứ tự ưu tiên: PA1/PA2/PA3 App trước, PA4 Web trước"
 ---
 
 # Phân tích 4 Phương án Phát triển Mobile App AgriSeco
@@ -39,12 +42,16 @@ authors:
 
 ## 2. Tổng quan 4 Phương án
 
-| # | Phương án | Mô tả |
-|:-:|-----------|-------|
-| **1** | **Tiếp tục đối tác (FSS)** | Mọi thay đổi yêu cầu FSS thực hiện. AgriSeco chỉ đặt hàng và nghiệm thu. |
-| **2** | **Mua mã nguồn** | Mua source code FE + BFF từ FSS + quyền sử dụng API lõi. Đội ngũ AgriSeco tự chỉnh sửa. |
-| **3** | **Tự xây dựng từ đầu** | Chỉ mua quyền sử dụng API lõi (FLEX). Tự xây dựng toàn bộ FE + BFF mới. |
-| **4** | **Kết hợp: Web trước → App sau** | Team tự build Mobile Web nhúng Agribank trước (4-5 tháng). App vẫn do FSS quản lý (chỉ sửa cấp bách). Sau thành công → tự build App. |
+| # | Phương án | Thứ tự ưu tiên | Mô tả |
+|:-:|-----------|----------------|-------|
+| **1** | **Tiếp tục đối tác (FSS)** | **App trước** → Web sau | FSS làm cả Mobile App và Mobile Web. AgriSeco không tự làm gì, chỉ đặt hàng và nghiệm thu. Ưu tiên App trước. |
+| **2** | **Mua mã nguồn** | **App trước** → Web sau | Mua source code Mobile App từ FSS, **sửa App trước**. Sau đó làm Mobile Web. |
+| **3** | **Tự xây dựng từ đầu** | **App trước** → Web sau | Tự **build Mobile App mới trước** (6-9 tháng). Chi phí trọng tâm ở Mobile App. Làm Mobile Web sau. |
+| **4** | **Kết hợp: Web trước → App sau** | **Web trước** → App sau | Tự **build Mobile Web trước** (4-5 tháng), nhúng Agribank. Sau thành công → tự build lại Mobile App. |
+
+> ⚡ **SỰ KHÁC BIỆT CỐT LÕI:**
+> - **PA1, PA2, PA3:** Đều ưu tiên Mobile App trước, Mobile Web sau
+> - **PA4:** Ngược lại - ưu tiên Mobile Web trước để tiếp cận nhanh **14,4 triệu** users Mobile Banking Agribank, sau đó mới build App
 
 ---
 

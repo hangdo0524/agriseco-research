@@ -847,29 +847,37 @@
             <tr>
               <th>#</th>
               <th>Phương án</th>
+              <th>Thứ tự ưu tiên</th>
               <th>Mô tả</th>
             </tr>
             <tr>
               <td><strong>1</strong></td>
-              <td>Tiếp tục đối tác</td>
-              <td>Mọi thay đổi yêu cầu FSS thực hiện. AgriSeco chỉ đặt hàng và nghiệm thu.</td>
+              <td>Tiếp tục đối tác (FSS)</td>
+              <td><span class="tag tag-info">App trước</span> → Web sau</td>
+              <td>Không tự làm gì. Yêu cầu FSS làm cả Mobile App và Mobile Web (nếu có). <strong>Ưu tiên App trước.</strong></td>
             </tr>
             <tr>
               <td><strong>2</strong></td>
-              <td>Mua mã nguồn</td>
-              <td>Mua mã nguồn từ FSS + quyền sử dụng API lõi. Đội ngũ AgriSeco tự chỉnh sửa.</td>
+              <td>Mua mã nguồn App</td>
+              <td><span class="tag tag-info">App trước</span> → Web sau</td>
+              <td>Mua source code Mobile App từ FSS, <strong>sửa App trước</strong>, sau đó tự làm Mobile Web. Chi phí trọng tâm ở App.</td>
             </tr>
             <tr>
               <td><strong>3</strong></td>
               <td>Tự xây dựng từ đầu</td>
-              <td>Chỉ mua quyền sử dụng API lõi (FLEX). Tự xây dựng toàn bộ giao diện + BFF mới.</td>
+              <td><span class="tag tag-info">App trước</span> → Web sau</td>
+              <td>Tự xây dựng <strong>Mobile App mới trước</strong>, sau đó làm Mobile Web. Chi phí trọng tâm ở App (~9 tỷ).</td>
             </tr>
             <tr style="background:var(--accent-light);">
               <td><strong>4</strong></td>
-              <td>Kết hợp: Web trước → App sau</td>
-              <td>Đội ngũ tự xây Web di động nhúng Agribank trước. App vẫn do FSS quản lý (chỉ sửa những gì cấp bách nhất). Sau khi thành công → tự xây lại App.</td>
+              <td>Hybrid: Web trước → App sau</td>
+              <td><span class="tag tag-success">Web trước</span> → App sau</td>
+              <td>Tự xây dựng <strong>Mobile Web trước</strong> (nhúng Agribank, ~1-2 tỷ). App cũ do FSS quản lý. Sau thành công → tự xây lại App (~9 tỷ).</td>
             </tr>
           </table>
+          <div style="background:var(--bg-secondary);padding:12px;border-radius:8px;margin-top:12px;">
+            <strong>💡 Điểm khác biệt chính:</strong> PA1, PA2, PA3 đều ưu tiên <strong>Mobile App trước</strong>. Chỉ PA4 ưu tiên <strong>Mobile Web trước</strong> để tiếp cận nhanh 14,4 triệu users Agribank.
+          </div>
         </div>
 
         <div class="card">
