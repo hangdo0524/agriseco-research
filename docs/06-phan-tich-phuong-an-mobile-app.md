@@ -167,27 +167,27 @@ MUA GÌ?
 ```
 CHI PHÍ MUA SOURCE (MỘT LẦN)
 │
-├── Mua source FE + BFF:        2 - 5 tỷ VND
-├── Tài liệu + Training:        200 - 500 triệu
-├── Quyền sử dụng API (năm đầu): 500 triệu - 1 tỷ
+├── Mua source BFF từ FSS:      ~5 tỷ VND
+├── Tài liệu + Training:        200 - 300 triệu
+├── Quyền sử dụng API FLEX:     (đàm phán với FSS)
 │
-└── TỔNG MUA:                   2,7 - 6,5 tỷ VND
+└── TỔNG MUA:                   ~5,5 tỷ VND
 ```
 
 ```
 CHI PHÍ VẬN HÀNH HÀNG NĂM
 │
-├── Nhân sự (5-7 người):
-│   ├── 1 Tech Lead:            40-60 triệu/tháng
-│   ├── 3-4 Mobile Devs:        25-35 triệu/tháng × 4
-│   ├── 1 QA:                   20-25 triệu/tháng
-│   └── Subtotal:               ~200 triệu/tháng = 2,4 tỷ/năm
+├── Nhân sự (4-5 người):
+│   ├── 1 Tech Lead:            35-50 triệu/tháng
+│   ├── 2-3 Mobile Devs:        25-35 triệu/tháng × 3
+│   ├── 1 QA (part-time):       15-20 triệu/tháng
+│   └── Subtotal:               ~150 triệu/tháng = 1,8 tỷ/năm
 │
-├── Phí API FLEX:               500 triệu - 1 tỷ/năm
-├── Infra (Cloud, CI/CD):       200 - 400 triệu/năm
-├── Tools (Figma, TestFlight):  50 - 100 triệu/năm
+├── Phí API FLEX:               (theo hợp đồng hiện tại)
+├── Infra (Cloud, CI/CD):       100 - 200 triệu/năm
+├── Tools:                      30 - 50 triệu/năm
 │
-└── TỔNG VẬN HÀNH:              3,2 - 4 tỷ/năm
+└── TỔNG VẬN HÀNH:              2 - 2,5 tỷ/năm
 ```
 
 ### Yêu cầu nhân sự
@@ -293,35 +293,28 @@ TIMELINE XÂY DỰNG TỪ ĐẦU
 ### Chi phí
 
 ```
-CHI PHÍ XÂY DỰNG (NĂM ĐẦU)
+CHI PHÍ XÂY DỰNG (Thuê vendor build + bàn giao source)
 │
-├── Nhân sự (10-12 người × 12 tháng):
-│   ├── 1 Project Manager:      35-50 triệu/tháng
-│   ├── 1 Tech Lead:            50-70 triệu/tháng
-│   ├── 1 UX/UI Designer:       30-40 triệu/tháng
-│   ├── 4-5 Mobile Devs:        30-40 triệu/tháng × 5
-│   ├── 2 Backend Devs:         35-45 triệu/tháng × 2
-│   ├── 1 DevOps:               35-45 triệu/tháng
-│   ├── 1-2 QA:                 20-30 triệu/tháng × 2
-│   └── Subtotal:               ~400 triệu/tháng = 4,8 tỷ/năm
+├── Frontend Mobile App:        ~4 tỷ VND
+│   └── (Build hoàn chỉnh + bàn giao source code)
 │
-├── Quyền sử dụng API FLEX:     500 triệu - 1 tỷ
-├── Infrastructure năm đầu:     300 - 500 triệu
-├── Tools & Licenses:           100 - 200 triệu
-├── Contingency (20%):          1 - 1,5 tỷ
+├── Backend-for-Frontend:       ~1,5 - 2 tỷ VND
+│   └── (Nếu tự build, không mua từ FSS)
 │
-└── TỔNG NĂM ĐẦU:               6,7 - 8 tỷ VND
+├── Quyền sử dụng API FLEX:     (đàm phán với FSS)
+│
+└── TỔNG BUILD:                 ~5,5 - 6 tỷ VND
 ```
 
 ```
-CHI PHÍ VẬN HÀNH (TỪ NĂM 2)
+CHI PHÍ VẬN HÀNH (TỪ SAU KHI BÀN GIAO)
 │
-├── Nhân sự (giảm còn 6-8 người): 2,5 - 3 tỷ/năm
-├── API FLEX:                     500 triệu - 1 tỷ/năm
-├── Infrastructure:               400 - 600 triệu/năm
-├── Tools:                        100 - 150 triệu/năm
+├── Nhân sự maintain (4-5 người): 1,8 - 2,2 tỷ/năm
+├── API FLEX:                     (theo hợp đồng)
+├── Infrastructure:               100 - 200 triệu/năm
+├── Tools:                        30 - 50 triệu/năm
 │
-└── TỔNG VẬN HÀNH:                3,5 - 4,7 tỷ/năm
+└── TỔNG VẬN HÀNH:                2 - 2,5 tỷ/năm
 ```
 
 ### Yêu cầu nhân sự
@@ -370,11 +363,12 @@ TEAM CẦN XÂY DỰNG
 
 | Hạng mục | PA1: Vendor | PA2: Mua Source | PA3: Tự Build |
 |----------|:-----------:|:---------------:|:-------------:|
-| **Năm 1** | 2-4 tỷ | 6-10 tỷ | 7-9 tỷ |
-| **Năm 2** | 2-4 tỷ | 3-4 tỷ | 3.5-4.5 tỷ |
-| **Năm 3** | 2-5 tỷ | 3-4 tỷ | 3.5-4.5 tỷ |
-| **TỔNG 3 NĂM** | **6-13 tỷ** | **12-18 tỷ** | **14-18 tỷ** |
-| **Sau 5 năm** | 12-25 tỷ | 18-26 tỷ | 20-27 tỷ |
+| **Năm 1** | 2-4 tỷ | 7-8 tỷ (5 tỷ mua + 2 tỷ team) | 6-8 tỷ (4-6 tỷ build + 2 tỷ team) |
+| **Năm 2** | 2-4 tỷ | 2-2,5 tỷ | 2-2,5 tỷ |
+| **Năm 3** | 2-5 tỷ | 2-2,5 tỷ | 2-2,5 tỷ |
+| **TỔNG 3 NĂM** | **6-13 tỷ** | **11-13 tỷ** | **10-13 tỷ** |
+
+*Ghi chú: Chưa bao gồm phí API FLEX (cần đàm phán với FSS)*
 
 ### Khả năng thực hiện
 
@@ -819,7 +813,7 @@ TIMELINE: MUA SOURCE CODE
 
 | Tiêu chí | PA1: Vendor | PA2: Mua Source | PA3: Tự Build |
 |----------|:-----------:|:---------------:|:-------------:|
-| **Chi phí 3 năm** | 6-13 tỷ | 12-18 tỷ | 14-18 tỷ |
+| **Chi phí 3 năm** | 6-13 tỷ | 11-13 tỷ | 10-13 tỷ |
 | **Rủi ro** | Thấp | Trung bình | Cao |
 | **Kiểm soát** | Không | Một phần | Hoàn toàn |
 | **Time to value** | Ngay | 3-6 tháng | 9-12 tháng |
