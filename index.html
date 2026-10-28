@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriSeco Research - Đăng nhập</title>
+  <style>
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f9fa;
+      --text-primary: #1a1a2e;
+      --text-secondary: #4a4a6a;
+      --border: #e0e0e0;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --danger: #ef4444;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg-primary: #0f172a;
+        --bg-secondary: #1e293b;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --border: #334155;
+        --accent: #3b82f6;
+        --accent-hover: #2563eb;
+      }
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .login-container {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px 40px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 16px;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      transition: border-color 0.2s;
+    }
+
+    input[type="password"]:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .error-message {
+      color: var(--danger);
+      font-size: 14px;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px 24px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: var(--accent-hover);
+    }
+
+    .footer {
+      margin-top: 32px;
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="logo">🔒</div>
+    <h1>AgriSeco Research</h1>
+    <p class="subtitle">Tài liệu nội bộ - Vui lòng nhập mật khẩu để truy cập</p>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="password">Mật khẩu</label>
+        <input type="password" id="password" placeholder="Nhập mật khẩu..." autofocus>
+        <p id="error" class="error-message">Mật khẩu không đúng. Vui lòng thử lại.</p>
+      </div>
+      <button type="submit">Truy cập</button>
+    </form>
+
+    <p class="footer">Difisoft © 2026</p>
+  </div>
+
+  <script>
+    // Simple hash function
+    function simpleHash(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+      }
+      return hash.toString();
+    }
+
+    // Hash of "agriseco2026"
+    const correctHash = "-1544509647";
+
+    // Check if already authenticated
+    try {
+      if (sessionStorage.getItem('agr_auth') === correctHash) {
+        window.location.href = 'main.html';
+      }
+    } catch (e) {}
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const password = document.getElementById('password').value;
+      const hash = simpleHash(password);
+
+      if (hash === correctHash) {
+        try {
+          sessionStorage.setItem('agr_auth', correctHash);
+        } catch (e) {}
+        window.location.href = 'main.html';
+      } else {
+        document.getElementById('error').classList.add('show');
+        document.getElementById('password').value = '';
+        document.getElementById('password').focus();
+      }
+    });
+
+    document.getElementById('password').addEventListener('input', function() {
+      document.getElementById('error').classList.remove('show');
+    });
+  </script>
+</body>
+</html>

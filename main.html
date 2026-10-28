@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    // Auth check - redirect to login if not authenticated
+    (function() {
+      var correctHash = "-1544509647";
+      try {
+        if (sessionStorage.getItem('agr_auth') !== correctHash) {
+          window.location.href = 'index.html';
+        }
+      } catch (e) {
+        window.location.href = 'index.html';
+      }
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriSeco Research - Tổng hợp</title>
+  <style>
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f9fa;
+      --bg-card: #ffffff;
+      --text-primary: #1a1a2e;
+      --text-secondary: #4a4a6a;
+      --border: #e0e0e0;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg-primary: #0f172a;
+        --bg-secondary: #1e293b;
+        --bg-card: #1e293b;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --border: #334155;
+        --accent: #3b82f6;
+        --accent-light: #1e3a5f;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: #1e293b;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --border: #334155;
+      --accent: #3b82f6;
+      --accent-light: #1e3a5f;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      padding: 16px;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    header {
+      text-align: center;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    h1 { font-size: 1.75rem; margin-bottom: 8px; }
+    .subtitle { color: var(--text-secondary); font-size: 0.9rem; }
+
+    .theme-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+
+    .tab {
+      padding: 10px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .tab:hover { background: var(--accent-light); }
+    .tab.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+    .content { display: none; }
+    .content.active { display: block; }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card h3 { font-size: 0.95rem; margin: 16px 0 8px; color: var(--text-primary); }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin: 12px 0;
+    }
+
+    .stat {
+      background: var(--bg-secondary);
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-value { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
+    .stat-label { font-size: 0.75rem; color: var(--text-secondary); }
+
+    ul { padding-left: 20px; margin: 8px 0; }
+    li { margin: 6px 0; font-size: 0.9rem; }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .tag-success { background: #d1fae5; color: #065f46; }
+    .tag-warning { background: #fef3c7; color: #92400e; }
+    .tag-danger { background: #fee2e2; color: #991b1b; }
+    .tag-info { background: var(--accent-light); color: var(--accent); }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .tag-success { background: #064e3b; color: #6ee7b7; }
+      :root:not([data-theme="light"]) .tag-warning { background: #78350f; color: #fcd34d; }
+      :root:not([data-theme="light"]) .tag-danger { background: #7f1d1d; color: #fca5a5; }
+    }
+    :root[data-theme="dark"] .tag-success { background: #064e3b; color: #6ee7b7; }
+    :root[data-theme="dark"] .tag-warning { background: #78350f; color: #fcd34d; }
+    :root[data-theme="dark"] .tag-danger { background: #7f1d1d; color: #fca5a5; }
+
+    .download-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-size: 0.85rem;
+      margin-top: 12px;
+    }
+
+    .download-link:hover { background: var(--accent-light); }
+
+    .highlight-box {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      margin: 12px 0;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.9rem;
+    }
+
+    .gap-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .gap-item:last-child { border-bottom: none; }
+
+    .priority {
+      min-width: 32px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .priority-p0 { background: #fee2e2; color: #991b1b; }
+    .priority-p1 { background: #fef3c7; color: #92400e; }
+    .priority-p2 { background: #dbeafe; color: #1e40af; }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .priority-p0 { background: #7f1d1d; color: #fca5a5; }
+      :root:not([data-theme="light"]) .priority-p1 { background: #78350f; color: #fcd34d; }
+      :root:not([data-theme="light"]) .priority-p2 { background: #1e3a5f; color: #93c5fd; }
+    }
+    :root[data-theme="dark"] .priority-p0 { background: #7f1d1d; color: #fca5a5; }
+    :root[data-theme="dark"] .priority-p1 { background: #78350f; color: #fcd34d; }
+    :root[data-theme="dark"] .priority-p2 { background: #1e3a5f; color: #93c5fd; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.85rem;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th { background: var(--bg-secondary); font-weight: 600; }
+
+    .wave-header {
+      background: var(--accent);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      margin: 16px 0 8px;
+      font-size: 0.9rem;
+    }
+
+    /* Subtabs */
+    .subtabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+      padding: 12px;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+    }
+    .subtab {
+      padding: 6px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+    .subtab:hover { background: var(--accent-light); }
+    .subtab.active { background: var(--accent); color: white; border-color: var(--accent); }
+    .subtab-content { display: none; }
+    .subtab-content.active { display: block; }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+  <div class="container">
+    <header>
+      <h1>🏦 AgriSeco Research</h1>
+      <p class="subtitle">Tổng hợp ý chính · Cập nhật: 28/10/2026 · Chi tiết xem file .md</p>
+    </header>
+
+    <div class="tabs">
+      <div class="tab active" onclick="showTab(0)">01. Cơ cấu tổ chức</div>
+      <div class="tab" onclick="showTab(1)">02. Thế mạnh Agribank</div>
+      <div class="tab" onclick="showTab(2)">03. Công nghệ</div>
+      <div class="tab" onclick="showTab(3)">04. Chiến lược</div>
+    </div>
+
+    <!-- TAB 1: Cơ cấu tổ chức -->
+    <div class="content active" id="tab-0">
+      <div class="card">
+        <h2>📊 Tổng quan Agriseco</h2>
+        <div class="stat-grid">
+          <div class="stat"><div class="stat-value">74,92%</div><div class="stat-label">Agribank sở hữu</div></div>
+          <div class="stat"><div class="stat-value">2.283 tỷ</div><div class="stat-label">Vốn điều lệ</div></div>
+          <div class="stat"><div class="stat-value">157</div><div class="stat-label">Nhân sự (31/12/2025)</div></div>
+          <div class="stat"><div class="stat-value">176,3 tỷ</div><div class="stat-label">LNTT 2025</div></div>
+          <div class="stat"><div class="stat-value">37,83 tr</div><div class="stat-label">Lương BQ/tháng</div></div>
+          <div class="stat"><div class="stat-value">4.434 tỷ</div><div class="stat-label">Tổng tài sản</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🏛️ Sơ đồ tổ chức</h2>
+        <pre style="font-size:0.75rem;background:var(--bg-secondary);padding:12px;border-radius:8px;overflow-x:auto;">
+┌─────────────────────────────────────┐
+│     ĐẠI HỘI ĐỒNG CỔ ĐÔNG            │
+│     (Agribank 74,92%)               │
+└──────────────────┬──────────────────┘
+                   │
+       ┌───────────┴───────────┐
+       │                       │
+┌──────▼──────┐         ┌──────▼──────┐
+│  HỘI ĐỒNG   │◄────────│ BAN KIỂM    │
+│  QUẢN TRỊ   │ (giám   │   SOÁT      │
+│ (4 thành   │  sát)   │             │
+│  viên)      │         │             │
+└──────┬──────┘         └─────────────┘
+       │
+       ├── Văn phòng HĐQT
+       ├── Kiểm toán nội bộ & QTRR
+       │
+┌──────▼──────────────────────────────┐
+│     BAN TỔNG GIÁM ĐỐC               │
+│     Quyền TGĐ + 3 Phó TGĐ           │
+└──────┬──────────────────────────────┘
+       │
+       ├─────────────────┬─────────────────┐
+       │                 │                 │
+┌──────▼──────┐   ┌──────▼──────┐   ┌──────▼──────┐
+│ KHỐI NGHIỆP │   │ KHỐI HỖ TRỢ │   │ MẠNG LƯỚI   │
+│     VỤ      │   │             │   │             │
+└─────────────┘   └─────────────┘   └─────────────┘</pre>
+      </div>
+
+      <div class="card">
+        <h2>👔 Nhân sự lãnh đạo</h2>
+        <h3>Hội đồng Quản trị</h3>
+        <table>
+          <tr><th>Họ tên</th><th>Chức vụ</th></tr>
+          <tr><td><strong>Ông Phan Văn Tuấn</strong></td><td>Chủ tịch HĐQT</td></tr>
+          <tr><td>Ông Nguyễn Đức Thuận</td><td>Thành viên</td></tr>
+          <tr><td>Bà Nguyễn Thị Hồng Hạnh</td><td>Thành viên</td></tr>
+          <tr><td>Ông Đoàn Ngọc Hoàn</td><td>Thành viên</td></tr>
+        </table>
+        <h3>Ban Tổng Giám đốc</h3>
+        <table>
+          <tr><th>Họ tên</th><th>Chức vụ</th></tr>
+          <tr><td><strong>Ông Trương Ngọc Lân</strong></td><td>Quyền TGĐ (14/9/2026 – 30/6/2027)</td></tr>
+          <tr><td>Ông Nguyễn Hoàng Tùng</td><td>Phó TGĐ, kiêm GĐ CN Miền Nam</td></tr>
+          <tr><td>Bà Nguyễn Ngọc Lan</td><td>Phó TGĐ</td></tr>
+          <tr><td>Ông Bùi Đức Thắng</td><td>Phó TGĐ</td></tr>
+        </table>
+        <h3>Ban Kiểm soát</h3>
+        <table>
+          <tr><th>Họ tên</th><th>Chức vụ</th></tr>
+          <tr><td><strong>Bà Lê Hương Giang</strong></td><td>Trưởng ban</td></tr>
+          <tr><td>Ông Đỗ Đức Tú</td><td>Thành viên</td></tr>
+          <tr><td>Bà Nguyễn Thị Hồng Dương</td><td>Thành viên</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2>🏢 Các khối chức năng</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
+          <div style="background:var(--bg-secondary);padding:12px;border-radius:8px;">
+            <h3 style="margin-top:0;">Khối Nghiệp vụ</h3>
+            <ul style="margin:0;">
+              <li>Dịch vụ CK: Môi giới, lưu ký, margin</li>
+              <li>Tự doanh & Bảo lãnh phát hành</li>
+              <li>Tư vấn tài chính DN (IPO, M&A)</li>
+              <li>Phân tích – Nghiên cứu</li>
+              <li>Tư vấn đầu tư</li>
+            </ul>
+          </div>
+          <div style="background:var(--bg-secondary);padding:12px;border-radius:8px;">
+            <h3 style="margin-top:0;">Khối Hỗ trợ</h3>
+            <ul style="margin:0;">
+              <li><strong>Công nghệ thông tin</strong> ⭐ (~17 người)</li>
+              <li>Kế toán tài chính</li>
+              <li>Tổ chức – Nhân sự</li>
+              <li>Hành chính tổng hợp</li>
+              <li>Kiểm soát nội bộ & QTRR</li>
+            </ul>
+          </div>
+          <div style="background:var(--bg-secondary);padding:12px;border-radius:8px;">
+            <h3 style="margin-top:0;">Mạng lưới</h3>
+            <ul style="margin:0;">
+              <li><strong>Trụ sở chính:</strong> Hà Nội (HO)</li>
+              <li><strong>CN Miền Trung:</strong> Đà Nẵng</li>
+              <li><strong>CN Miền Nam:</strong> TP.HCM</li>
+              <li><s>CN Miền Bắc:</s> Đã đóng cửa</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>📈 Cơ cấu nhân sự</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;">
+          <div>
+            <h3>Trình độ (157 người)</h3>
+            <table>
+              <tr><th>Trình độ</th><th>Số người</th><th>Tỷ lệ</th></tr>
+              <tr><td>Đại học</td><td>124</td><td>79,0%</td></tr>
+              <tr><td>Thạc sĩ / Tiến sĩ</td><td>27</td><td>17,2%</td></tr>
+              <tr><td>Khác</td><td>6</td><td>3,8%</td></tr>
+            </table>
+          </div>
+          <div>
+            <h3>Thu nhập & Phúc lợi</h3>
+            <ul>
+              <li><strong>Lương BQ 2025:</strong> 37,83 triệu/người/tháng</li>
+              <li>BHXH, BHYT, BHTN + BH tai nạn</li>
+              <li>Khám sức khỏe định kỳ</li>
+              <li><strong>Đào tạo:</strong> 8 khóa/108 buổi (KH 2026: 9 khóa/120 buổi)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>💻 Phòng CNTT – Chi tiết</h2>
+        <div class="highlight-box">
+          <strong>~17 người:</strong> TP (tuyển mới 2025) + 2 Phó (Hạ tầng, Phát triển) + 1 BA + 3 Dev + Hạ tầng/Vận hành
+        </div>
+        <h3>Cơ cấu</h3>
+        <ul>
+          <li><strong>Trưởng phòng</strong> (tuyển mới 2025)</li>
+          <li><strong>Phó phòng Hạ tầng/Vận hành</strong></li>
+          <li><strong>Phó phòng Phát triển</strong> (vị trí mới) – Xây dựng đội dev từ đầu</li>
+          <li>1 BA, 3 Developers</li>
+          <li>Còn lại: Hạ tầng, vận hành</li>
+        </ul>
+        <h3>Định hướng</h3>
+        <table>
+          <tr><th>Hạng mục</th><th>Chi tiết</th></tr>
+          <tr><td>Mục tiêu</td><td>Chuyển đổi số toàn diện, gia nhập hệ sinh thái Agribank</td></tr>
+          <tr><td>Sản phẩm</td><td>AGR Mobi Pro, AGR Trading Pro</td></tr>
+          <tr><td>Phái sinh</td><td>Chưa triển khai</td></tr>
+          <tr><td>Đội phát triển</td><td>Đang xây dựng mới</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2>📅 Biến động nhân sự 2026</h2>
+        <table>
+          <tr><th>Thời gian</th><th>Sự kiện</th></tr>
+          <tr><td>01/04/2026</td><td>Ông Nguyễn Hoàng Tùng được bổ nhiệm Phó TGĐ kiêm GĐ CN Miền Nam (nhiệm kỳ 5 năm)</td></tr>
+          <tr><td>24/04/2026</td><td>TGĐ Lê Sơn Tùng thôi chức. Phó TGĐ Nguyễn Hoàng Tùng phụ trách Ban điều hành</td></tr>
+          <tr><td>29/04/2026</td><td>ĐHĐCĐ: KH doanh thu 580 tỷ, LNTT 194 tỷ; giảm HĐQT xuống 4 TV; cổ tức 6% bằng CP</td></tr>
+          <tr><td>14/09/2026</td><td>Ông Trương Ngọc Lân (nguyên TGĐ ABS, VIX) được bổ nhiệm Quyền TGĐ đến 30/6/2027</td></tr>
+        </table>
+      </div>
+
+      <a href="docs/01-co-cau-to-chuc.md" download class="download-link">📥 Xem file gốc</a>
+    </div>
+
+    <!-- TAB 2: Agribank → Tác động đến AgriSeco -->
+    <div class="content" id="tab-1">
+      <div class="card">
+        <h2>🏦 Agribank - Cổ đông chi phối AgriSeco</h2>
+        <div class="highlight-box">
+          <strong>Agribank sở hữu 74,92% vốn AgriSeco</strong> — Top 3 NHTM Việt Nam, mạng lưới lớn nhất cả nước
+        </div>
+        <div class="stat-grid" style="margin-top:12px;">
+          <div class="stat"><div class="stat-value">74,92%</div><div class="stat-label">Sở hữu AgriSeco</div></div>
+          <div class="stat"><div class="stat-value">2.218</div><div class="stat-label">Điểm GD (31/12/2025)</div></div>
+          <div class="stat"><div class="stat-value">~41.000</div><div class="stat-label">Nhân viên</div></div>
+          <div class="stat"><div class="stat-value">34/34</div><div class="stat-label">Tỉnh thành</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>✅ Lợi thế AgriSeco được thừa hưởng</h2>
+        <table>
+          <tr><th>Nguồn lực Agribank</th><th>Tác động đến AgriSeco</th></tr>
+          <tr><td><strong>2.218 điểm giao dịch</strong> (lớn nhất VN)</td><td>Kênh phân phối tiềm năng, tiếp cận KH nông thôn</td></tr>
+          <tr><td><strong>~41.000 nhân viên</strong></td><td>Khách hàng tiềm năng (cross-sell nội bộ)</td></tr>
+          <tr><td><strong>Cơ sở KH tam nông</strong> (1,32 triệu tỷ dư nợ)</td><td>Cross-sell chứng khoán cho nông dân, HTX, DN nông nghiệp</td></tr>
+          <tr><td><strong>Thương hiệu uy tín</strong> (Fitch BB+, Top 10 VN)</td><td>Độ tin cậy cao với NĐT thận trọng</td></tr>
+          <tr><td><strong>Phủ sóng 34/34 tỉnh thành</strong></td><td>Tiếp cận vùng sâu, vùng xa (đối thủ tập trung đô thị)</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2>🔗 Cơ hội tích hợp</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;">
+          <div style="background:var(--bg-secondary);padding:12px;border-radius:8px;">
+            <h3 style="margin-top:0;">📱 Nhúng vào App Agribank</h3>
+            <p style="margin:0;font-size:0.85rem;">Hiện chỉ redirect ra ngoài → Cần embedded để giữ KH trong hệ sinh thái</p>
+          </div>
+          <div style="background:var(--bg-secondary);padding:12px;border-radius:8px;">
+            <h3 style="margin-top:0;">📜 Trái phiếu Agribank</h3>
+            <p style="margin:0;font-size:0.85rem;">Sản phẩm của công ty mẹ → Thêm vào app AgriSeco để giao dịch</p>
+          </div>
+          <div style="background:var(--bg-secondary);padding:12px;border-radius:8px;">
+            <h3 style="margin-top:0;">📊 Chia sẻ dữ liệu KH</h3>
+            <p style="margin:0;font-size:0.85rem;">Dữ liệu KH Agribank → Targeting, cross-sell chứng khoán</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>⚠️ Thách thức</h2>
+        <table>
+          <tr><th>Vấn đề</th><th>Ảnh hưởng</th></tr>
+          <tr><td>Quy trình thủ tục nhiều bước, cần thời gian chờ</td><td>Chậm triển khai tích hợp</td></tr>
+          <tr><td>App Agribank chưa tốt (rating 3.4/5)</td><td>UX kém khi nhúng AgriSeco</td></tr>
+          <tr><td>Cạnh tranh từ CTCK có fintech mạnh (TCBS, SSI)</td><td>Mất KH trẻ, KH đô thị</td></tr>
+        </table>
+      </div>
+
+      <a href="docs/02-the-manh-agribank.md" download class="download-link">📥 Xem file gốc (chi tiết đầy đủ)</a>
+    </div>
+
+    <!-- TAB 3: Công nghệ (với subtabs) -->
+    <div class="content" id="tab-2">
+      <div class="subtabs">
+        <div class="subtab active" onclick="showSubtab(0)">Tổng quan</div>
+        <div class="subtab" onclick="showSubtab(1)">Mobile App</div>
+        <div class="subtab" style="opacity:0.5;cursor:not-allowed;">Web (sắp tới)</div>
+        <div class="subtab" style="opacity:0.5;cursor:not-allowed;">Core (sắp tới)</div>
+      </div>
+
+      <!-- Subtab 0: Tổng quan CNTT -->
+      <div class="subtab-content active" id="subtab-0">
+      <div class="card">
+        <h2>🗺️ Bản đồ hệ thống</h2>
+        <pre style="font-size:0.7rem;background:var(--bg-secondary);padding:12px;border-radius:8px;overflow-x:auto;">
+                              AGRISECO
+                                 │
+        ┌────────────────────────┼────────────────────────┐
+        │                        │                        │
+   ┌────▼────┐             ┌─────▼─────┐            ┌─────▼─────┐
+   │  CORE   │             │  KÊNH     │            │  TÍCH HỢP │
+   │ TRADING │             │  PHÂN PHỐI│            │  BÊN NGOÀI│
+   └────┬────┘             └─────┬─────┘            └─────┬─────┘
+        │                        │                        │
+        ▼                   ┌────┼────┐              ┌────┼────┐
+   FLEX (FSS)              App  Web  Web            Kế    Ngân
+                           Pro  GD   GT             toán  hàng</pre>
+      </div>
+
+      <div class="card">
+        <h2>🖥️ Hệ thống hiện tại</h2>
+        <table>
+          <tr><th>Hệ thống</th><th>Trạng thái</th><th>Vendor</th></tr>
+          <tr><td>Core CK cơ sở (FLEX)</td><td><span class="tag tag-success">✅</span></td><td>FSS</td></tr>
+          <tr><td>Mobile App (AgriSeco Pro)</td><td><span class="tag tag-success">✅</span></td><td>FSS</td></tr>
+          <tr><td>Web Trading</td><td><span class="tag tag-success">✅</span></td><td>?</td></tr>
+          <tr><td>Phái sinh</td><td><span class="tag tag-danger">❌ chưa có</span></td><td>-</td></tr>
+          <tr><td>Trái phiếu Agribank</td><td><span class="tag tag-danger">❌ không có trên app</span></td><td>-</td></tr>
+          <tr><td>Tích hợp Agribank</td><td><span class="tag tag-warning">⚠️ chỉ redirect</span></td><td>-</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2>👥 Nhân sự CNTT (~17 người)</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;">
+          <div>
+            <h3>Cơ cấu</h3>
+            <ul>
+              <li><strong>Trưởng phòng</strong> (tuyển mới 2025)</li>
+              <li>Phó phòng Hạ tầng/Vận hành</li>
+              <li>Phó phòng Phát triển (vị trí mới)</li>
+              <li>1 BA, 3 Developers</li>
+              <li>Còn lại: Hạ tầng, vận hành</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Đánh giá</h3>
+            <table style="font-size:0.8rem;">
+              <tr><th>Hạng mục</th><th></th><th>Rủi ro</th></tr>
+              <tr><td>Hạ tầng/Vận hành</td><td><span class="tag tag-success">✅ Đủ</span></td><td>Thấp</td></tr>
+              <tr><td>Phát triển</td><td><span class="tag tag-warning">⚠️ 3 dev</span></td><td>Cao</td></tr>
+              <tr><td>BA</td><td><span class="tag tag-warning">⚠️ 1 người</span></td><td>TB</td></tr>
+            </table>
+          </div>
+        </div>
+        <div class="highlight-box" style="margin-top:12px;">
+          <strong>⚠️ Đặc điểm:</strong> Chủ yếu nhân sự vận hành & hạ tầng. Đội phát triển rất mỏng, đang xây dựng. Chưa có nhân sự cứng về mảng phát triển.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🏭 Phụ thuộc Vendor</h2>
+        <table>
+          <tr><th>Hệ thống</th><th>Vendor</th><th>Mức phụ thuộc</th></tr>
+          <tr><td>Core (FLEX)</td><td>FSS</td><td><span class="tag tag-danger">Cao</span></td></tr>
+          <tr><td>Mobile App</td><td>FSS</td><td><span class="tag tag-danger">Cao</span></td></tr>
+          <tr><td>Web Trading</td><td>?</td><td><span class="tag tag-warning">Chưa rõ</span></td></tr>
+        </table>
+        <div class="highlight-box" style="margin-top:12px;">
+          <strong>❓ Chưa rõ:</strong> Đội in-house đã phát triển được những gì? Phần lớn phụ thuộc vendor từ core đến app.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>⚠️ Vấn đề tích hợp Agribank</h2>
+        <div class="highlight-box">
+          App Agribank có shortcut "AgriSeco" (6-7 items) nhưng nhấn vào → <strong>mở web bên ngoài</strong> → thoát app → chưa liền mạch!
+        </div>
+        <p style="font-size:0.85rem;margin-top:8px;">KH dùng app Agribank → nhấn AgriSeco → bật ra ngoài → phải quay lại app. <strong>Cần nhúng embedded.</strong></p>
+      </div>
+
+      <div class="card">
+        <h2>🎯 Cơ hội / Việc cần làm</h2>
+        <table>
+          <tr><th>Chưa có</th><th>Cơ hội</th></tr>
+          <tr><td>Phái sinh</td><td>Mở rộng sản phẩm</td></tr>
+          <tr><td>Trái phiếu Agribank</td><td>Thêm vào app + cho GD</td></tr>
+          <tr><td>Tích hợp Agribank sâu</td><td>Deep integration / SDK nhúng</td></tr>
+          <tr><td>UX rời rạc</td><td>Embedded trong app Agribank</td></tr>
+        </table>
+      </div>
+
+      <a href="docs/03-hien-trang-he-thong-cntt.md" download class="download-link">📥 Xem file gốc</a>
+      </div><!-- end subtab-0 -->
+
+      <!-- Subtab 1: Mobile App -->
+      <div class="subtab-content" id="subtab-1">
+      <div class="card">
+        <h2>📱 Tổng quan hiện trạng</h2>
+        <div class="stat-grid">
+          <div class="stat" style="border-left:3px solid var(--danger);"><div class="stat-value" style="color:var(--danger);">6</div><div class="stat-label">❌ Chưa có / Chưa đạt</div></div>
+          <div class="stat" style="border-left:3px solid var(--warning);"><div class="stat-value" style="color:var(--warning);">6</div><div class="stat-label">⚠️ Cần cải tiến</div></div>
+          <div class="stat" style="border-left:3px solid var(--success);"><div class="stat-value" style="color:var(--success);">1</div><div class="stat-label">✅ Đủ (GD CK cơ sở)</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><span class="priority priority-p0">P0</span> Bắt buộc pháp lý</h2>
+        <table style="font-size:0.85rem;">
+          <tr><th style="width:25%;">Vấn đề</th><th>Mô tả chi tiết</th><th style="width:25%;">Giải pháp</th></tr>
+          <tr>
+            <td><span class="tag tag-danger">❌</span> <strong>eKYC chưa đạt C06</strong></td>
+            <td>Chưa hỗ trợ: Quét QR CCCD, đọc NFC chip, tích hợp VNeID. Đối thủ (TCBS, SSI) đã có đầy đủ theo Đề án 06.</td>
+            <td>eKYC đáp ứng C06: QR + NFC + VNeID</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-danger">❌</span> <strong>Chưa liên kết VNeID</strong></td>
+            <td>TK chứng khoán chưa liên kết với VNeID. <strong>Deadline: 31/12/2026</strong> theo NĐ 320/2026.</td>
+            <td>Liên kết TK với VNeID</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2><span class="priority priority-p1">P1</span> Tăng doanh thu / Cải tiến UX</h2>
+        <table style="font-size:0.85rem;">
+          <tr><th style="width:25%;">Vấn đề</th><th>Mô tả chi tiết</th><th style="width:25%;">Giải pháp</th></tr>
+          <tr>
+            <td><span class="tag tag-danger">❌</span> <strong>Tích hợp Agribank</strong></td>
+            <td>Trong app Agribank có shortcut AgriSeco nhưng nhấn vào → mở web bên ngoài → thoát app → UX rời rạc.</td>
+            <td>Mobile Web nhúng (WebView + SSO)</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-danger">❌</span> <strong>Trái phiếu Agribank</strong></td>
+            <td>Sản phẩm của công ty mẹ nhưng không có trong app AgriSeco. Mất cơ hội cross-sell.</td>
+            <td>Xem, mua, theo dõi TP trong app</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-warning">⚠️</span> <strong>Nộp tiền</strong></td>
+            <td>Chỉ mở ra trang hướng dẫn với nhiều cách thủ công làm bên ngoài app. Chưa có deep link, chưa có QR động.</td>
+            <td>Deep link + QR động (quét = xong)</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-warning">⚠️</span> <strong>Mở tài khoản</strong></td>
+            <td>Sau eKYC online vẫn phải ký hợp đồng giấy. Luật GDĐT 2023 CHO PHÉP eContract (chưa bắt buộc).</td>
+            <td>eContract + eSign (100% online)</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-warning">⚠️</span> <strong>Bảo mật OTP</strong></td>
+            <td>Còn dùng thẻ ma trận (lỗi thời, đối thủ đã bỏ). Chưa Device Binding, chưa Biometric.</td>
+            <td>Sunset Matrix → Soft OTP + Biometric</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-danger">❌</span> <strong>Khảo sát KH</strong></td>
+            <td>Chưa có khảo sát khẩu vị rủi ro để phân loại KH và gợi ý sản phẩm phù hợp.</td>
+            <td>Khảo sát + Profile KH</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2><span class="priority priority-p2">P2</span> Thu hút khách hàng</h2>
+        <table style="font-size:0.85rem;">
+          <tr><th style="width:25%;">Vấn đề</th><th>Mô tả chi tiết</th><th style="width:25%;">Giải pháp</th></tr>
+          <tr>
+            <td><span class="tag tag-warning">⚠️</span> <strong>Hỗ trợ/Liên hệ</strong></td>
+            <td>Nhấn Hotline → mở trang arg.vn. Nhấn Zalo → vào nhóm chung → chọn tiếp. Quá nhiều bước.</td>
+            <td>1 chạm = gọi/chat trực tiếp</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-warning">⚠️</span> <strong>Thống kê thị trường</strong></td>
+            <td>Chỉ có thông tin cơ bản. Thiếu: Top tăng/giảm, Khối ngoại mua/bán ròng, Thống kê ngành. Đối thủ có iBoard (SSI), SmartOne (TCBS).</td>
+            <td>Dashboard thị trường + Chi tiết mã (P/E, EPS, ROE)</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-warning">⚠️</span> <strong>Khuyến nghị</strong></td>
+            <td>Chỉ có báo cáo phân tích dạng PDF. Thiếu điểm mua/bán cụ thể, giá mục tiêu, vùng cắt lỗ.</td>
+            <td>Khuyến nghị actionable với giá</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2><span class="priority priority-p2">P3</span> Thực hiện sau</h2>
+        <table style="font-size:0.85rem;">
+          <tr><th style="width:25%;">Vấn đề</th><th>Mô tả chi tiết</th><th style="width:25%;">Giải pháp</th></tr>
+          <tr>
+            <td><span class="tag tag-warning">⚠️</span> <strong>Giao diện</strong></td>
+            <td>Thiết kế đã cũ so với đối thủ. UX cơ bản, nhiều bước thao tác. Chưa có dashboard cá nhân. (Đã có: dark mode, thay đổi cỡ chữ)</td>
+            <td>UI/UX Refresh</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-danger">❌</span> <strong>Mở rộng ngân hàng</strong></td>
+            <td>Chỉ hỗ trợ nộp tiền qua Agribank. Chưa có deep link các NH khác (BIDV, VCB, TCB, MBBank...).</td>
+            <td>Deep link multi-bank</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="card" style="background:var(--bg-secondary);">
+        <h2 style="color:var(--success);">✅ Đã đủ: Giao dịch CK cơ sở</h2>
+        <p style="font-size:0.9rem;margin:0;">Mua/Bán/Hủy/Sửa lệnh, Margin, Ứng trước tiền bán — đầy đủ chức năng core.</p>
+      </div>
+
+      <div class="card">
+        <h2>🚨 Deadline pháp lý</h2>
+        <div class="highlight-box">
+          <strong>31/12/2026:</strong> TK chứng khoán phải liên kết VNeID (NĐ 320/2026)
+        </div>
+        <h3 style="margin-top:12px;">eContract/eSign</h3>
+        <p style="font-size:0.85rem;">Luật GDĐT 2023 (hiệu lực 01/07/2024) <strong>CHO PHÉP</strong> nhưng <strong>KHÔNG BẮT BUỘC</strong> → P1</p>
+      </div>
+
+      <div class="card">
+        <h2>🔐 Thay Matrix bằng Biometric</h2>
+        <h3>Điều kiện:</h3>
+        <ul>
+          <li>Device đã <strong>BIND</strong> với TK từ trước (qua SMS OTP lần đầu)</li>
+          <li>Biometric đã đăng ký trên device</li>
+          <li>Đang dùng <strong>chính thiết bị đã bind</strong></li>
+        </ul>
+        <h3>Thay đổi cần thiết:</h3>
+        <ul>
+          <li><strong>Mobile App:</strong> Thêm logic check device bind</li>
+          <li><strong>Auth Service (mới):</strong> Handle Biometric, Device Binding</li>
+          <li><strong>Core FSS:</strong> Không cần sửa (nếu logic ở App)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>📋 Roadmap</h2>
+        <div class="wave-header">🔴 WAVE 1: Tuân thủ pháp luật [P0]</div>
+        <div class="gap-item"><span class="priority priority-p0">P0</span> eKYC C06 (QR, NFC, VNeID)</div>
+        <div class="gap-item"><span class="priority priority-p0">P0</span> Liên kết TK với VNeID (NĐ 320, deadline 31/12/2026)</div>
+
+        <div class="wave-header">💰 WAVE 2: Tăng doanh thu [P1]</div>
+        <div class="gap-item"><span class="priority priority-p1">P1</span> Mobile Web nhúng app Agribank</div>
+        <div class="gap-item"><span class="priority priority-p1">P1</span> Trái phiếu Agribank trong app</div>
+        <div class="gap-item"><span class="priority priority-p1">P1</span> Deep link nộp tiền one-touch</div>
+        <div class="gap-item"><span class="priority priority-p1">P1</span> eContract + eSign (chưa bắt buộc)</div>
+        <div class="gap-item"><span class="priority priority-p1">P1</span> Sunset thẻ ma trận (Auth Service riêng, không sửa FSS)</div>
+
+        <div class="wave-header">🎯 WAVE 3-4: Trải nghiệm [P2-P3]</div>
+        <div class="gap-item"><span class="priority priority-p2">P2</span> Khuyến nghị, Thống kê, Hỗ trợ trong app</div>
+        <div class="gap-item"><span class="priority priority-p2">P3</span> UI/UX, Dashboard cá nhân</div>
+      </div>
+
+      <div class="card">
+        <h2>⚔️ So sánh đối thủ</h2>
+        <table>
+          <tr><th></th><th>AgriSeco</th><th>TCBS</th><th>SSI</th></tr>
+          <tr><td>Sản phẩm</td><td>CK cơ sở</td><td>Đầy đủ</td><td>Đầy đủ</td></tr>
+          <tr><td>eKYC C06</td><td>❌</td><td>✅</td><td>✅</td></tr>
+          <tr><td>Thẻ ma trận</td><td>Còn</td><td>Bỏ</td><td>Bỏ</td></tr>
+        </table>
+      </div>
+
+      <a href="docs/05-mobile-app-agriseco-pro.md" download class="download-link">📥 Xem chi tiết</a>
+      </div><!-- end subtab-1 -->
+
+    </div><!-- end tab-2 -->
+
+    <!-- TAB 4: Chiến lược -->
+    <div class="content" id="tab-3">
+      <div class="card">
+        <h2>📈 Thị phần</h2>
+        <div class="highlight-box">
+          AgriSeco: <strong>~1-2%</strong> (chưa Top 10) | TCBS: 10% (#3) | MBS: 5% (#6)
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>👥 Phân khúc ưu tiên</h2>
+        <table>
+          <tr><th>Phân khúc</th><th>Đối tượng</th><th>Chiến lược</th></tr>
+          <tr><td><span class="tag tag-success">Quick Win</span></td><td>NV Agribank, KH VIP</td><td>Cross-sell</td></tr>
+          <tr><td><span class="tag tag-info">Growth</span></td><td>DN nông nghiệp</td><td>Tư vấn IB</td></tr>
+          <tr><td><span class="tag tag-warning">Volume</span></td><td>KH tiết kiệm</td><td>Quỹ mở, TP</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2>💡 Lợi thế riêng</h2>
+        <ul>
+          <li><strong>Mạng lưới nông thôn:</strong> 2.218 điểm GD (đối thủ tập trung đô thị)</li>
+          <li><strong>KH giàu nông nghiệp:</strong> Chủ trang trại, HTX → blue ocean</li>
+          <li><strong>Độ tin cậy nhà nước:</strong> Phù hợp NĐT thận trọng</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>🎯 KPIs</h2>
+        <table>
+          <tr><th>Chỉ số</th><th>Hiện tại</th><th>18 tháng</th></tr>
+          <tr><td>Thị phần</td><td>~1-2%</td><td>5% (Top 10)</td></tr>
+          <tr><td>TK mới/tháng</td><td>?</td><td>20.000</td></tr>
+          <tr><td>TK từ Agribank</td><td>?</td><td>60%</td></tr>
+        </table>
+      </div>
+
+      <a href="docs/04-chien-luoc-loi-the-canh-tranh.md" download class="download-link">📥 Xem chi tiết</a>
+    </div>
+  </div>
+
+  <script>
+    function showTab(index) {
+      document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', i === index));
+      document.querySelectorAll('.content').forEach((c, i) => c.classList.toggle('active', i === index));
+    }
+
+    function showSubtab(index) {
+      document.querySelectorAll('.subtab').forEach((t, i) => {
+        if (i < 2) t.classList.toggle('active', i === index); // Only first 2 are clickable
+      });
+      document.querySelectorAll('.subtab-content').forEach((c, i) => c.classList.toggle('active', i === index));
+    }
+
+    function toggleTheme() {
+      const root = document.documentElement;
+      const current = root.getAttribute('data-theme');
+      if (current === 'dark') root.setAttribute('data-theme', 'light');
+      else if (current === 'light') root.removeAttribute('data-theme');
+      else root.setAttribute('data-theme', 'dark');
+    }
+  </script>
+</body>
+</html>

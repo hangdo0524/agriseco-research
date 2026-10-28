@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cơ cấu tổ chức Agriseco</title>
+<style>
+:root{
+  --bg:#f6f7f5; --card:#ffffff; --ink:#1d2420; --muted:#5d6a63; --line:#c9d2cc;
+  --brand:#0f6b46; --brand-soft:#e3f1ea; --accent:#b8860b; --accent-soft:#fbf3dd;
+  --gov:#3b4a8a; --gov-soft:#e8ebf7; --hi:#c2410c; --hi-soft:#fdeee5;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#121614; --card:#1b211e; --ink:#e7ece9; --muted:#9aa8a0; --line:#34403a;
+    --brand:#4fbf8b; --brand-soft:#1d3329; --accent:#e0b34a; --accent-soft:#33291a;
+    --gov:#93a3e6; --gov-soft:#222842; --hi:#f59e6b; --hi-soft:#3a2418;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+.wrap{max-width:1200px;margin:0 auto;padding:28px 16px 48px}
+h1{font-size:26px;margin:0 0 4px}
+h2{font-size:18px;margin:36px 0 14px;padding-bottom:6px;border-bottom:2px solid var(--brand)}
+.sub{color:var(--muted);margin:0 0 20px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.stat b{display:block;font-size:22px;color:var(--brand)}
+.stat span{color:var(--muted);font-size:13px}
+.chart{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 12px;overflow-x:auto}
+.level{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;position:relative}
+.vline{width:2px;height:22px;background:var(--line);margin:0 auto}
+.node{border-radius:9px;padding:10px 14px;text-align:center;min-width:170px;border:1.5px solid var(--line);background:var(--card)}
+.node .t{font-weight:700}
+.node .p{font-size:12.5px;color:var(--muted)}
+.gov{background:var(--gov-soft);border-color:var(--gov)}
+.gov .t{color:var(--gov)}
+.exec{background:var(--brand-soft);border-color:var(--brand)}
+.exec .t{color:var(--brand)}
+.side{background:var(--accent-soft);border-color:var(--accent)}
+.row-gov{display:flex;justify-content:center;align-items:center;gap:0;flex-wrap:wrap}
+.hconn{width:40px;height:2px;background:var(--line)}
+.dash{border-style:dashed}
+.branches{display:grid;grid-template-columns:repeat(3,minmax(220px,1fr));gap:14px;margin-top:4px;position:relative}
+.branches:before{content:"";position:absolute;top:-12px;left:16.6%;right:16.6%;height:2px;background:var(--line)}
+.col{position:relative;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px}
+.col:before{content:"";position:absolute;top:-12px;left:50%;width:2px;height:12px;background:var(--line)}
+.col h3{margin:0 0 10px;font-size:14px;text-align:center;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.unit{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--brand);border-radius:7px;padding:7px 10px;margin-bottom:8px;font-size:14px}
+.unit small{display:block;color:var(--muted);font-size:12px}
+.unit.sup{border-left-color:var(--accent)}
+.unit.net{border-left-color:var(--gov)}
+.unit.closed{opacity:.55;text-decoration:line-through}
+.unit.it{border:2px solid var(--hi);border-left-width:6px;background:var(--hi-soft)}
+.unit.it b{color:var(--hi)}
+.tag{display:inline-block;font-size:11px;font-weight:700;background:var(--hi);color:#fff;border-radius:4px;padding:1px 6px;margin-left:4px;vertical-align:1px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:14px;justify-content:center}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.card h3{margin:0 0 10px;font-size:15px}
+.person{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.person:last-child{border-bottom:0}
+.person span:last-child{color:var(--muted);text-align:right;font-size:13px}
+.lead{font-weight:700}
+.tl{position:relative;margin-left:8px;padding-left:22px;border-left:2px solid var(--line)}
+.ev{position:relative;margin-bottom:16px}
+.ev:before{content:"";position:absolute;left:-29px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--brand);border:2px solid var(--bg)}
+.ev .d{font-weight:700;color:var(--brand);font-size:13.5px}
+.ev.you:before{background:var(--hi)}
+.ev.you .d{color:var(--hi)}
+.bar{height:22px;border-radius:6px;overflow:hidden;display:flex;background:var(--bg);border:1px solid var(--line);margin:8px 0 6px}
+.bar div{height:100%}
+.note{font-size:12.5px;color:var(--muted);margin-top:28px}
+.note a{color:var(--muted)}
+@media (max-width:760px){
+  .branches{grid-template-columns:1fr}
+  .branches:before,.col:before{display:none}
+  .hconn{width:2px;height:16px}
+  .row-gov{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Công ty CP Chứng khoán Agribank (Agriseco – AGR)</h1>
+  <p class="sub">Sơ đồ cơ cấu tổ chức &amp; nhân sự · cập nhật 27/10/2026 · theo BCTN 2025, website công ty và báo chí</p>
+
+  <div class="stats">
+    <div class="stat"><b>74,92%</b><span>Agribank sở hữu (cổ đông lớn duy nhất)</span></div>
+    <div class="stat"><b>~2.283 tỷ</b><span>Vốn điều lệ (→ ~2.420 tỷ sau trả cổ tức)</span></div>
+    <div class="stat"><b>157</b><span>Nhân sự tại 31/12/2025</span></div>
+    <div class="stat"><b>37,83 tr</b><span>Lương bình quân/người/tháng 2025</span></div>
+    <div class="stat"><b>176,3 tỷ</b><span>LNTT 2025 · KH 2026: 194 tỷ</span></div>
+    <div class="stat"><b>4.434 tỷ</b><span>Tổng tài sản cuối 2025</span></div>
+  </div>
+
+  <h2>1. Sơ đồ cơ cấu tổ chức</h2>
+  <div class="chart">
+    <div class="level"><div class="node gov"><div class="t">Đại hội đồng cổ đông</div><div class="p">Agribank 74,92%</div></div></div>
+    <div class="vline"></div>
+    <div class="row-gov">
+      <div class="node gov"><div class="t">Hội đồng quản trị</div><div class="p">Chủ tịch: Ông Phan Văn Tuấn · 4 thành viên</div></div>
+      <div class="hconn"></div>
+      <div class="node gov dash"><div class="t">Ban Kiểm soát</div><div class="p">Trưởng ban: Bà Lê Hương Giang</div></div>
+    </div>
+    <div class="vline"></div>
+    <div class="level">
+      <div class="node side"><div class="t">Văn phòng HĐQT</div></div>
+      <div class="node side"><div class="t">Kiểm toán nội bộ &amp; QTRR</div><div class="p">trực thuộc HĐQT</div></div>
+    </div>
+    <div class="vline"></div>
+    <div class="level"><div class="node exec"><div class="t">Ban Tổng Giám đốc</div><div class="p">Quyền TGĐ: Ông Trương Ngọc Lân · 3 Phó TGĐ</div></div></div>
+    <div class="vline" style="height:12px"></div>
+
+    <div class="branches">
+      <div class="col">
+        <h3>Khối nghiệp vụ</h3>
+        <div class="unit">Dịch vụ chứng khoán<small>Môi giới, lưu ký, margin</small></div>
+        <div class="unit">Tự doanh &amp; Bảo lãnh phát hành</div>
+        <div class="unit">Tư vấn tài chính doanh nghiệp<small>IPO, niêm yết, M&amp;A</small></div>
+        <div class="unit">Phân tích – Nghiên cứu</div>
+        <div class="unit">Tư vấn đầu tư KH cá nhân &amp; tổ chức</div>
+      </div>
+      <div class="col">
+        <h3>Khối hỗ trợ</h3>
+        <div class="unit it"><b>Công nghệ thông tin</b> <span class="tag">VỊ TRÍ CỦA CHỊ</span><small>~17 người: hạ tầng, vận hành, 1 BA, 3 dev · Trưởng phòng tuyển mới 2025 · 2 Phó phòng (hạ tầng/vận hành &amp; phát triển)</small></div>
+        <div class="unit sup">Kế toán tài chính</div>
+        <div class="unit sup">Tổ chức – Nhân sự</div>
+        <div class="unit sup">Hành chính tổng hợp</div>
+        <div class="unit sup">Kiểm soát nội bộ &amp; QTRR</div>
+      </div>
+      <div class="col">
+        <h3>Mạng lưới</h3>
+        <div class="unit net">Trụ sở chính (HO) – Hà Nội<small>Head Office</small></div>
+        <div class="unit net">Chi nhánh Miền Trung – Đà Nẵng</div>
+        <div class="unit net">Chi nhánh Miền Nam – TP.HCM<small>GĐ: Ông Nguyễn Hoàng Tùng (kiêm Phó TGĐ)</small></div>
+        <div class="unit net closed">Chi nhánh Miền Bắc<small>đã đóng cửa</small></div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <span><i style="background:var(--gov)"></i>Quản trị – giám sát</span>
+      <span><i style="background:var(--accent)"></i>Trực thuộc HĐQT / hỗ trợ</span>
+      <span><i style="background:var(--brand)"></i>Điều hành – nghiệp vụ</span>
+      <span><i style="background:var(--hi)"></i>Phòng CNTT</span>
+    </div>
+  </div>
+
+  <h2>2. Nhân sự lãnh đạo</h2>
+  <div class="people">
+    <div class="card">
+      <h3>Hội đồng quản trị</h3>
+      <div class="person lead"><span>Ông Phan Văn Tuấn</span><span>Chủ tịch HĐQT</span></div>
+      <div class="person"><span>Ông Nguyễn Đức Thuận</span><span>Thành viên</span></div>
+      <div class="person"><span>Bà Nguyễn Thị Hồng Hạnh</span><span>Thành viên</span></div>
+      <div class="person"><span>Ông Đoàn Ngọc Hoàn</span><span>Thành viên</span></div>
+    </div>
+    <div class="card">
+      <h3>Ban Tổng Giám đốc</h3>
+      <div class="person lead"><span>Ông Trương Ngọc Lân</span><span>Quyền TGĐ (14/9/2026 – 30/6/2027)</span></div>
+      <div class="person"><span>Ông Nguyễn Hoàng Tùng</span><span>Phó TGĐ, kiêm GĐ CN Miền Nam</span></div>
+      <div class="person"><span>Bà Nguyễn Ngọc Lan</span><span>Phó TGĐ</span></div>
+      <div class="person"><span>Ông Bùi Đức Thắng</span><span>Phó TGĐ</span></div>
+    </div>
+    <div class="card">
+      <h3>Ban Kiểm soát</h3>
+      <div class="person lead"><span>Bà Lê Hương Giang</span><span>Trưởng ban</span></div>
+      <div class="person"><span>Ông Đỗ Đức Tú</span><span>Thành viên</span></div>
+      <div class="person"><span>Bà Nguyễn Thị Hồng Dương</span><span>Thành viên</span></div>
+    </div>
+  </div>
+
+  <h2>3. Cơ cấu nhân sự (31/12/2025)</h2>
+  <div class="people">
+    <div class="card">
+      <h3>Trình độ – tổng 157 người</h3>
+      <div class="bar">
+        <div style="width:78.98%;background:var(--brand)"></div>
+        <div style="width:17.2%;background:var(--gov)"></div>
+        <div style="width:3.82%;background:var(--accent)"></div>
+      </div>
+      <div class="person"><span>Đại học</span><span>124 người · 79,0%</span></div>
+      <div class="person"><span>Thạc sĩ / Tiến sĩ</span><span>27 người · 17,2%</span></div>
+      <div class="person"><span>Khác</span><span>6 người · 3,8%</span></div>
+    </div>
+    <div class="card">
+      <h3>Thu nhập &amp; phúc lợi</h3>
+      <div class="person"><span>Lương bình quân 2025</span><span>37,83 tr/người/tháng</span></div>
+      <div class="person"><span>Bảo hiểm</span><span>BHXH, BHYT, BHTN + BH tai nạn, chăm sóc sức khỏe</span></div>
+      <div class="person"><span>Khám sức khỏe</span><span>Định kỳ</span></div>
+      <div class="person"><span>Đào tạo</span><span>8 khóa/108 buổi · KH 2026: 9 khóa/120 buổi</span></div>
+    </div>
+    <div class="card">
+      <h3>Định hướng CNTT</h3>
+      <div class="person"><span>Mục tiêu</span><span>Chuyển đổi số toàn diện, gia nhập hệ sinh thái Agribank</span></div>
+      <div class="person"><span>Sản phẩm</span><span>AGR Mobi Pro, AGR Trading Pro</span></div>
+      <div class="person"><span>Phái sinh</span><span>Chưa triển khai</span></div>
+      <div class="person"><span>Đội phát triển</span><span>Đang xây dựng mới (vai trò Phó phòng)</span></div>
+    </div>
+  </div>
+
+  <h2>4. Biến động nhân sự lãnh đạo 2026</h2>
+  <div class="tl">
+    <div class="ev"><div class="d">01/04/2026</div>Ông Nguyễn Hoàng Tùng (GĐ CN Miền Nam) được bổ nhiệm Phó TGĐ kiêm GĐ Chi nhánh Miền Nam, nhiệm kỳ 5 năm.</div>
+    <div class="ev"><div class="d">24/04/2026</div>TGĐ Lê Sơn Tùng thôi chức theo đơn. Phó TGĐ Nguyễn Hoàng Tùng được giao phụ trách Ban điều hành.</div>
+    <div class="ev"><div class="d">29/04/2026</div>ĐHĐCĐ thường niên: kế hoạch doanh thu 580 tỷ, LNTT 194 tỷ; giảm HĐQT xuống 4 thành viên; cổ tức 6% bằng cổ phiếu.</div>
+    <div class="ev"><div class="d">14/09/2026</div>Ông Trương Ngọc Lân (nguyên TGĐ ABS, VIX) được bổ nhiệm Quyền TGĐ đến 30/6/2027.</div>
+  </div>
+
+  <p class="note">Nguồn: <a href="https://agriseco.com.vn/Introduction/AboutAGR/LeadershipTeam">Agriseco – Ban lãnh đạo</a> ·
+  <a href="https://mobiv2.fireant.vn/News/NewsAttachedFile/1865468">Báo cáo thường niên 2025</a> ·
+  <a href="https://cafef.vn/agriseco-bo-nhiem-quyen-tong-giam-doc-188260915091631259.chn">CafeF 15/9/2026</a> ·
+  <a href="https://antt.nguoiduatin.vn/chung-khoan-agirbank-mien-nhiem-tong-giam-doc-205260423190802716.htm">Người Đưa Tin 23/4/2026</a> ·
+  <a href="https://www.vcci.com.vn/tin-tuc/agriseco-dat-muc-tieu-loi-nhuan-tang-hon-10-ky-vong-khai-thac-loi-the-he-sinh-thai-agribank">VCCI</a>.
+  Thông tin Phòng CNTT (quy mô, phân công) theo trao đổi trong quá trình phỏng vấn. Sơ đồ theo mô tả trong BCTN, có thể khác sơ đồ nội bộ chính thức.</p>
+</div>
+</body>
+</html>
