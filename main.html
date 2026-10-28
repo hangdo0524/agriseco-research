@@ -847,157 +847,164 @@
         </div>
 
         <div class="card">
-          <h3>❓ Phương án 2: Mua mã nguồn có đáng không?</h3>
-            <p style="font-size:0.9rem;margin-bottom:12px;">Với hiện trạng app nhiều vấn đề như trên, việc mua source code để sửa cần cân nhắc:</p>
-            <table style="font-size:0.85rem;">
-              <tr>
-                <th style="width:50%;">🟢 Đáng mua NẾU</th>
-                <th style="width:50%;">🔴 KHÔNG đáng NẾU</th>
-              </tr>
-              <tr>
-                <td>
-                  <ul style="margin:0;padding-left:16px;">
-                    <li>Code base còn tốt, clean, dễ maintain</li>
-                    <li>Architecture tách biệt FE/BFF/Core rõ ràng</li>
-                    <li>Vấn đề chủ yếu ở UI/UX, logic FE</li>
-                    <li>Có thể sửa incremental, không cần rewrite</li>
-                    <li>Tiết kiệm 6-9 tháng so với build mới</li>
-                  </ul>
-                </td>
-                <td>
-                  <ul style="margin:0;padding-left:16px;">
-                    <li>Code legacy, coupling cao, khó sửa</li>
-                    <li>Technical debt lớn, sửa 1 chỗ vỡ chỗ khác</li>
-                    <li>Không có tài liệu, không có test</li>
-                    <li>Framework/library cũ, không cập nhật được</li>
-                    <li>Chi phí sửa ≈ chi phí build mới</li>
-                  </ul>
-                </td>
-              </tr>
-            </table>
-            <p style="font-size:0.85rem;margin-top:12px;color:var(--text-secondary);">
-              <strong>→ Khuyến nghị:</strong> Cần <strong>code audit</strong> trước khi quyết định mua. Nếu code quá tệ, PA3 (tự build) có thể hiệu quả hơn.
-            </p>
-          </div>
-
-          <div style="background:var(--bg-secondary);padding:16px;border-radius:8px;margin-bottom:16px;border-left:4px solid var(--accent);">
-            <h4 style="margin-bottom:8px;">🤔 PA2 còn tối ưu không khi phải fix TẤT CẢ vấn đề?</h4>
-            <p style="font-size:0.9rem;margin-bottom:12px;">Source hiện tại đã cũ. Nếu cần fix toàn bộ vấn đề trong đề xuất (P0→P3), khối lượng công việc rất lớn:</p>
-            <table style="font-size:0.85rem;">
-              <tr>
-                <th>Hạng mục cần fix</th>
-                <th>Effort ước tính</th>
-                <th>Ảnh hưởng đến code</th>
-              </tr>
-              <tr>
-                <td>eKYC C06, VNeID</td>
-                <td>1-2 tháng</td>
-                <td>Flow đăng ký, xác thực</td>
-              </tr>
-              <tr>
-                <td>Trái phiếu Agribank</td>
-                <td>1-2 tháng</td>
-                <td>Thêm module mới</td>
-              </tr>
-              <tr>
-                <td>Deep link ngân hàng</td>
-                <td>2-4 tuần</td>
-                <td>Module nộp tiền</td>
-              </tr>
-              <tr>
-                <td>Tích hợp sâu Agribank</td>
-                <td>2-3 tháng</td>
-                <td>SDK, auth, session</td>
-              </tr>
-              <tr>
-                <td>UI/UX Refresh</td>
-                <td>2-3 tháng</td>
-                <td>Gần như toàn bộ UI</td>
-              </tr>
-              <tr>
-                <td><strong>TỔNG</strong></td>
-                <td><strong>6-10 tháng</strong></td>
-                <td><strong>~70-80% code</strong></td>
-              </tr>
-            </table>
-            <div style="background:var(--danger);color:white;padding:12px;border-radius:6px;margin-top:12px;">
-              <strong>⚠️ Kết luận:</strong> Nếu phải sửa ~70-80% code, PA2 (mua source) <strong>KHÔNG còn tối ưu</strong>.
-              Lúc này PA3 (tự build) có thể hiệu quả hơn vì:
-              <ul style="margin:8px 0 0 16px;">
-                <li>Không kế thừa technical debt</li>
-                <li>Tech stack mới, clean architecture</li>
-                <li>Thời gian tương đương (6-9 tháng)</li>
-                <li>Chi phí có thể tương đương (~9 tỷ)</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <h2>⚖️ So sánh Tổng thể</h2>
-          <table>
+          <h2>⚖️ So sánh Tổng thể (Theo chuẩn đánh giá phương án)</h2>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px;">
+            Đánh giá theo các tiêu chí chuẩn: Chi phí, Thời gian, Rủi ro, Lợi ích, Nguồn lực, Kiểm soát, Chất lượng
+          </p>
+          <table style="font-size:0.85rem;">
             <tr>
-              <th>Tiêu chí</th>
+              <th colspan="2">Tiêu chí</th>
               <th>PA1: Vendor</th>
               <th>PA2: Mua Source</th>
               <th>PA3: Tự Build</th>
               <th style="background:var(--accent-light);">PA4: Hybrid</th>
             </tr>
-            <tr>
-              <td><strong>Chi phí</strong></td>
-              <td>Cần làm rõ</td>
-              <td>Cần làm rõ</td>
-              <td>~9 tỷ*</td>
-              <td>~1-2 tỷ (web FE)* + BFF + ~9 tỷ (app sau)</td>
+            <!-- CHI PHÍ -->
+            <tr style="background:var(--bg-secondary);">
+              <td rowspan="3"><strong>💰 CHI PHÍ</strong></td>
+              <td>Chi phí ban đầu</td>
+              <td><span class="tag tag-success">Thấp</span> (0)</td>
+              <td><span class="tag tag-warning">TB</span> (đàm phán)</td>
+              <td><span class="tag tag-danger">Cao</span> (~9 tỷ)</td>
+              <td><span class="tag tag-warning">TB→Cao</span> (~1-2 + 9 tỷ)</td>
             </tr>
-            <tr>
-              <td><strong>Rủi ro</strong></td>
-              <td><span class="tag tag-success">Thấp</span></td>
-              <td><span class="tag tag-warning">TB</span></td>
-              <td><span class="tag tag-danger">Cao</span></td>
-              <td><span class="tag tag-success">Thấp→TB</span></td>
+            <tr style="background:var(--bg-secondary);">
+              <td>Chi phí vận hành/năm</td>
+              <td><span class="tag tag-danger">Cao</span> (phí FSS + CR)</td>
+              <td><span class="tag tag-warning">TB</span> (đội ngũ + API)</td>
+              <td><span class="tag tag-success">Thấp</span> (đội ngũ + API)</td>
+              <td><span class="tag tag-warning">TB</span> (FSS giảm dần)</td>
             </tr>
-            <tr>
-              <td><strong>Kiểm soát</strong></td>
-              <td>❌</td>
-              <td>🟡 Một phần</td>
-              <td>✅ Hoàn toàn</td>
-              <td>✅ Dần dần</td>
+            <tr style="background:var(--bg-secondary);">
+              <td>ROI dài hạn</td>
+              <td>❌ Thấp</td>
+              <td>🟡 Trung bình</td>
+              <td>✅ Cao</td>
+              <td>✅ Cao</td>
             </tr>
+            <!-- THỜI GIAN -->
             <tr>
-              <td><strong>Time to value</strong></td>
-              <td>Theo CR</td>
+              <td rowspan="2"><strong>⏱️ THỜI GIAN</strong></td>
+              <td>Ra sản phẩm đầu tiên</td>
+              <td>Theo yêu cầu FSS</td>
               <td>4-6 tháng</td>
               <td>6-9 tháng</td>
               <td style="color:green;"><strong>4-5 tháng</strong></td>
             </tr>
             <tr>
-              <td><strong>Tích hợp Agribank</strong></td>
-              <td>🟡 Thuê FSS làm</td>
-              <td>✅ Tự làm</td>
-              <td>✅ Tự làm (sau 6-9 tháng)</td>
-              <td style="color:green;"><strong>✅ Tự làm (ngay)</strong></td>
-            </tr>
-            <tr>
-              <td><strong>Sở hữu code</strong></td>
-              <td>❌</td>
-              <td>🟡</td>
-              <td>✅</td>
-              <td>✅ Dần dần</td>
-            </tr>
-            <tr>
-              <td><strong>Nhân sự cần</strong></td>
-              <td>0</td>
-              <td>4-5</td>
-              <td>8-10</td>
-              <td>4-5 → 8-10</td>
-            </tr>
-            <tr>
-              <td><strong>Tổng thời gian</strong></td>
-              <td>-</td>
+              <td>Hoàn thiện toàn bộ</td>
+              <td>—</td>
               <td>4-6 tháng</td>
               <td>6-9 tháng</td>
               <td>10-14 tháng</td>
+            </tr>
+            <!-- RỦI RO -->
+            <tr style="background:var(--bg-secondary);">
+              <td rowspan="3"><strong>⚠️ RỦI RO</strong></td>
+              <td>Rủi ro kỹ thuật</td>
+              <td><span class="tag tag-success">Thấp</span></td>
+              <td><span class="tag tag-warning">TB</span> (nợ kỹ thuật)</td>
+              <td><span class="tag tag-danger">Cao</span></td>
+              <td><span class="tag tag-success">Thấp</span> (scope nhỏ)</td>
+            </tr>
+            <tr style="background:var(--bg-secondary);">
+              <td>Rủi ro triển khai</td>
+              <td><span class="tag tag-success">Thấp</span></td>
+              <td><span class="tag tag-warning">TB</span></td>
+              <td><span class="tag tag-danger">Cao</span></td>
+              <td><span class="tag tag-success">Thấp→TB</span></td>
+            </tr>
+            <tr style="background:var(--bg-secondary);">
+              <td>Phụ thuộc vendor</td>
+              <td><span class="tag tag-danger">Cao</span></td>
+              <td><span class="tag tag-warning">TB</span></td>
+              <td><span class="tag tag-success">Thấp</span></td>
+              <td><span class="tag tag-success">Giảm dần</span></td>
+            </tr>
+            <!-- LỢI ÍCH -->
+            <tr>
+              <td rowspan="3"><strong>📈 LỢI ÍCH</strong></td>
+              <td>Lợi ích ngắn hạn</td>
+              <td>✅ Ổn định (không đầu tư)</td>
+              <td>🟡 TB (đang đầu tư)</td>
+              <td>❌ Âm (đang đầu tư)</td>
+              <td>✅ Có sản phẩm sớm</td>
+            </tr>
+            <tr>
+              <td>Lợi ích dài hạn</td>
+              <td>❌ Kém</td>
+              <td>✅ Khá</td>
+              <td>✅ Tốt nhất</td>
+              <td>✅ Tốt</td>
+            </tr>
+            <tr>
+              <td>Lợi thế cạnh tranh</td>
+              <td>❌ Không có</td>
+              <td>🟡 Một phần</td>
+              <td>✅ Cao</td>
+              <td>✅ Cao (Agribank)</td>
+            </tr>
+            <!-- NGUỒN LỰC -->
+            <tr style="background:var(--bg-secondary);">
+              <td rowspan="2"><strong>👥 NGUỒN LỰC</strong></td>
+              <td>Nhân sự cần</td>
+              <td>0</td>
+              <td>4-5 người</td>
+              <td>8-10 người</td>
+              <td>4-5 → 8-10</td>
+            </tr>
+            <tr style="background:var(--bg-secondary);">
+              <td>Kỹ năng yêu cầu</td>
+              <td>Nghiệm thu</td>
+              <td>Mobile dev + QA</td>
+              <td>Full-stack + DevOps</td>
+              <td>Web → Mobile dần</td>
+            </tr>
+            <!-- KIỂM SOÁT -->
+            <tr>
+              <td rowspan="3"><strong>🔐 KIỂM SOÁT</strong></td>
+              <td>Sở hữu mã nguồn</td>
+              <td>❌ Không</td>
+              <td>🟡 Một phần (FE)</td>
+              <td>✅ Hoàn toàn</td>
+              <td>✅ Dần dần</td>
+            </tr>
+            <tr>
+              <td>Độc lập công nghệ</td>
+              <td>❌ Không</td>
+              <td>🟡 Một phần</td>
+              <td>✅ Hoàn toàn</td>
+              <td>✅ Hoàn toàn (web)</td>
+            </tr>
+            <tr>
+              <td>Tích hợp Agribank</td>
+              <td>🟡 Thuê FSS</td>
+              <td>✅ Tự làm</td>
+              <td>✅ Sau 6-9 tháng</td>
+              <td style="color:green;"><strong>✅ Ngay</strong></td>
+            </tr>
+            <!-- CHẤT LƯỢNG -->
+            <tr style="background:var(--bg-secondary);">
+              <td rowspan="3"><strong>⭐ CHẤT LƯỢNG</strong></td>
+              <td>Khả năng mở rộng</td>
+              <td>❌ Phụ thuộc FSS</td>
+              <td>🟡 Giới hạn</td>
+              <td>✅ Cao</td>
+              <td>✅ Cao</td>
+            </tr>
+            <tr style="background:var(--bg-secondary);">
+              <td>Khả năng bảo trì</td>
+              <td>❌ Không kiểm soát</td>
+              <td>🟡 Kế thừa code cũ</td>
+              <td>✅ Tốt (code mới)</td>
+              <td>✅ Tốt (code mới)</td>
+            </tr>
+            <tr style="background:var(--bg-secondary);">
+              <td>Nợ kỹ thuật</td>
+              <td>❌ Không trả được</td>
+              <td>🟡 Kế thừa</td>
+              <td>✅ Không có</td>
+              <td>✅ Không có</td>
             </tr>
           </table>
           <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:8px;">
@@ -1242,223 +1249,326 @@ GIAI ĐOẠN 2: Tự build lại Mobile App (6-9 tháng sau)
         </div>
 
         <div class="card">
-          <h2>📋 Chi tiết từng phương án</h2>
-
-          <h4 style="margin:16px 0 8px;color:var(--text-secondary);">PA1: Tiếp tục đối tác (FSS)</h4>
+          <h3>❓ Phân tích thêm: PA2 - Mua mã nguồn có đáng không?</h3>
+          <p style="font-size:0.9rem;margin-bottom:12px;">Với hiện trạng app nhiều vấn đề như trên, việc mua source code để sửa cần cân nhắc:</p>
           <table style="font-size:0.85rem;">
             <tr>
-              <th>Làm được gì?</th>
-              <th>Thay đổi được gì?</th>
-              <th>Lợi ích?</th>
-              <th>Phục vụ ai?</th>
-              <th>Chi phí</th>
+              <th style="width:50%;">🟢 Đáng mua NẾU</th>
+              <th style="width:50%;">🔴 KHÔNG đáng NẾU</th>
             </tr>
             <tr>
               <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li>Đặt yêu cầu thay đổi cho FSS</li>
-                  <li>Sửa lỗi theo hợp đồng</li>
-                  <li>Nâng cấp theo lộ trình FSS</li>
+                <ul style="margin:0;padding-left:16px;">
+                  <li>Code base còn tốt, clean, dễ maintain</li>
+                  <li>Architecture tách biệt FE/BFF/Core rõ ràng</li>
+                  <li>Vấn đề chủ yếu ở UI/UX, logic FE</li>
+                  <li>Có thể sửa incremental, không cần rewrite</li>
+                  <li>Tiết kiệm 6-9 tháng so với build mới</li>
                 </ul>
               </td>
               <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li>Tính năng nhỏ (2-6 tháng/yêu cầu)</li>
-                  <li>Giao diện nhỏ</li>
-                  <li>❌ Không đổi được luồng lớn</li>
-                </ul>
-              </td>
-              <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li>Không cần đầu tư đội ngũ</li>
-                  <li>Rủi ro thấp</li>
-                  <li>❌ Không có lợi thế cạnh tranh</li>
-                </ul>
-              </td>
-              <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li>Khách hàng hiện tại</li>
-                  <li>❌ Khó mở rộng tệp mới</li>
-                </ul>
-              </td>
-              <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li>Phí bảo trì hàng năm</li>
-                  <li>Phí theo yêu cầu thay đổi</li>
-                  <li><em>(Cần làm rõ với FSS)</em></li>
+                <ul style="margin:0;padding-left:16px;">
+                  <li>Code legacy, coupling cao, khó sửa</li>
+                  <li>Nợ kỹ thuật lớn, sửa 1 chỗ vỡ chỗ khác</li>
+                  <li>Không có tài liệu, không có test</li>
+                  <li>Framework/library cũ, không cập nhật được</li>
+                  <li>Chi phí sửa ≈ chi phí build mới</li>
                 </ul>
               </td>
             </tr>
           </table>
-          <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:8px;">
-            <strong>Ghi chú:</strong> Phù hợp nếu chấp nhận vị thế hiện tại, không có tham vọng công nghệ.
+
+          <div style="background:var(--bg-secondary);padding:16px;border-radius:8px;margin-top:16px;border-left:4px solid var(--accent);">
+            <h4 style="margin-bottom:8px;">🤔 PA2 còn tối ưu không khi phải fix TẤT CẢ vấn đề?</h4>
+            <p style="font-size:0.9rem;margin-bottom:12px;">Source hiện tại đã cũ. Nếu cần fix toàn bộ vấn đề (P0→P3), khối lượng công việc rất lớn:</p>
+            <table style="font-size:0.85rem;">
+              <tr>
+                <th>Hạng mục cần fix</th>
+                <th>Effort ước tính</th>
+                <th>Ảnh hưởng</th>
+              </tr>
+              <tr><td>eKYC C06, VNeID</td><td>1-2 tháng</td><td>Flow đăng ký, xác thực</td></tr>
+              <tr><td>Trái phiếu Agribank</td><td>1-2 tháng</td><td>Thêm module mới</td></tr>
+              <tr><td>Deep link ngân hàng</td><td>2-4 tuần</td><td>Module nộp tiền</td></tr>
+              <tr><td>Tích hợp sâu Agribank</td><td>2-3 tháng</td><td>SDK, auth, session</td></tr>
+              <tr><td>UI/UX Refresh</td><td>2-3 tháng</td><td>Gần như toàn bộ UI</td></tr>
+              <tr><td><strong>TỔNG</strong></td><td><strong>6-10 tháng</strong></td><td><strong>~70-80% code</strong></td></tr>
+            </table>
+            <div style="background:var(--danger);color:white;padding:12px;border-radius:6px;margin-top:12px;">
+              <strong>⚠️ Kết luận:</strong> Nếu phải sửa ~70-80% code, PA2 <strong>KHÔNG còn tối ưu</strong>. Lúc này PA3/PA4 hiệu quả hơn vì: không kế thừa nợ kỹ thuật, tech stack mới, thời gian tương đương.
+            </div>
+          </div>
+          <p style="font-size:0.85rem;margin-top:12px;color:var(--text-secondary);">
+            <strong>→ Khuyến nghị:</strong> Cần <strong>code audit</strong> trước khi quyết định mua. Nếu code quá tệ, PA3/PA4 có thể hiệu quả hơn.
+          </p>
+        </div>
+
+        <div class="card">
+          <h2>📋 So sánh Chi tiết theo 5 Tiêu chí</h2>
+          <p style="color:var(--text-secondary);margin-bottom:16px;font-size:0.9rem;">
+            Mỗi tiêu chí được so sánh với <strong>cùng các điểm đánh giá</strong> cho cả 4 phương án.
           </p>
 
-          <h4 style="margin:20px 0 8px;color:var(--text-secondary);">PA2: Mua mã nguồn</h4>
+          <!-- TIÊU CHÍ 1: LÀM ĐƯỢC GÌ -->
+          <h4 style="margin:16px 0 8px;background:var(--accent);color:white;padding:8px 12px;border-radius:6px;">
+            1️⃣ Làm được gì?
+          </h4>
           <table style="font-size:0.85rem;">
             <tr>
-              <th>Làm được gì?</th>
-              <th>Thay đổi được gì?</th>
-              <th>Lợi ích?</th>
-              <th>Phục vụ ai?</th>
-              <th>Chi phí</th>
+              <th style="width:20%;">Điểm đánh giá</th>
+              <th>PA1: Vendor</th>
+              <th>PA2: Mua Source</th>
+              <th>PA3: Tự Build</th>
+              <th style="background:var(--accent-light);">PA4: Hybrid</th>
             </tr>
             <tr>
-              <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li>Tự sửa giao diện/trải nghiệm</li>
-                  <li>Thêm tính năng phía người dùng</li>
-                  <li>Tích hợp Agribank</li>
-                  <li>Thử nghiệm giao diện</li>
-                  <li>Sửa lỗi nhanh</li>
-                </ul>
-              </td>
-              <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li>Toàn bộ giao diện</li>
-                  <li>Luồng trải nghiệm</li>
-                  <li>Thông báo đẩy</li>
-                  <li>Trang cá nhân</li>
-                  <li>❌ Không đổi được lõi giao dịch</li>
-                </ul>
-              </td>
-              <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li>Ra tính năng nhanh (2-4 tuần)</li>
-                  <li>Khác biệt với đối thủ</li>
-                  <li>Bắt đầu xây đội ngũ</li>
-                  <li>⚠️ Kế thừa nợ kỹ thuật</li>
-                </ul>
-              </td>
-              <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li>Khách hàng hiện tại (cải thiện)</li>
-                  <li>Nhân viên Agribank (nếu tích hợp)</li>
-                </ul>
-              </td>
-              <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li>Mua mã nguồn: <em>(đàm phán FSS)</em></li>
-                  <li>Đội ngũ 4-5 người</li>
-                  <li>Phí sử dụng API lõi</li>
-                </ul>
-              </td>
+              <td><strong>Phát triển tính năng mới trên app hiện tại</strong></td>
+              <td>🟡 Qua FSS (2-6 tháng/yêu cầu)</td>
+              <td>✅ Tự làm (2-4 tuần)</td>
+              <td>✅ Tự làm (sau 6-9 tháng hoàn thành app)</td>
+              <td>✅ Tự làm web (4-5 tháng) → app sau</td>
+            </tr>
+            <tr>
+              <td><strong>Sản phẩm mới tích hợp Agribank</strong></td>
+              <td>🟡 Thuê FSS làm</td>
+              <td>✅ Tự làm</td>
+              <td>✅ Tự làm (sau 6-9 tháng)</td>
+              <td>✅ <strong>Ưu tiên làm ngay</strong> (4-5 tháng)</td>
+            </tr>
+            <tr>
+              <td><strong>Sửa lỗi / Cải tiến UX</strong></td>
+              <td>🟡 Chờ FSS</td>
+              <td>✅ Tự sửa nhanh</td>
+              <td>✅ Tự sửa (sau hoàn thành)</td>
+              <td>✅ Web: tự sửa / App cũ: FSS sửa cấp bách</td>
+            </tr>
+            <tr>
+              <td><strong>Kiểm soát mã nguồn</strong></td>
+              <td>❌ Không sở hữu</td>
+              <td>🟡 Một phần (FE)</td>
+              <td>✅ Hoàn toàn</td>
+              <td>✅ Web: hoàn toàn / App: dần dần</td>
+            </tr>
+            <tr>
+              <td><strong>Chọn công nghệ</strong></td>
+              <td>❌ FSS quyết định</td>
+              <td>🟡 Kế thừa công nghệ cũ</td>
+              <td>✅ Tự chọn từ đầu</td>
+              <td>✅ Tự chọn từ đầu</td>
             </tr>
           </table>
-          <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:8px;">
-            <strong>Ghi chú:</strong> ⚠️ Chỉ tối ưu nếu cần sửa &lt;50% mã nguồn. Nếu sửa &gt;60%, xem xét PA3 hoặc PA4.
-          </p>
 
-          <h4 style="margin:20px 0 8px;color:var(--text-secondary);">PA3: Tự xây dựng từ đầu</h4>
+          <!-- TIÊU CHÍ 2: THAY ĐỔI ĐƯỢC GÌ -->
+          <h4 style="margin:24px 0 8px;background:var(--accent);color:white;padding:8px 12px;border-radius:6px;">
+            2️⃣ Thay đổi được gì?
+          </h4>
           <table style="font-size:0.85rem;">
             <tr>
-              <th>Làm được gì?</th>
-              <th>Thay đổi được gì?</th>
-              <th>Lợi ích?</th>
-              <th>Phục vụ ai?</th>
-              <th>Chi phí</th>
+              <th style="width:20%;">Điểm đánh giá</th>
+              <th>PA1: Vendor</th>
+              <th>PA2: Mua Source</th>
+              <th>PA3: Tự Build</th>
+              <th style="background:var(--accent-light);">PA4: Hybrid</th>
             </tr>
             <tr>
-              <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li>Thiết kế từ đầu</li>
-                  <li>Chọn công nghệ phù hợp</li>
-                  <li>Tích hợp sâu Agribank</li>
-                  <li>Kiến trúc tối ưu</li>
-                  <li>Sở hữu hoàn toàn</li>
-                </ul>
-              </td>
-              <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li>Mọi thứ (ngoài API lõi)</li>
-                  <li>Giao diện/trải nghiệm hoàn toàn mới</li>
-                  <li>Kiến trúc mới</li>
-                  <li>Công nghệ hiện đại</li>
-                </ul>
-              </td>
-              <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li>Không nợ kỹ thuật</li>
-                  <li>Lợi thế cạnh tranh dài hạn</li>
-                  <li>Xây dựng đội ngũ mạnh</li>
-                  <li>Tài sản công nghệ riêng</li>
-                </ul>
-              </td>
-              <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li>Khách hàng hiện tại</li>
-                  <li>Khách hàng mới (trải nghiệm tốt)</li>
-                  <li>Nhân viên/KH Agribank</li>
-                </ul>
-              </td>
-              <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li>Xây dựng: ~9 tỷ</li>
-                  <li>Đội ngũ 8-10 người</li>
-                  <li>Phí sử dụng API lõi</li>
-                  <li>Thời gian: 6-9 tháng</li>
-                </ul>
-              </td>
+              <td><strong>Giao diện người dùng (UI)</strong></td>
+              <td>🟡 Thay đổi nhỏ qua FSS</td>
+              <td>✅ Toàn bộ</td>
+              <td>✅ Thiết kế mới hoàn toàn</td>
+              <td>✅ Web: mới / App cũ: giữ nguyên</td>
+            </tr>
+            <tr>
+              <td><strong>Luồng trải nghiệm (UX Flow)</strong></td>
+              <td>❌ Không đổi được</td>
+              <td>✅ Tái cấu trúc</td>
+              <td>✅ Thiết kế lại từ đầu</td>
+              <td>✅ Web: thiết kế mới / App cũ: giữ</td>
+            </tr>
+            <tr>
+              <td><strong>Kiến trúc hệ thống</strong></td>
+              <td>❌ Không</td>
+              <td>🟡 Một phần (kế thừa nợ kỹ thuật)</td>
+              <td>✅ Kiến trúc mới, sạch</td>
+              <td>✅ Kiến trúc mới từ đầu</td>
+            </tr>
+            <tr>
+              <td><strong>Công nghệ sử dụng</strong></td>
+              <td>❌ Không</td>
+              <td>🟡 Giới hạn bởi code cũ</td>
+              <td>✅ Công nghệ hiện đại</td>
+              <td>✅ Công nghệ hiện đại</td>
+            </tr>
+            <tr>
+              <td><strong>Lõi giao dịch (Core API)</strong></td>
+              <td>❌ Không (FSS)</td>
+              <td>❌ Không (vẫn dùng API)</td>
+              <td>❌ Không (vẫn dùng API)</td>
+              <td>❌ Không (vẫn dùng API)</td>
             </tr>
           </table>
-          <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:8px;">
-            <strong>Ghi chú:</strong> ✅ Tối ưu nếu cần sửa &gt;60% mã nguồn hiện tại hoặc muốn kiểm soát hoàn toàn.
-          </p>
 
-          <h4 style="margin:20px 0 8px;color:#10b981;border-bottom:2px solid #10b981;padding-bottom:4px;">PA4: Kết hợp - Web trước, App sau</h4>
+          <!-- TIÊU CHÍ 3: LỢI ÍCH GÌ -->
+          <h4 style="margin:24px 0 8px;background:var(--accent);color:white;padding:8px 12px;border-radius:6px;">
+            3️⃣ Lợi ích gì?
+          </h4>
           <table style="font-size:0.85rem;">
             <tr>
-              <th>Làm được gì?</th>
-              <th>Thay đổi được gì?</th>
-              <th>Lợi ích?</th>
-              <th>Phục vụ ai?</th>
-              <th>Chi phí</th>
+              <th style="width:20%;">Điểm đánh giá</th>
+              <th>PA1: Vendor</th>
+              <th>PA2: Mua Source</th>
+              <th>PA3: Tự Build</th>
+              <th style="background:var(--accent-light);">PA4: Hybrid</th>
             </tr>
             <tr>
-              <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li><strong>GĐ1:</strong> Xây Web di động</li>
-                  <li>Nhúng vào App Agribank</li>
-                  <li>Tiếp cận 41K nhân viên</li>
-                  <li><strong>GĐ2:</strong> Xây App mới</li>
-                </ul>
-              </td>
-              <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li><strong>GĐ1:</strong> Kênh phân phối mới</li>
-                  <li>Tích hợp Agribank ngay</li>
-                  <li><strong>GĐ2:</strong> Thay thế app cũ</li>
-                  <li>Kiểm soát hoàn toàn</li>
-                </ul>
-              </td>
-              <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li>Ra sản phẩm nhanh (4-5 tháng)</li>
-                  <li>Rủi ro thấp (phạm vi nhỏ)</li>
-                  <li>Xây đội ngũ từ từ</li>
-                  <li>Chứng minh năng lực</li>
-                  <li>App cũ vẫn chạy (FSS chỉ sửa cấp bách)</li>
-                </ul>
-              </td>
-              <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li><strong>41.000 nhân viên Agribank</strong></li>
-                  <li><strong>Khách hàng Agribank</strong></li>
-                  <li>Sau đó: tất cả khách hàng</li>
-                </ul>
-              </td>
-              <td>
-                <ul style="margin:0;padding-left:14px;">
-                  <li><strong>GĐ1:</strong> ~1-2 tỷ (web, chưa gồm BFF)</li>
-                  <li><strong>GĐ2:</strong> ~9 tỷ (app)</li>
-                  <li>Đội ngũ: 4-5 → 8-10 người</li>
-                  <li>Tham khảo: BSC ~1 tỷ + 400tr CCQ</li>
-                </ul>
-              </td>
+              <td><strong>Tốc độ ra tính năng mới</strong></td>
+              <td>❌ Chậm (2-6 tháng/yêu cầu)</td>
+              <td>✅ Nhanh (2-4 tuần)</td>
+              <td>✅ Nhanh (sau 6-9 tháng)</td>
+              <td>✅ Nhanh (sau 4-5 tháng cho web)</td>
+            </tr>
+            <tr>
+              <td><strong>Rủi ro triển khai</strong></td>
+              <td><span class="tag tag-success">Thấp</span></td>
+              <td><span class="tag tag-warning">Trung bình</span></td>
+              <td><span class="tag tag-danger">Cao</span></td>
+              <td><span class="tag tag-success">Thấp → TB</span> (scope nhỏ)</td>
+            </tr>
+            <tr>
+              <td><strong>Xây dựng đội ngũ kỹ thuật</strong></td>
+              <td>❌ Không</td>
+              <td>✅ Có (4-5 người)</td>
+              <td>✅ Có (8-10 người, áp lực cao)</td>
+              <td>✅ Có (4-5 → 8-10, từ từ)</td>
+            </tr>
+            <tr>
+              <td><strong>Lợi thế cạnh tranh</strong></td>
+              <td>❌ Không có</td>
+              <td>🟡 Một phần</td>
+              <td>✅ Cao (sản phẩm độc quyền)</td>
+              <td>✅ Cao (tích hợp Agribank)</td>
+            </tr>
+            <tr>
+              <td><strong>Kiểm soát chất lượng</strong></td>
+              <td>❌ Phụ thuộc FSS</td>
+              <td>🟡 Một phần</td>
+              <td>✅ Hoàn toàn</td>
+              <td>✅ Hoàn toàn (web) / Hạn chế (app cũ)</td>
+            </tr>
+            <tr>
+              <td><strong>Chứng minh năng lực với BLĐ</strong></td>
+              <td>❌ Không</td>
+              <td>🟡 Qua thời gian</td>
+              <td>🟡 Sau 6-9 tháng</td>
+              <td>✅ <strong>Sau 4-5 tháng</strong> (qua web)</td>
             </tr>
           </table>
-          <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:8px;">
-            <strong>Ghi chú:</strong> ✅ Tối ưu nếu tích hợp Agribank là ưu tiên cấp bách. Giảm rủi ro, chứng minh năng lực trước khi đầu tư lớn.
+
+          <!-- TIÊU CHÍ 4: PHỤC VỤ AI -->
+          <h4 style="margin:24px 0 8px;background:var(--accent);color:white;padding:8px 12px;border-radius:6px;">
+            4️⃣ Phục vụ ai?
+          </h4>
+          <table style="font-size:0.85rem;">
+            <tr>
+              <th style="width:20%;">Nhóm khách hàng</th>
+              <th>PA1: Vendor</th>
+              <th>PA2: Mua Source</th>
+              <th>PA3: Tự Build</th>
+              <th style="background:var(--accent-light);">PA4: Hybrid</th>
+            </tr>
+            <tr>
+              <td><strong>Khách hàng hiện tại</strong></td>
+              <td>✅ Phục vụ (không cải thiện)</td>
+              <td>✅ Phục vụ + cải thiện UX</td>
+              <td>✅ Trải nghiệm mới (sau 6-9 tháng)</td>
+              <td>✅ App cũ giữ nguyên + Web mới</td>
+            </tr>
+            <tr>
+              <td><strong>41.000 nhân viên Agribank</strong></td>
+              <td>🟡 Nếu thuê FSS làm</td>
+              <td>✅ Tự tích hợp</td>
+              <td>✅ Sau 6-9 tháng</td>
+              <td>✅ <strong>Ưu tiên số 1</strong> (4-5 tháng)</td>
+            </tr>
+            <tr>
+              <td><strong>Khách hàng Agribank</strong></td>
+              <td>🟡 Nếu thuê FSS làm</td>
+              <td>✅ Tự tích hợp</td>
+              <td>✅ Sau 6-9 tháng</td>
+              <td>✅ <strong>Ưu tiên số 1</strong> (4-5 tháng)</td>
+            </tr>
+            <tr>
+              <td><strong>Khách hàng mới (qua UX tốt)</strong></td>
+              <td>❌ UX không đổi</td>
+              <td>✅ Cải thiện được</td>
+              <td>✅ Trải nghiệm tốt nhất</td>
+              <td>✅ Web mới → App mới sau</td>
+            </tr>
+            <tr>
+              <td><strong>2.218 chi nhánh Agribank</strong></td>
+              <td>🟡 Nếu thuê FSS</td>
+              <td>✅ Có thể khai thác</td>
+              <td>✅ Sau 6-9 tháng</td>
+              <td>✅ <strong>Khai thác ngay</strong></td>
+            </tr>
+          </table>
+
+          <!-- TIÊU CHÍ 5: CHI PHÍ -->
+          <h4 style="margin:24px 0 8px;background:var(--accent);color:white;padding:8px 12px;border-radius:6px;">
+            5️⃣ Chi phí
+          </h4>
+          <table style="font-size:0.85rem;">
+            <tr>
+              <th style="width:20%;">Hạng mục</th>
+              <th>PA1: Vendor</th>
+              <th>PA2: Mua Source</th>
+              <th>PA3: Tự Build</th>
+              <th style="background:var(--accent-light);">PA4: Hybrid</th>
+            </tr>
+            <tr>
+              <td><strong>Chi phí xây dựng / Mua</strong></td>
+              <td>0 (không mua)</td>
+              <td><em>Đàm phán FSS</em></td>
+              <td>~9 tỷ (FE + BFF)</td>
+              <td>GĐ1: ~1-2 tỷ / GĐ2: ~9 tỷ</td>
+            </tr>
+            <tr>
+              <td><strong>Chi phí nhân sự (đội ngũ)</strong></td>
+              <td>0</td>
+              <td>4-5 người</td>
+              <td>8-10 người</td>
+              <td>4-5 người → 8-10 người</td>
+            </tr>
+            <tr>
+              <td><strong>Chi phí bảo trì hàng năm</strong></td>
+              <td>Phí FSS (hiện tại)</td>
+              <td>Phí API lõi + đội ngũ</td>
+              <td>Phí API lõi + đội ngũ</td>
+              <td>Phí FSS (giảm dần) + Phí API lõi</td>
+            </tr>
+            <tr>
+              <td><strong>Chi phí yêu cầu thay đổi</strong></td>
+              <td>Tính theo yêu cầu (FSS)</td>
+              <td>Chỉ công đội ngũ</td>
+              <td>Chỉ công đội ngũ</td>
+              <td>Chỉ công đội ngũ</td>
+            </tr>
+            <tr>
+              <td><strong>Thời gian hoàn thành</strong></td>
+              <td>—</td>
+              <td>4-6 tháng</td>
+              <td>6-9 tháng</td>
+              <td>GĐ1: 4-5 tháng / Tổng: 10-14 tháng</td>
+            </tr>
+            <tr>
+              <td><strong>Thời gian ra giá trị đầu tiên</strong></td>
+              <td>—</td>
+              <td>4-6 tháng</td>
+              <td>6-9 tháng</td>
+              <td style="color:green;"><strong>4-5 tháng</strong></td>
+            </tr>
+          </table>
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:12px;">
+            <strong>Tham khảo BSC:</strong> Mobile Web cơ bản ~1 tỷ + phân phối CCQ ~400tr (chưa gồm BFF). App đầy đủ (FE + BFF) ~9 tỷ.
           </p>
         </div>
 

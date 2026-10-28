@@ -3,7 +3,10 @@ title: Phân tích 4 phương án phát triển Mobile App AgriSeco
 authors:
   - date: 2026-10-28
     email: "hang.do@difisoft.com"
-    change: "Initial creation — so sánh 3 phương án: vendor, mua source, tự build"
+    change: "Initial creation — so sánh 4 phương án: vendor, mua source, tự build, hybrid"
+  - date: 2026-10-28
+    email: "hang.do@difisoft.com"
+    change: "Cập nhật bảng so sánh 5 tiêu chí nhất quán, sắp xếp lại bố cục"
 ---
 
 # Phân tích 4 Phương án Phát triển Mobile App AgriSeco
@@ -12,7 +15,7 @@ authors:
 
 ---
 
-## Đánh giá Hiện trạng Mobile App
+## 1. Đánh giá Hiện trạng Mobile App
 
 ### Các vấn đề hiện tại
 
@@ -34,100 +37,180 @@ authors:
 
 ---
 
-## Phương án 2: Mua Source Code - Có đáng không?
+## 2. Tổng quan 4 Phương án
 
-Với hiện trạng app nhiều vấn đề như trên, việc mua source code để sửa cần cân nhắc kỹ:
-
-### 🟢 ĐÁNG MUA nếu:
-
-| Điều kiện | Lý do |
-|-----------|-------|
-| Code base còn tốt, clean | Dễ maintain, dễ onboard team mới |
-| Architecture tách biệt rõ (FE/BFF/Core) | Có thể sửa từng phần độc lập |
-| Vấn đề chủ yếu ở UI/UX | Chỉ cần redesign FE, không động core |
-| Có thể sửa incremental | Không cần rewrite toàn bộ |
-| Tiết kiệm 6-9 tháng so với build mới | Time-to-market nhanh hơn |
-| Có tài liệu và test coverage | Team mới hiểu được code |
-
-### 🔴 KHÔNG ĐÁNG nếu:
-
-| Điều kiện | Lý do |
-|-----------|-------|
-| Code legacy, coupling cao | Sửa 1 chỗ vỡ chỗ khác |
-| Technical debt lớn | Chi phí maintain cao |
-| Không có tài liệu, không có test | Team mất nhiều tháng để hiểu |
-| Framework/library cũ | Không cập nhật được, security risk |
-| Chi phí sửa ≈ chi phí build mới | Không có lợi về thời gian/tiền |
-
-### Khuyến nghị
-
-```
-TRƯỚC KHI QUYẾT ĐỊNH MUA SOURCE CODE:
-│
-├── 1. YÊU CẦU CODE AUDIT
-│   ├── Review architecture
-│   ├── Đánh giá code quality
-│   ├── Kiểm tra test coverage
-│   └── Xác định technical debt
-│
-├── 2. ƯỚC TÍNH CHI PHÍ SỬA
-│   ├── Effort để fix các vấn đề P0/P1
-│   ├── Effort để modernize UI/UX
-│   └── So sánh với chi phí build mới
-│
-└── 3. QUYẾT ĐỊNH
-    ├── Nếu chi phí sửa < 60% chi phí build mới → MUA
-    ├── Nếu chi phí sửa ≈ chi phí build mới → TỰ BUILD
-    └── Nếu code quá tệ, không audit được → TỰ BUILD
-```
-
-**Kết luận:** Không nên mua source code một cách mù quáng. Cần **code audit** trước để đánh giá giá trị thực sự của source code hiện tại.
+| # | Phương án | Mô tả |
+|:-:|-----------|-------|
+| **1** | **Tiếp tục đối tác (FSS)** | Mọi thay đổi yêu cầu FSS thực hiện. AgriSeco chỉ đặt hàng và nghiệm thu. |
+| **2** | **Mua mã nguồn** | Mua source code FE + BFF từ FSS + quyền sử dụng API lõi. Đội ngũ AgriSeco tự chỉnh sửa. |
+| **3** | **Tự xây dựng từ đầu** | Chỉ mua quyền sử dụng API lõi (FLEX). Tự xây dựng toàn bộ FE + BFF mới. |
+| **4** | **Kết hợp: Web trước → App sau** | Team tự build Mobile Web nhúng Agribank trước (4-5 tháng). App vẫn do FSS quản lý (chỉ sửa cấp bách). Sau thành công → tự build App. |
 
 ---
 
-## PA2 còn tối ưu không khi phải fix TẤT CẢ vấn đề?
+## 3. So sánh Tổng thể (Theo chuẩn đánh giá phương án)
 
-Source hiện tại đã cũ. Nếu cần fix toàn bộ vấn đề trong đề xuất (P0→P3), khối lượng công việc rất lớn:
+Đánh giá theo các tiêu chí chuẩn ngành: Chi phí, Thời gian, Rủi ro, Lợi ích, Nguồn lực, Kiểm soát, Chất lượng
 
-| Hạng mục cần fix | Effort ước tính | Ảnh hưởng đến code |
-|------------------|-----------------|-------------------|
-| eKYC C06, VNeID | 1-2 tháng | Flow đăng ký, xác thực |
-| Trái phiếu Agribank | 1-2 tháng | Thêm module mới |
-| Deep link ngân hàng | 2-4 tuần | Module nộp tiền |
-| Tích hợp sâu Agribank | 2-3 tháng | SDK, auth, session |
-| UI/UX Refresh | 2-3 tháng | Gần như toàn bộ UI |
-| **TỔNG** | **6-10 tháng** | **~70-80% code** |
+### 💰 CHI PHÍ
 
-### ⚠️ Kết luận quan trọng
+| Tiêu chí | PA1: Vendor | PA2: Mua Source | PA3: Tự Build | PA4: Hybrid |
+|----------|-------------|-----------------|---------------|-------------|
+| Chi phí ban đầu | 🟢 Thấp (0) | 🟡 TB (đàm phán) | 🔴 Cao (~9 tỷ) | 🟡 TB→Cao (~1-2 + 9 tỷ) |
+| Chi phí vận hành/năm | 🔴 Cao (phí FSS + CR) | 🟡 TB (đội ngũ + API) | 🟢 Thấp (đội ngũ + API) | 🟡 TB (FSS giảm dần) |
+| ROI dài hạn | ❌ Thấp | 🟡 Trung bình | ✅ Cao | ✅ Cao |
 
-```
-NẾU PHẢI SỬA ~70-80% CODE:
-│
-├── PA2 (Mua source) KHÔNG CÒN TỐI ƯU
-│   ├── Vẫn kế thừa technical debt của phần còn lại
-│   ├── Framework/library có thể đã cũ
-│   ├── Thời gian: 6-10 tháng
-│   └── Chi phí: ~5 tỷ mua + 4-5 tỷ sửa = ~9-10 tỷ
-│
-└── PA3 (Tự build) CÓ THỂ HIỆU QUẢ HƠN
-    ├── Không kế thừa technical debt
-    ├── Tech stack mới, clean architecture
-    ├── Thời gian: 6-9 tháng (tương đương)
-    └── Chi phí: ~9 tỷ (tương đương)
-```
+### ⏱️ THỜI GIAN
 
-### Khi nào PA2 vẫn tối ưu?
+| Tiêu chí | PA1: Vendor | PA2: Mua Source | PA3: Tự Build | PA4: Hybrid |
+|----------|-------------|-----------------|---------------|-------------|
+| Ra sản phẩm đầu tiên | Theo yêu cầu FSS | 4-6 tháng | 6-9 tháng | **4-5 tháng** ✅ |
+| Hoàn thiện toàn bộ | — | 4-6 tháng | 6-9 tháng | 10-14 tháng |
 
-| PA2 phù hợp NẾU | PA3 phù hợp NẾU |
-|-----------------|-----------------|
-| Code audit cho kết quả tốt | Cần fix >60% code |
-| Chỉ cần fix 30-40% code | Source code quá cũ, nhiều debt |
-| Muốn ship nhanh trong 4-5 tháng | Có budget và team đủ mạnh |
-| Không có team đủ mạnh để build mới | Muốn kiểm soát hoàn toàn tech stack |
+### ⚠️ RỦI RO
+
+| Tiêu chí | PA1: Vendor | PA2: Mua Source | PA3: Tự Build | PA4: Hybrid |
+|----------|-------------|-----------------|---------------|-------------|
+| Rủi ro kỹ thuật | 🟢 Thấp | 🟡 TB (nợ kỹ thuật) | 🔴 Cao | 🟢 Thấp (scope nhỏ) |
+| Rủi ro triển khai | 🟢 Thấp | 🟡 TB | 🔴 Cao | 🟢 Thấp → TB |
+| Phụ thuộc vendor | 🔴 Cao | 🟡 TB | 🟢 Thấp | 🟢 Giảm dần |
+
+### 📈 LỢI ÍCH
+
+| Tiêu chí | PA1: Vendor | PA2: Mua Source | PA3: Tự Build | PA4: Hybrid |
+|----------|-------------|-----------------|---------------|-------------|
+| Lợi ích ngắn hạn | ✅ Ổn định (không đầu tư) | 🟡 TB (đang đầu tư) | ❌ Âm (đang đầu tư) | ✅ Có sản phẩm sớm |
+| Lợi ích dài hạn | ❌ Kém | ✅ Khá | ✅ Tốt nhất | ✅ Tốt |
+| Lợi thế cạnh tranh | ❌ Không có | 🟡 Một phần | ✅ Cao | ✅ Cao (Agribank) |
+
+### 👥 NGUỒN LỰC
+
+| Tiêu chí | PA1: Vendor | PA2: Mua Source | PA3: Tự Build | PA4: Hybrid |
+|----------|-------------|-----------------|---------------|-------------|
+| Nhân sự cần | 0 | 4-5 người | 8-10 người | 4-5 → 8-10 |
+| Kỹ năng yêu cầu | Nghiệm thu | Mobile dev + QA | Full-stack + DevOps | Web → Mobile dần |
+
+### 🔐 KIỂM SOÁT
+
+| Tiêu chí | PA1: Vendor | PA2: Mua Source | PA3: Tự Build | PA4: Hybrid |
+|----------|-------------|-----------------|---------------|-------------|
+| Sở hữu mã nguồn | ❌ Không | 🟡 Một phần (FE) | ✅ Hoàn toàn | ✅ Dần dần |
+| Độc lập công nghệ | ❌ Không | 🟡 Một phần | ✅ Hoàn toàn | ✅ Hoàn toàn (web) |
+| Tích hợp Agribank | 🟡 Thuê FSS | ✅ Tự làm | ✅ Sau 6-9 tháng | ✅ **Ngay** |
+
+### ⭐ CHẤT LƯỢNG
+
+| Tiêu chí | PA1: Vendor | PA2: Mua Source | PA3: Tự Build | PA4: Hybrid |
+|----------|-------------|-----------------|---------------|-------------|
+| Khả năng mở rộng | ❌ Phụ thuộc FSS | 🟡 Giới hạn | ✅ Cao | ✅ Cao |
+| Khả năng bảo trì | ❌ Không kiểm soát | 🟡 Kế thừa code cũ | ✅ Tốt (code mới) | ✅ Tốt (code mới) |
+| Nợ kỹ thuật | ❌ Không trả được | 🟡 Kế thừa | ✅ Không có | ✅ Không có |
+
+*Tham khảo: App (FE + BFF) ~9 tỷ | Mobile Web FE ~1 tỷ + CCQ ~400tr (chưa gồm BFF, case BSC)*
 
 ---
 
-## PHƯƠNG ÁN 4: Hybrid - Mobile Web trước → App sau
+## 4. So sánh Chi tiết theo 5 Tiêu chí
+
+Mỗi tiêu chí được so sánh với **cùng các điểm đánh giá** cho cả 4 phương án.
+
+### 4.1 Làm được gì?
+
+| Điểm đánh giá | PA1: Vendor | PA2: Mua Source | PA3: Tự Build | PA4: Hybrid |
+|---------------|-------------|-----------------|---------------|-------------|
+| **Phát triển tính năng mới trên app hiện tại** | 🟡 Qua FSS (2-6 tháng/yêu cầu) | ✅ Tự làm (2-4 tuần) | ✅ Tự làm (sau 6-9 tháng) | ✅ Web: 4-5 tháng → App sau |
+| **Sản phẩm mới tích hợp Agribank** | 🟡 Thuê FSS làm | ✅ Tự làm | ✅ Sau 6-9 tháng | ✅ **Ưu tiên ngay** (4-5 tháng) |
+| **Sửa lỗi / Cải tiến UX** | 🟡 Chờ FSS | ✅ Tự sửa nhanh | ✅ Sau hoàn thành | ✅ Web: tự sửa / App: FSS |
+| **Kiểm soát mã nguồn** | ❌ Không sở hữu | 🟡 Một phần (FE) | ✅ Hoàn toàn | ✅ Web: toàn bộ / App: dần |
+| **Chọn công nghệ** | ❌ FSS quyết định | 🟡 Kế thừa cũ | ✅ Tự chọn mới | ✅ Tự chọn mới |
+
+### 4.2 Thay đổi được gì?
+
+| Điểm đánh giá | PA1: Vendor | PA2: Mua Source | PA3: Tự Build | PA4: Hybrid |
+|---------------|-------------|-----------------|---------------|-------------|
+| **Giao diện người dùng (UI)** | 🟡 Thay đổi nhỏ qua FSS | ✅ Toàn bộ | ✅ Thiết kế mới hoàn toàn | ✅ Web: mới / App cũ: giữ |
+| **Luồng trải nghiệm (UX Flow)** | ❌ Không đổi được | ✅ Tái cấu trúc | ✅ Thiết kế lại | ✅ Web: mới / App cũ: giữ |
+| **Kiến trúc hệ thống** | ❌ Không | 🟡 Một phần (kế thừa nợ kỹ thuật) | ✅ Kiến trúc mới, sạch | ✅ Kiến trúc mới từ đầu |
+| **Công nghệ sử dụng** | ❌ Không | 🟡 Giới hạn bởi code cũ | ✅ Công nghệ hiện đại | ✅ Công nghệ hiện đại |
+| **Lõi giao dịch (Core API)** | ❌ Không | ❌ Không | ❌ Không | ❌ Không |
+
+### 4.3 Lợi ích gì?
+
+| Điểm đánh giá | PA1: Vendor | PA2: Mua Source | PA3: Tự Build | PA4: Hybrid |
+|---------------|-------------|-----------------|---------------|-------------|
+| **Tốc độ ra tính năng mới** | ❌ Chậm (2-6 tháng/yêu cầu) | ✅ Nhanh (2-4 tuần) | ✅ Nhanh (sau 6-9 tháng) | ✅ Nhanh (sau 4-5 tháng) |
+| **Rủi ro triển khai** | 🟢 Thấp | 🟡 Trung bình | 🔴 Cao | 🟢 Thấp → TB (scope nhỏ) |
+| **Xây dựng đội ngũ kỹ thuật** | ❌ Không | ✅ 4-5 người | ✅ 8-10 người (áp lực cao) | ✅ 4-5 → 8-10 (từ từ) |
+| **Lợi thế cạnh tranh** | ❌ Không có | 🟡 Một phần | ✅ Cao | ✅ Cao (tích hợp Agribank) |
+| **Kiểm soát chất lượng** | ❌ Phụ thuộc FSS | 🟡 Một phần | ✅ Hoàn toàn | ✅ Web: toàn bộ / App: hạn chế |
+| **Chứng minh năng lực với BLĐ** | ❌ Không | 🟡 Qua thời gian | 🟡 Sau 6-9 tháng | ✅ **Sau 4-5 tháng** |
+
+### 4.4 Phục vụ ai?
+
+| Nhóm khách hàng | PA1: Vendor | PA2: Mua Source | PA3: Tự Build | PA4: Hybrid |
+|-----------------|-------------|-----------------|---------------|-------------|
+| **Khách hàng hiện tại** | ✅ Phục vụ (không cải thiện) | ✅ Phục vụ + cải thiện UX | ✅ Trải nghiệm mới (sau 6-9 tháng) | ✅ App cũ giữ + Web mới |
+| **41.000 nhân viên Agribank** | 🟡 Nếu thuê FSS làm | ✅ Tự tích hợp | ✅ Sau 6-9 tháng | ✅ **Ưu tiên số 1** (4-5 tháng) |
+| **Khách hàng Agribank** | 🟡 Nếu thuê FSS làm | ✅ Tự tích hợp | ✅ Sau 6-9 tháng | ✅ **Ưu tiên số 1** (4-5 tháng) |
+| **Khách hàng mới (qua UX tốt)** | ❌ UX không đổi | ✅ Cải thiện được | ✅ Trải nghiệm tốt nhất | ✅ Web mới → App mới sau |
+| **2.218 chi nhánh Agribank** | 🟡 Nếu thuê FSS | ✅ Có thể khai thác | ✅ Sau 6-9 tháng | ✅ **Khai thác ngay** |
+
+### 4.5 Chi phí
+
+| Hạng mục | PA1: Vendor | PA2: Mua Source | PA3: Tự Build | PA4: Hybrid |
+|----------|-------------|-----------------|---------------|-------------|
+| **Chi phí xây dựng / Mua** | 0 (không mua) | *Đàm phán FSS* | ~9 tỷ (FE + BFF) | GĐ1: ~1-2 tỷ / GĐ2: ~9 tỷ |
+| **Chi phí nhân sự (đội ngũ)** | 0 | 4-5 người | 8-10 người | 4-5 → 8-10 người |
+| **Chi phí bảo trì hàng năm** | Phí FSS (hiện tại) | Phí API lõi + đội ngũ | Phí API lõi + đội ngũ | Phí FSS (giảm dần) + API lõi |
+| **Chi phí yêu cầu thay đổi** | Tính theo yêu cầu (FSS) | Chỉ công đội ngũ | Chỉ công đội ngũ | Chỉ công đội ngũ |
+| **Thời gian hoàn thành** | — | 4-6 tháng | 6-9 tháng | GĐ1: 4-5 tháng / Tổng: 10-14 tháng |
+| **Thời gian ra giá trị đầu tiên** | — | 4-6 tháng | 6-9 tháng | **4-5 tháng** ✅ |
+
+*Tham khảo BSC: Mobile Web cơ bản ~1 tỷ + phân phối CCQ ~400tr (chưa gồm BFF). App đầy đủ (FE + BFF) ~9 tỷ.*
+
+---
+
+## 5. Góc nhìn theo Vai trò
+
+### 5.1 Góc nhìn Lãnh đạo (CEO)
+
+| Tiêu chí | PA1: Vendor | PA2: Mua source | PA3: Tự xây | PA4: Kết hợp |
+|----------|-------------|-----------------|-------------|--------------|
+| **Lợi nhuận ngắn hạn** | ✅ Tốt (không đầu tư) | ⚠️ Trung bình | ❌ Âm (đang đầu tư) | ✅ Khá (ra sản phẩm sớm) |
+| **Lợi nhuận dài hạn** | ❌ Kém | ✅ Khá | ✅ Tốt nhất | ✅ Tốt |
+| **Lợi thế cạnh tranh** | ❌ Không có | 🟡 Một phần | ✅ Cao | ✅ Cao (tích hợp Agribank) |
+| **Phụ thuộc đối tác** | 🔴 Cao | 🟡 Trung bình | 🟢 Thấp | 🟢 Giảm dần |
+| **Rủi ro** | 🟢 Thấp | 🟡 Trung bình | 🔴 Cao | 🟢 Thấp → TB |
+
+*Ghi chú: PA4 cho phép chứng minh năng lực với Ban lãnh đạo qua sản phẩm nhỏ (4-5 tháng) trước khi đầu tư lớn.*
+
+### 5.2 Góc nhìn Kỹ thuật
+
+| Tiêu chí | PA1: Vendor | PA2: Mua source | PA3: Tự xây | PA4: Kết hợp |
+|----------|-------------|-----------------|-------------|--------------|
+| **Kiểm soát mã nguồn** | ❌ Không | 🟡 Một phần | ✅ Hoàn toàn | ✅ Dần dần (web → app) |
+| **Công nghệ sử dụng** | ❌ Đối tác chọn | 🟡 Kế thừa cũ | ✅ Tự chọn mới | ✅ Tự chọn từ đầu |
+| **Nợ kỹ thuật** | ❌ Không trả được | 🟡 Kế thừa | ✅ Không có | ✅ Không có |
+| **Xây dựng đội ngũ** | ❌ Không | ✅ Có | ✅ Có (áp lực cao) | ✅ Có (từ từ) |
+| **Học nghiệp vụ** | ❌ Không | 🟡 Qua code cũ | 🟡 Vừa làm vừa học | ✅ Học qua dự án nhỏ trước |
+
+*Ghi chú: PA4 giúp đội ngũ học nghiệp vụ chứng khoán qua dự án nhỏ (web) trước khi làm dự án lớn (app).*
+
+### 5.3 Góc nhìn Kinh doanh
+
+| Tiêu chí | PA1: Vendor | PA2: Mua source | PA3: Tự xây | PA4: Kết hợp |
+|----------|-------------|-----------------|-------------|--------------|
+| **Thời gian ra tính năng mới** | ❌ 2-6 tháng/tính năng | ✅ 2-4 tuần | ✅ 2-4 tuần (sau 6-9 tháng) | ✅ 2-4 tuần (sau 4-5 tháng) |
+| **Tích hợp Agribank (sản phẩm mới)** | 🟡 Thuê FSS làm | ✅ Tự làm | ✅ Sau 6-9 tháng | ✅ **Ngay từ đầu** |
+| **Tiếp cận 41K nhân viên Agribank** | 🟡 Phụ thuộc FSS | ✅ Chủ động | ✅ Sau 6-9 tháng | ✅ **Sau 4-5 tháng** |
+| **Cá nhân hóa trải nghiệm** | ❌ Không | ✅ Có | ✅ Có | ✅ Có |
+| **Thử nghiệm A/B** | ❌ Không | ✅ Có | ✅ Có | ✅ Có |
+
+*Ghi chú: Tích hợp Agribank là **sản phẩm mới**, cần viết từ đầu. PA1 thuê FSS làm, PA2/3/4 tự làm. PA4 ưu tiên làm ngay để tiếp cận 41.000 nhân viên Agribank.*
+
+---
+
+## 6. PA4: Hybrid - Mobile Web trước → App sau (Chi tiết)
 
 > **Tương tự case BSC:** Team tự làm Mobile Web nhúng Agribank trước, sau đó quay lại build App.
 
@@ -138,9 +221,9 @@ GIAI ĐOẠN 1: Mobile Web nhúng Agribank (4-5 tháng)
 │
 ├── Team AgriSeco tự build Mobile Web
 ├── Tích hợp nhúng vào App Agribank  
-├── App AgriSeco Pro vẫn do FSS quản lý (song song)
-├── Mục tiêu: Tiếp cận 41.000 NV + KH Agribank
-└── Chứng minh năng lực team
+├── App AgriSeco Pro vẫn do FSS quản lý (chỉ sửa cấp bách nhất)
+├── Chi phí: ~1-1,5 tỷ (tham khảo case BSC)
+└── Mục tiêu: Tiếp cận 41.000 NV + KH Agribank
 
 ═══════════════════════════════════════════════════
 
@@ -149,19 +232,9 @@ GIAI ĐOẠN 2: Tự build lại Mobile App (6-9 tháng sau)
 ├── Sau khi Mobile Web thành công
 ├── Team đã có kinh nghiệm + hiểu nghiệp vụ
 ├── Tự build App mới hoàn toàn
-├── Dần thay thế app FSS
-└── Sở hữu hoàn toàn tech stack
+├── Chi phí: ~9 tỷ
+└── Dần thay thế app FSS
 ```
-
-### Chi tiết PA4
-
-| Làm được gì? | Thay đổi được gì? | Lợi ích? | Phục vụ ai? |
-|--------------|-------------------|----------|-------------|
-| **GĐ1:** Build Mobile Web | Kênh phân phối mới | Ra sản phẩm nhanh (4-5 tháng) | **Agribank là ưu tiên cấp bách** |
-| Nhúng vào App Agribank | Tích hợp Agribank ngay | Rủi ro thấp (scope nhỏ) | Muốn giảm rủi ro |
-| Tiếp cận 41K NV Agribank | **GĐ2:** Thay thế app cũ | Xây team gradual | Chưa có team mạnh sẵn |
-| **GĐ2:** Build App mới | Kiểm soát hoàn toàn | Chứng minh năng lực | Tương tự case BSC |
-| | | App cũ vẫn chạy song song | |
 
 ### So sánh PA3 vs PA4
 
@@ -170,10 +243,10 @@ GIAI ĐOẠN 2: Tự build lại Mobile App (6-9 tháng sau)
 | **Thời gian ra sản phẩm đầu** | 6-9 tháng | **4-5 tháng** ✅ |
 | **Rủi ro** | Cao (scope lớn) | **Thấp hơn** ✅ |
 | **Tích hợp Agribank** | Sau 6-9 tháng | **Ngay từ đầu** ✅ |
-| **Xây dựng team** | Áp lực cao ngay | **Gradual** ✅ |
+| **Xây dựng team** | Áp lực cao ngay | **Từ từ** ✅ |
 | **Chứng minh ROI** | Chờ 6-9 tháng | **4-5 tháng** ✅ |
 | **Tổng thời gian hoàn thiện** | 6-9 tháng | 10-14 tháng |
-| **Chi phí** | ~9 tỷ | ~1-2 tỷ (web FE, chưa BFF) + ~9 tỷ (app sau) |
+| **Chi phí** | ~9 tỷ | ~1-2 tỷ (web) + ~9 tỷ (app sau) |
 
 ### Ưu điểm PA4
 
@@ -200,663 +273,98 @@ PA4 (HYBRID) PHÙ HỢP KHI:
 ├── ✅ Ban lãnh đạo ưu tiên tích hợp Agribank là CẤP BÁCH
 ├── ✅ Muốn giảm rủi ro bằng cách làm scope nhỏ trước
 ├── ✅ Cần chứng minh năng lực trước khi đầu tư lớn
-├── ✅ Chưa có team mạnh sẵn, cần xây dựng gradual
+├── ✅ Chưa có team mạnh sẵn, cần xây dựng từ từ
 └── ✅ Chấp nhận timeline tổng dài hơn để đổi lấy an toàn
 ```
 
 ---
 
-## Tổng quan 3 Phương án
+## 7. Phân tích thêm: PA2 - Mua mã nguồn có đáng không?
 
-| # | Phương án | Mô tả |
-|:-:|-----------|-------|
-| **1** | **Tiếp tục phụ thuộc Vendor** | Mọi thay đổi yêu cầu FSS thực hiện. AgriSeco chỉ đặt hàng và nghiệm thu. |
-| **2** | **Mua lại mã nguồn FE + BFF** | Mua source code Frontend + Backend-for-Frontend, cùng quyền sử dụng API Core. Team AgriSeco tự chỉnh sửa UI/UX, tính năng FE. |
-| **3** | **Tự xây dựng từ đầu** | Chỉ mua quyền sử dụng API Core (FLEX). Tự xây dựng toàn bộ FE + BFF mới. |
-| **4** | **Hybrid: Mobile Web trước → App sau** | Team tự build Mobile Web nhúng Agribank trước (4-5 tháng). App vẫn do FSS quản lý song song. Sau khi thành công → tự build lại App. Tương tự case BSC. |
+Với hiện trạng app nhiều vấn đề như trên, việc mua source code để sửa cần cân nhắc kỹ:
+
+### Đáng mua NẾU
+
+| Điều kiện | Lý do |
+|-----------|-------|
+| Code base còn tốt, clean | Dễ maintain, dễ onboard team mới |
+| Architecture tách biệt rõ (FE/BFF/Core) | Có thể sửa từng phần độc lập |
+| Vấn đề chủ yếu ở UI/UX | Chỉ cần redesign FE, không động core |
+| Có thể sửa incremental | Không cần rewrite toàn bộ |
+| Tiết kiệm 6-9 tháng so với build mới | Time-to-market nhanh hơn |
+
+### KHÔNG đáng NẾU
+
+| Điều kiện | Lý do |
+|-----------|-------|
+| Code legacy, coupling cao | Sửa 1 chỗ vỡ chỗ khác |
+| Nợ kỹ thuật lớn | Chi phí maintain cao |
+| Không có tài liệu, không có test | Team mất nhiều tháng để hiểu |
+| Framework/library cũ | Không cập nhật được, security risk |
+| Chi phí sửa ≈ chi phí build mới | Không có lợi về thời gian/tiền |
+
+### PA2 còn tối ưu không khi phải fix TẤT CẢ vấn đề?
+
+Source hiện tại đã cũ. Nếu cần fix toàn bộ vấn đề (P0→P3), khối lượng công việc rất lớn:
+
+| Hạng mục cần fix | Effort ước tính | Ảnh hưởng đến code |
+|------------------|-----------------|-------------------|
+| eKYC C06, VNeID | 1-2 tháng | Flow đăng ký, xác thực |
+| Trái phiếu Agribank | 1-2 tháng | Thêm module mới |
+| Deep link ngân hàng | 2-4 tuần | Module nộp tiền |
+| Tích hợp sâu Agribank | 2-3 tháng | SDK, auth, session |
+| UI/UX Refresh | 2-3 tháng | Gần như toàn bộ UI |
+| **TỔNG** | **6-10 tháng** | **~70-80% code** |
+
+### Kết luận quan trọng
+
+```
+NẾU PHẢI SỬA ~70-80% CODE:
+│
+├── PA2 (Mua source) KHÔNG CÒN TỐI ƯU
+│   ├── Vẫn kế thừa nợ kỹ thuật của phần còn lại
+│   ├── Framework/library có thể đã cũ
+│   ├── Thời gian: 6-10 tháng
+│   └── Chi phí: mua + sửa có thể tương đương build mới
+│
+└── PA3/PA4 CÓ THỂ HIỆU QUẢ HƠN
+    ├── Không kế thừa nợ kỹ thuật
+    ├── Tech stack mới, clean architecture
+    ├── Thời gian: tương đương
+    └── Chi phí: tương đương
+```
+
+**→ Khuyến nghị:** Cần **code audit** trước khi quyết định mua. Nếu code quá tệ, PA3/PA4 có thể hiệu quả hơn.
 
 ---
 
-## So sánh Tổng thể
+## 8. Khuyến nghị
 
-```
-                    PHỤ THUỘC          MUA SOURCE           TỰ BUILD
-                    ──────────         ──────────           ────────
-Chi phí ban đầu     ●○○○○ Thấp        ●●●○○ Trung bình     ●●●●● Cao
-Chi phí vận hành    ●●●●○ Cao         ●●○○○ Trung bình     ●●○○○ Thấp
-Thời gian triển khai●○○○○ Nhanh       ●●●○○ Trung bình     ●●●●● Chậm
-Độc lập công nghệ   ○○○○○ Không       ●●●○○ Một phần       ●●●●● Hoàn toàn
-Rủi ro kỹ thuật     ●○○○○ Thấp        ●●●○○ Trung bình     ●●●●○ Cao
-Khả năng tùy biến   ●○○○○ Thấp        ●●●●○ Cao            ●●●●● Toàn quyền
-Yêu cầu nhân sự     ●○○○○ Không       ●●●○○ Vừa            ●●●●● Nhiều
-```
+### Khi nào chọn phương án nào?
 
----
+| PA2 phù hợp NẾU | PA3 phù hợp NẾU | PA4 phù hợp NẾU |
+|-----------------|-----------------|-----------------|
+| Code audit cho kết quả tốt | Cần fix >60% code | **Agribank là ưu tiên cấp bách** |
+| Chỉ cần fix <50% code | Có budget + team mạnh | Muốn giảm rủi ro |
+| Không có team đủ mạnh | Muốn kiểm soát hoàn toàn | Chứng minh năng lực trước |
+| Muốn ship nhanh | Đội ngũ sẵn sàng | Xây team dần dần |
 
-## PHƯƠNG ÁN 1: Tiếp tục Phụ thuộc Vendor (FSS)
+### Đề xuất
 
-### Mô tả chi tiết
+**PA4 (Hybrid) có thể là lựa chọn tối ưu** nếu tích hợp Agribank là chiến lược ưu tiên.
 
-```
-AGRISECO                              FSS (Vendor)
-    │                                      │
-    │  1. Đặt yêu cầu (CR)                │
-    ├─────────────────────────────────────►│
-    │                                      │
-    │  2. FSS báo giá + timeline          │
-    │◄─────────────────────────────────────┤
-    │                                      │
-    │  3. AgriSeco duyệt/đàm phán         │
-    ├─────────────────────────────────────►│
-    │                                      │
-    │  4. FSS phát triển (2-8 tuần)       │
-    │                                      │
-    │  5. Bàn giao + Nghiệm thu           │
-    │◄─────────────────────────────────────┤
-    │                                      │
-    └──────────────────────────────────────┘
-```
+PA4 cho phép:
+- Ra sản phẩm nhanh (4-5 tháng)
+- Giảm rủi ro (scope nhỏ)
+- Xây team từ từ (gradual)
+- Sau đó tự tin build lại app hoàn chỉnh
 
-### Những gì CÓ THỂ làm được
+### Bước tiếp theo
 
-| Hạng mục | Chi tiết | Thời gian | Chi phí ước tính |
-|----------|----------|:---------:|------------------|
-| Sửa bug | Bug fixes, patches | 1-2 tuần | Theo hợp đồng bảo trì |
-| Thêm tính năng nhỏ | Thêm field, đổi flow đơn giản | 2-4 tuần | 50-150 triệu/CR |
-| Thêm tính năng lớn | eKYC C06, VNeID, Trái phiếu | 2-6 tháng | 500 triệu - 2 tỷ |
-| Đổi giao diện | Thay màu, logo, font | 2-4 tuần | 100-300 triệu |
-| Nâng cấp version | iOS/Android SDK updates | 1-2 tháng | 200-500 triệu/năm |
-
-### Những gì KHÔNG THỂ hoặc KHÓ làm
-
-| Hạng mục | Lý do | Hệ quả |
-|----------|-------|--------|
-| **Thay đổi nhanh** | Phải qua quy trình CR, báo giá, duyệt | Chậm hơn đối thủ 2-6 tháng |
-| **Tùy biến sâu UX** | FSS dùng framework chung cho nhiều CTCK | Giống các app khác của FSS |
-| **Tích hợp deep Agribank** | Không có incentive cho FSS | Khó đàm phán, đắt |
-| **A/B Testing** | Không kiểm soát release | Không thể test nhanh |
-| **Hotfix khẩn cấp** | Phụ thuộc resource FSS | Có thể chờ hàng tuần |
-| **Đổi công nghệ** | FSS quyết định tech stack | Không kiểm soát |
-
-### Chi phí
-
-*(Cần làm rõ với FSS về chi phí bảo trì và CR hàng năm)*
-
-### Rủi ro
-
-| Rủi ro | Mức độ | Mô tả |
-|--------|:------:|-------|
-| Vendor lock-in | 🔴 Cao | Không thể đổi vendor mà không build lại |
-| Giá tăng theo thời gian | 🟡 TB | FSS có leverage, giá CR tăng dần |
-| Chất lượng không kiểm soát | 🟡 TB | Phụ thuộc vào dev FSS assign |
-| FSS ngừng hỗ trợ | 🟡 TB | Nếu FSS pivot sang mảng khác |
-| Chậm so với thị trường | 🔴 Cao | Không thể ship nhanh như TCBS, SSI |
-
----
-
-## PHƯƠNG ÁN 2: Mua lại Mã nguồn FE + BFF
-
-### Mô tả chi tiết
-
-```
-MUA GÌ?
-│
-├── SOURCE CODE
-│   ├── Frontend (React Native / Flutter)
-│   │   ├── UI Components
-│   │   ├── Business Logic FE
-│   │   └── State Management
-│   │
-│   └── Backend-for-Frontend (BFF)
-│       ├── API Gateway
-│       ├── Authentication
-│       ├── Session Management
-│       └── Data Transformation
-│
-├── QUYỀN SỬ DỤNG
-│   ├── API Core (FLEX) - Giao dịch CK
-│   ├── API Market Data
-│   └── API Thanh toán
-│
-└── TÀI LIỆU
-    ├── API Documentation
-    ├── Architecture Guide
-    └── Deployment Guide
-```
-
-### Những gì CÓ THỂ làm được
-
-| Hạng mục | Chi tiết | Ai làm | Thời gian |
-|----------|----------|--------|:---------:|
-| **Thay đổi UI/UX hoàn toàn** | Redesign từ A-Z | Team AgriSeco | 2-4 tháng |
-| **Thêm tính năng FE** | Dashboard, Charts, Notifications | Team AgriSeco | 1-4 tuần/feature |
-| **Tích hợp Agribank** | Deep link, SDK embed | Team AgriSeco | 1-2 tháng |
-| **A/B Testing** | Test UI, flow, copy | Team AgriSeco | Realtime |
-| **Hotfix nhanh** | Bug FE, crash | Team AgriSeco | Vài giờ - 1 ngày |
-| **Dark mode, Themes** | Tùy chỉnh giao diện | Team AgriSeco | 1-2 tuần |
-| **Localization** | Đa ngôn ngữ | Team AgriSeco | 1-2 tuần |
-| **Push Notification nâng cao** | Personalized, scheduled | Team AgriSeco | 2-4 tuần |
-| **Biometric cải tiến** | Face ID, Fingerprint flows | Team AgriSeco | 2-4 tuần |
-
-### Những gì VẪN PHỤ THUỘC FSS
-
-| Hạng mục | Lý do | Giải pháp |
-|----------|-------|-----------|
-| **Core Trading Engine** | FLEX là core, FSS sở hữu | Hợp đồng API dài hạn |
-| **Matching Engine** | Kết nối sàn HoSE/HNX | Qua FLEX API |
-| **Thanh toán/Clearing** | Quy trình nghiệp vụ CK | Qua FLEX API |
-| **Báo cáo pháp lý** | Quy định UBCKNN | Qua FLEX |
-| **Bug trong API** | Lỗi từ backend FLEX | Vẫn CR với FSS |
-
-### Chi phí
-
-*(Cần đàm phán với FSS về giá mua source code và quyền sử dụng API)*
-
-### Yêu cầu nhân sự
-
-```
-TEAM CẦN XÂY DỰNG
-│
-├── NGAY LẬP TỨC (tháng 1-3)
-│   ├── 1 Tech Lead Mobile (senior, 5+ năm)
-│   ├── 2 Mobile Developers (mid-senior)
-│   └── 1 QA Engineer
-│
-├── MỞ RỘNG (tháng 4-6)
-│   ├── 1-2 Mobile Developers
-│   └── 1 DevOps (part-time hoặc outsource)
-│
-└── ỔN ĐỊNH (tháng 7+)
-    └── 5-7 người tổng cộng
-```
-
-### Rủi ro
-
-| Rủi ro | Mức độ | Mô tả | Giảm thiểu |
-|--------|:------:|-------|------------|
-| Code quality kém | 🟡 TB | Source FSS có thể khó maintain | Code review kỹ trước mua |
-| Thiếu tài liệu | 🟡 TB | Không đủ doc để hiểu code | Yêu cầu training + handover |
-| API breaking changes | 🟡 TB | FSS thay đổi API không báo trước | Hợp đồng SLA rõ ràng |
-| Không tuyển được người | 🔴 Cao | Thị trường mobile dev khan hiếm | Lương cạnh tranh, remote OK |
-| Chậm trễ ban đầu | 🟡 TB | Team mới cần thời gian học code | Buffer 2-3 tháng |
-
----
-
-## PHƯƠNG ÁN 3: Tự Xây dựng từ Đầu
-
-### Mô tả chi tiết
-
-```
-XÂY GÌ?
-│
-├── MOBILE APP (từ đầu)
-│   ├── React Native / Flutter
-│   ├── Thiết kế UX/UI mới hoàn toàn
-│   ├── Tích hợp API FLEX
-│   └── Tích hợp sâu Agribank
-│
-├── BACKEND (BFF + Services)
-│   ├── API Gateway
-│   ├── User Service
-│   ├── Notification Service
-│   ├── Analytics Service
-│   └── Admin Dashboard
-│
-└── INFRASTRUCTURE
-    ├── Cloud (AWS/GCP/Azure)
-    ├── CI/CD Pipeline
-    ├── Monitoring & Logging
-    └── Security & Compliance
-```
-
-### Những gì CÓ THỂ làm được
-
-| Hạng mục | Chi tiết |
-|----------|----------|
-| **Kiểm soát hoàn toàn** | Toàn quyền quyết định mọi thứ |
-| **Tech stack hiện đại** | Chọn công nghệ mới nhất, phù hợp nhất |
-| **Tích hợp Agribank sâu** | SDK embed, shared auth, seamless UX |
-| **Kiến trúc tối ưu** | Thiết kế cho scale, performance |
-| **Sở hữu IP** | Tài sản công nghệ của AgriSeco |
-| **Đào tạo team mạnh** | Build culture, capability nội bộ |
-| **Tốc độ ship sau build** | Không phụ thuộc ai sau khi hoàn thành |
-| **Khác biệt hóa** | App độc đáo, không giống đối thủ |
-
-### Timeline
-
-```
-TIMELINE XÂY DỰNG TỪ ĐẦU
-│
-├── THÁNG 1-2: Chuẩn bị
-│   ├── Tuyển dụng core team
-│   ├── Thiết kế kiến trúc
-│   └── Đàm phán API FLEX
-│
-├── THÁNG 3-5: MVP
-│   ├── Core features: Login, Xem giá, Đặt lệnh
-│   ├── Tích hợp API cơ bản
-│   └── Internal testing
-│
-├── THÁNG 6-8: Beta
-│   ├── Thêm features: Portfolio, Lịch sử, Nộp/Rút tiền
-│   ├── Beta testing với nhóm KH
-│   └── Bug fixes, performance
-│
-├── THÁNG 9-10: Launch
-│   ├── Public release
-│   ├── Migration từ app cũ
-│   └── Support & monitoring
-│
-└── THÁNG 11-12+: Iteration
-    ├── Features mới theo feedback
-    └── Continuous improvement
-```
-
-### Chi phí
-
-*(Cần báo giá cụ thể từ vendor và đàm phán quyền sử dụng API FLEX với FSS)*
-
-**Tham khảo:** Một dự án app chứng khoán tương tự (Frontend + BFF, xây từ đầu, bàn giao source code) có chi phí khoảng **~9 tỷ VND**.
-
-### Yêu cầu nhân sự
-
-```
-TEAM CẦN XÂY DỰNG
-│
-├── CORE TEAM (Tháng 1-2)
-│   ├── 1 Project Manager (kinh nghiệm fintech)
-│   ├── 1 Tech Lead (mobile + backend, 7+ năm)
-│   ├── 1 Senior Mobile Dev
-│   └── 1 Senior Backend Dev
-│
-├── MỞ RỘNG (Tháng 3-4)
-│   ├── 1 UX/UI Designer
-│   ├── 2-3 Mobile Devs (mid-level)
-│   ├── 1 Backend Dev
-│   ├── 1 DevOps Engineer
-│   └── 1 QA Engineer
-│
-├── HOÀN THIỆN (Tháng 5-6)
-│   └── 1 QA Engineer thêm
-│
-└── ỔN ĐỊNH
-    └── 10-12 người giai đoạn build
-    └── 6-8 người giai đoạn maintain
-```
-
-### Rủi ro
-
-| Rủi ro | Mức độ | Mô tả | Giảm thiểu |
-|--------|:------:|-------|------------|
-| Không ship được | 🔴 Cao | Project thất bại, không hoàn thành | PM giỏi, scope rõ |
-| Chậm deadline | 🔴 Cao | Trượt 3-6 tháng rất phổ biến | Buffer time, MVP first |
-| Vượt budget | 🟡 TB | Chi phí thực tế cao hơn estimate | Contingency 20-30% |
-| Tuyển không được người | 🔴 Cao | Khó tìm senior fintech mobile | Lương cao, outsource phần |
-| API FLEX không đủ | 🟡 TB | Thiếu API cần thiết | Đàm phán trước khi build |
-| Chất lượng kém | 🟡 TB | Code không production-ready | Code review, testing |
-| Turnover cao | 🟡 TB | Dev nghỉ giữa chừng | Vesting, culture tốt |
-
----
-
-## BẢNG SO SÁNH TỔNG HỢP
-
-### Chi phí
-
-*(Chi phí cụ thể cần đàm phán với FSS và các vendor)*
-
-**Tham khảo:** Một dự án app chứng khoán tương tự (Frontend + BFF, xây từ đầu, bàn giao source code) có chi phí khoảng **~9 tỷ VND**.
-
-### Khả năng thực hiện
-
-| Khả năng | PA1 | PA2 | PA3 |
-|----------|:---:|:---:|:---:|
-| Redesign UI hoàn toàn | ❌ | ✅ | ✅ |
-| Ship feature trong 1-2 tuần | ❌ | ✅ | ✅ |
-| Tích hợp sâu Agribank | ❌ | ✅ | ✅ |
-| A/B Testing | ❌ | ✅ | ✅ |
-| Hotfix trong ngày | ❌ | ✅ | ✅ |
-| Kiểm soát roadmap | ❌ | ✅ | ✅ |
-| Thay đổi Core Trading | ❌ | ❌ | ❌ |
-| Sở hữu hoàn toàn code | ❌ | 🟡 Một phần | ✅ |
-| Tech stack mới nhất | ❌ | 🟡 Hạn chế | ✅ |
-| Không phụ thuộc vendor | ❌ | 🟡 Còn phụ thuộc API | 🟡 Còn phụ thuộc API |
-
----
-
-## PHÂN TÍCH THEO GÓC NHÌN
-
-### 1. Góc nhìn CEO (Chiến lược & ROI)
-
-#### Phương án 1: Tiếp tục Vendor
-
-```
-✅ ƯU ĐIỂM
-├── Không cần đầu tư lớn ban đầu
-├── Không cần xây dựng team mới
-├── Rủi ro thất bại thấp
-└── Focus vào kinh doanh, không phải tech
-
-❌ NHƯỢC ĐIỂM
-├── KHÔNG CÓ LỢI THẾ CẠNH TRANH về công nghệ
-├── Phụ thuộc hoàn toàn vào bên thứ 3
-├── Chi phí tích lũy cao theo thời gian
-├── Khó khác biệt hóa với đối thủ (cùng dùng FSS)
-└── Không xây dựng được năng lực nội bộ
-
-📊 ROI
-├── Ngắn hạn: Tốt (không cần đầu tư)
-├── Trung hạn: Trung bình (chi phí CR tăng)
-└── Dài hạn: Kém (mất cơ hội, tụt hậu)
-
-🎯 PHÙ HỢP KHI
-├── Không có tham vọng công nghệ
-├── Nguồn lực tài chính hạn chế
-├── Không có khả năng tuyển dụng tech
-└── Chấp nhận vị thế hiện tại
-```
-
-#### Phương án 2: Mua Source Code
-
-```
-✅ ƯU ĐIỂM
-├── CÂN BẰNG giữa tốc độ và kiểm soát
-├── Tận dụng được foundation có sẵn
-├── Rủi ro vừa phải
-├── Có thể KHÁC BIỆT HÓA dần dần
-├── Bắt đầu xây dựng năng lực tech
-└── Thời gian go-live nhanh (có sẵn code)
-
-❌ NHƯỢC ĐIỂM
-├── Chi phí mua + chi phí team
-├── Có thể "thừa kế" technical debt
-├── Vẫn phụ thuộc API FLEX
-├── Không triệt để như build mới
-└── Team cần thời gian học code legacy
-
-📊 ROI
-├── Ngắn hạn: Trung bình (đầu tư mua + team)
-├── Trung hạn: Tốt (ship nhanh, tiết kiệm CR)
-└── Dài hạn: Khá (có năng lực, có asset)
-
-🎯 PHÙ HỢP KHI
-├── Muốn kiểm soát nhưng không muốn rủi ro cao
-├── Có budget 5-10 tỷ năm đầu
-├── Có thể tuyển 5-7 dev tốt
-├── Cần ship cải tiến trong 3-6 tháng
-└── Chấp nhận compromise về tech stack
-```
-
-#### Phương án 3: Tự Xây dựng
-
-```
-✅ ƯU ĐIỂM
-├── KIỂM SOÁT HOÀN TOÀN
-├── Tech stack tốt nhất, phù hợp nhất
-├── Không có technical debt thừa kế
-├── TÀI SẢN CÔNG NGHỆ thuộc về AgriSeco
-├── Khác biệt hóa hoàn toàn
-├── Xây dựng culture & capability tech mạnh
-└── Long-term competitive advantage
-
-❌ NHƯỢC ĐIỂM
-├── Chi phí ban đầu CAO NHẤT
-├── Rủi ro thất bại CAO NHẤT
-├── Thời gian dài (9-12 tháng đến launch)
-├── Khó tuyển team đủ mạnh
-├── Cần leadership tech giỏi
-└── Opportunity cost trong thời gian build
-
-📊 ROI
-├── Ngắn hạn: Âm (chỉ đầu tư, chưa có sản phẩm)
-├── Trung hạn: Break-even sau 2-3 năm
-└── Dài hạn: Tốt nhất (nếu thành công)
-
-🎯 PHÙ HỢP KHI
-├── Có tầm nhìn công nghệ dài hạn
-├── Có budget 8-10 tỷ năm đầu
-├── Có khả năng tuyển team strong (10+ người)
-├── Chấp nhận không ship gì mới trong 9-12 tháng
-├── CEO/Board hiểu và support tech investment
-└── Muốn trở thành "fintech player" thực sự
-```
-
----
-
-### 2. Góc nhìn Kỹ thuật (Tech Lead)
-
-#### Phương án 1: Vendor
-
-```
-ĐÁNH GIÁ KỸ THUẬT
-│
-├── ARCHITECTURE: Không kiểm soát
-│   └── FSS quyết định, AgriSeco không có tiếng nói
-│
-├── CODE QUALITY: Không biết
-│   └── Không access được code, không review được
-│
-├── TECH STACK: Không chọn được
-│   └── FSS dùng gì thì dùng đó
-│
-├── SECURITY: Phụ thuộc FSS
-│   └── Không thể audit code
-│
-├── SCALABILITY: Không kiểm soát
-│   └── Không biết bottleneck ở đâu
-│
-├── TEAM CAPABILITY: Không xây dựng được
-│   └── IT AgriSeco chỉ làm vận hành
-│
-└── TECHNICAL DEBT: Tích lũy ở FSS
-    └── Không trả được vì không có code
-```
-
-#### Phương án 2: Mua Source
-
-```
-ĐÁNH GIÁ KỸ THUẬT
-│
-├── ARCHITECTURE
-│   ├── Thừa kế từ FSS (có thể tốt hoặc xấu)
-│   ├── Có thể refactor dần
-│   └── ⚠️ Cần audit kỹ trước khi mua
-│
-├── CODE QUALITY
-│   ├── Phụ thuộc vào code FSS viết
-│   ├── Có thể có technical debt
-│   └── ✅ Nhưng có thể fix được vì có code
-│
-├── TECH STACK
-│   ├── Thừa kế từ FSS
-│   ├── Có thể upgrade dần (React Native version...)
-│   └── ⚠️ Migration có thể đau đớn
-│
-├── SECURITY
-│   ├── ✅ Có thể audit code
-│   ├── ✅ Có thể fix vulnerabilities
-│   └── ✅ Chủ động trong security
-│
-├── SCALABILITY
-│   ├── Kiểm soát được FE/BFF
-│   └── ⚠️ Core FLEX vẫn phụ thuộc FSS
-│
-├── TEAM CAPABILITY
-│   ├── ✅ Bắt đầu xây dựng team
-│   ├── ✅ Học được kiến trúc CTCK
-│   └── ⚠️ Cần thời gian hiểu code legacy
-│
-└── TECHNICAL DEBT
-    ├── Thừa kế từ FSS
-    └── ✅ Nhưng có roadmap trả dần
-```
-
-**Checklist trước khi mua:**
-
-- [ ] Review architecture diagram
-- [ ] Code audit (security + quality)
-- [ ] Kiểm tra test coverage
-- [ ] Xem tài liệu API
-- [ ] Xác minh dependencies licenses
-- [ ] Đánh giá khả năng maintain
-
-#### Phương án 3: Tự Build
-
-```
-ĐÁNH GIÁ KỸ THUẬT
-│
-├── ARCHITECTURE
-│   ├── ✅ Thiết kế từ đầu, đúng best practices
-│   ├── ✅ Clean architecture, modular
-│   ├── ✅ Tối ưu cho use case AgriSeco
-│   └── ⚠️ Cần Tech Lead kinh nghiệm
-│
-├── CODE QUALITY
-│   ├── ✅ Kiểm soát từ đầu
-│   ├── ✅ Coding standards rõ ràng
-│   ├── ✅ PR review bắt buộc
-│   └── ✅ Automated testing
-│
-├── TECH STACK
-│   ├── ✅ Chọn được công nghệ mới nhất
-│   ├── ✅ React Native / Flutter tùy chọn
-│   ├── ✅ Backend: Node/Go/Rust tùy chọn
-│   └── ⚠️ Cần cân nhắc team skillset
-│
-├── SECURITY
-│   ├── ✅ Security-first từ đầu
-│   ├── ✅ Audit được toàn bộ
-│   ├── ✅ Compliance theo chuẩn
-│   └── ✅ Penetration testing chủ động
-│
-├── SCALABILITY
-│   ├── ✅ Thiết kế cho scale từ đầu
-│   ├── ✅ Cloud-native architecture
-│   ├── ✅ Microservices nếu cần
-│   └── ⚠️ Core FLEX vẫn là bottleneck
-│
-├── TEAM CAPABILITY
-│   ├── ✅ Xây dựng team từ đầu
-│   ├── ✅ Culture & practices tốt
-│   ├── ✅ Kinh nghiệm thực chiến
-│   └── ⚠️ Rủi ro tuyển không được người
-│
-└── TECHNICAL DEBT
-    ├── ✅ Không có debt thừa kế
-    ├── ✅ Kiểm soát được debt mới
-    └── ✅ Trả debt theo sprint
-```
-
-**Tech Stack đề xuất (nếu tự build):**
-
-```
-RECOMMENDED STACK
-│
-├── MOBILE
-│   ├── React Native (cross-platform)
-│   ├── TypeScript
-│   ├── Redux Toolkit / Zustand
-│   └── React Query
-│
-├── BACKEND (BFF)
-│   ├── Node.js + TypeScript hoặc Go
-│   ├── GraphQL hoặc REST
-│   └── PostgreSQL + Redis
-│
-├── INFRASTRUCTURE
-│   ├── AWS / GCP
-│   ├── Kubernetes (hoặc ECS)
-│   ├── Terraform (IaC)
-│   └── GitHub Actions (CI/CD)
-│
-└── MONITORING
-    ├── Datadog / New Relic
-    ├── Sentry (error tracking)
-    └── Firebase Analytics
-```
-
----
-
-### 3. Góc nhìn Kinh doanh (Business/Sales)
-
-#### Tác động đến Kinh doanh
-
-| Hạng mục | PA1: Vendor | PA2: Mua Source | PA3: Tự Build |
-|----------|-------------|-----------------|---------------|
-| **Time-to-market feature mới** | 2-6 tháng | 2-4 tuần | 2-4 tuần (sau build) |
-| **Phản hồi KH nhanh** | ❌ Chậm | ✅ Nhanh | ✅ Nhanh |
-| **Tích hợp Agribank** | ❌ Khó | ✅ Linh hoạt | ✅ Tối ưu |
-| **Chiến dịch Marketing** | ❌ Hạn chế | ✅ Linh hoạt | ✅ Toàn quyền |
-| **Personalization** | ❌ Không | ✅ Có | ✅ Full |
-| **User Experience** | ⚠️ Giống đối thủ | ✅ Khác biệt được | ✅ Độc đáo |
-| **Chăm sóc KH qua app** | ❌ Hạn chế | ✅ Tùy biến | ✅ Tùy biến |
-
-#### Revenue Impact
-
-```
-PHƯƠNG ÁN 1: VENDOR
-│
-├── Khả năng tăng KH mới: THẤP
-│   └── App không có gì nổi bật
-│
-├── Giữ chân KH cũ: TRUNG BÌNH
-│   └── Không tệ nhưng không wow
-│
-├── Cross-sell Agribank: THẤP
-│   └── Tích hợp hạn chế
-│
-└── Revenue projection: +5-10%/năm (organic)
-```
-
-```
-PHƯƠNG ÁN 2: MUA SOURCE
-│
-├── Khả năng tăng KH mới: TRUNG BÌNH-CAO
-│   └── Có thể cải thiện UX đáng kể
-│
-├── Giữ chân KH cũ: CAO
-│   └── App tốt hơn = sticky hơn
-│
-├── Cross-sell Agribank: CAO
-│   └── Deep integration possible
-│
-└── Revenue projection: +15-25%/năm (accelerated)
-```
-
-```
-PHƯƠNG ÁN 3: TỰ BUILD
-│
-├── Khả năng tăng KH mới: CAO (sau launch)
-│   └── App hoàn toàn mới, tốt nhất
-│
-├── Giữ chân KH cũ: CAO
-│   └── UX tốt nhất, features đầy đủ
-│
-├── Cross-sell Agribank: RẤT CAO
-│   └── Tích hợp sâu nhất có thể
-│
-├── ⚠️ NĂM ĐẦU: Không có gì mới (đang build)
-│
-└── Revenue projection: -5% năm 1, +25-40%/năm từ năm 2
-```
-
-#### Lợi ích Kinh doanh Cụ thể
-
-**Với PA2/PA3, có thể làm:**
-
-| Tính năng | Lợi ích kinh doanh | Ước tính tác động |
-|-----------|-------------------|-------------------|
-| **Dashboard cá nhân** | Sticky, engagement cao | +15% daily active users |
-| **Push notification thông minh** | Retention, cross-sell | +20% conversion rate |
-| **Deep link Agribank** | Onboard KH Agribank dễ | +30% new users từ Agribank |
-| **Referral program trong app** | Viral growth | +10% organic acquisition |
-| **Gamification** | Engagement, loyalty | +25% trading frequency |
-| **A/B test pricing/UI** | Optimize conversion | +10-15% revenue per user |
-| **In-app support** | Reduce churn | -20% support tickets |
-| **Personalized recommendations** | Cross-sell | +15% AUM per customer |
-
----
-
-## KHUYẾN NGHỊ
+1. **Xác định:** Tích hợp Agribank có phải ưu tiên cấp bách?
+2. **Nếu có** → PA4 (Mobile Web trước)
+3. **Nếu không** → Code audit để chọn PA2 vs PA3
+4. **Đàm phán** quyền sử dụng API FLEX với FSS
 
 ### Ma trận Quyết định
 
@@ -865,105 +373,13 @@ PHƯƠNG ÁN 3: TỰ BUILD
                     Thấp (<5 tỷ/năm)    Cao (>8 tỷ/năm)
                     ─────────────────────────────────────
 THAM VỌNG     Thấp │   PA1: Vendor    │   PA2: Mua Source
-CÔNG NGHỆ         │                   │   
+CÔNG NGHỆ         │                   │
                   │─────────────────────────────────────
-              Cao │   PA2: Mua Source │   PA3: Tự Build
-                  │   (giảm scope)    │   
+              Cao │   PA2: Mua Source │   PA3/PA4: Tự Build
+                  │   (giảm scope)    │
                     ─────────────────────────────────────
 ```
 
-### Khuyến nghị theo Tình huống
-
-#### Nếu AgriSeco muốn "Giữ vị thế hiện tại, không tham vọng"
-
-**→ Phương án 1: Tiếp tục Vendor**
-
-- Không cần đầu tư lớn
-- Chấp nhận tụt hậu dần so với TCBS, SSI
-- Phù hợp nếu focus vào mảng khác (tư vấn, tự doanh)
-
-#### Nếu AgriSeco muốn "Cải thiện đáng kể, rủi ro vừa phải"
-
-**→ Phương án 2: Mua Source Code** ⭐ KHUYẾN NGHỊ
-
-- Balance giữa tốc độ, chi phí, rủi ro
-- Có thể ship cải tiến trong 3-6 tháng
-- Bắt đầu xây dựng năng lực tech
-- Tận dụng được lợi thế Agribank
-
-#### Nếu AgriSeco muốn "Trở thành fintech player, dẫn đầu công nghệ"
-
-**→ Phương án 3: Tự Xây dựng**
-
-- Đòi hỏi commitment cao từ Board
-- Cần Tech Leader rất giỏi
-- Chấp nhận 9-12 tháng không ship gì mới
-- Long-term competitive advantage
-
 ---
 
-### Lộ trình Đề xuất (Phương án 2)
-
-```
-TIMELINE: MUA SOURCE CODE
-│
-├── THÁNG 1-2: Chuẩn bị
-│   ├── Đàm phán mua source với FSS
-│   ├── Code audit
-│   ├── Tuyển Tech Lead + 2 Senior Devs
-│   └── Setup infrastructure
-│
-├── THÁNG 3-4: Onboarding
-│   ├── Handover từ FSS
-│   ├── Team học code base
-│   ├── Fix critical bugs
-│   └── Small improvements
-│
-├── THÁNG 5-6: Quick Wins
-│   ├── UI refresh (không đổi flow)
-│   ├── Performance optimization
-│   ├── Deep link Agribank
-│   └── Push notification cải tiến
-│
-├── THÁNG 7-9: Feature Development
-│   ├── Dashboard cá nhân
-│   ├── eKYC C06 (nếu deadline)
-│   ├── Tích hợp trái phiếu
-│   └── In-app support
-│
-├── THÁNG 10-12: Scale
-│   ├── A/B testing infrastructure
-│   ├── Analytics nâng cao
-│   ├── Referral program
-│   └── Planning năm sau
-│
-└── NĂM 2+: Continuous Improvement
-    ├── Feature iteration
-    ├── Tech stack modernization
-    └── Team growth
-```
-
----
-
-## TÓM TẮT CUỐI CÙNG
-
-| Tiêu chí | PA1: Vendor | PA2: Mua Source | PA3: Tự Build |
-|----------|:-----------:|:---------------:|:-------------:|
-| **Chi phí** | Cần làm rõ | Cần làm rõ | Tham khảo ~9 tỷ* |
-| **Rủi ro** | Thấp | Trung bình | Cao |
-| **Kiểm soát** | Không | Một phần | Hoàn toàn |
-| **Time to value** | Ngay | 3-6 tháng | 9-12 tháng |
-| **Long-term advantage** | Không | Có | Cao nhất |
-| **Phù hợp** | Không tham vọng | Balance | Tầm nhìn lớn |
-
-**Khuyến nghị: Phương án 2 (Mua Source Code)** cho đa số trường hợp, vì:
-
-1. Cân bằng giữa tốc độ, chi phí và rủi ro
-2. Có thể ship giá trị trong 3-6 tháng
-3. Tận dụng được hệ sinh thái Agribank
-4. Bắt đầu xây dựng năng lực công nghệ nội bộ
-5. Giữ lại option để tự build sau nếu cần
-
----
-
-*Ghi chú: Các con số chi phí là ước tính dựa trên thị trường 2026. Cần đàm phán cụ thể với FSS và tham khảo thêm từ các CTCK đã thực hiện tương tự.*
+*Cập nhật: 28/10/2026*
