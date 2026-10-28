@@ -922,6 +922,11 @@
               <td>Tự Xây dựng từ đầu</td>
               <td>Chỉ mua quyền sử dụng API Core (FLEX). Tự xây dựng toàn bộ FE + BFF mới.</td>
             </tr>
+            <tr style="background:var(--accent-light);">
+              <td><strong>4</strong></td>
+              <td>Hybrid: Mobile Web trước → App sau</td>
+              <td>Team tự build Mobile Web nhúng Agribank trước. App vẫn do FSS quản lý. Sau khi thành công → tự build lại App.</td>
+            </tr>
           </table>
         </div>
 
@@ -933,54 +938,63 @@
               <th>PA1: Vendor</th>
               <th>PA2: Mua Source</th>
               <th>PA3: Tự Build</th>
+              <th style="background:var(--accent-light);">PA4: Hybrid</th>
             </tr>
             <tr>
               <td><strong>Chi phí</strong></td>
               <td>Cần làm rõ</td>
               <td>Cần làm rõ</td>
-              <td>Tham khảo ~9 tỷ*</td>
+              <td>~9 tỷ*</td>
+              <td>~4 tỷ (web) + ~9 tỷ (app sau)</td>
             </tr>
             <tr>
               <td><strong>Rủi ro</strong></td>
               <td><span class="tag tag-success">Thấp</span></td>
-              <td><span class="tag tag-warning">Trung bình</span></td>
+              <td><span class="tag tag-warning">TB</span></td>
               <td><span class="tag tag-danger">Cao</span></td>
+              <td><span class="tag tag-success">Thấp→TB</span></td>
             </tr>
             <tr>
               <td><strong>Kiểm soát</strong></td>
-              <td>❌ Không</td>
+              <td>❌</td>
               <td>🟡 Một phần</td>
               <td>✅ Hoàn toàn</td>
+              <td>✅ Dần dần</td>
             </tr>
             <tr>
               <td><strong>Time to value</strong></td>
               <td>Theo CR</td>
               <td>4-6 tháng</td>
               <td>6-9 tháng</td>
-            </tr>
-            <tr>
-              <td><strong>Ship feature mới</strong></td>
-              <td>❌ Chờ vendor</td>
-              <td>✅ 2-4 tuần/feature</td>
-              <td>✅ 2-4 tuần/feature*</td>
+              <td style="color:green;"><strong>4-5 tháng</strong></td>
             </tr>
             <tr>
               <td><strong>Tích hợp Agribank</strong></td>
               <td>❌ Khó</td>
               <td>✅ Được</td>
-              <td>✅ Tối ưu</td>
+              <td>✅ Sau 6-9 tháng</td>
+              <td style="color:green;"><strong>✅ Ngay</strong></td>
             </tr>
             <tr>
               <td><strong>Sở hữu code</strong></td>
               <td>❌</td>
-              <td>🟡 Một phần</td>
-              <td>✅ Hoàn toàn</td>
+              <td>🟡</td>
+              <td>✅</td>
+              <td>✅ Dần dần</td>
             </tr>
             <tr>
               <td><strong>Nhân sự cần</strong></td>
               <td>0</td>
-              <td>4-5 người</td>
-              <td>8-10 người</td>
+              <td>4-5</td>
+              <td>8-10</td>
+              <td>4-5 → 8-10</td>
+            </tr>
+            <tr>
+              <td><strong>Tổng thời gian</strong></td>
+              <td>-</td>
+              <td>4-6 tháng</td>
+              <td>6-9 tháng</td>
+              <td>10-14 tháng</td>
             </tr>
           </table>
           <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:8px;">
@@ -1019,6 +1033,102 @@
               <tr><td>A/B Testing</td><td>❌</td><td>✅</td><td>✅</td></tr>
             </table>
             <p style="font-size:0.75rem;color:var(--text-secondary);">*Sau khi build xong (6-9 tháng)</p>
+          </div>
+        </div>
+
+        <div class="card" style="border:2px solid var(--accent);">
+          <h2>🚀 PA4: Hybrid - Mobile Web trước → App sau (Tương tự BSC)</h2>
+          <p style="color:var(--text-secondary);margin-bottom:16px;">
+            Nếu tích hợp Agribank là ưu tiên chiến lược cấp bách của Ban lãnh đạo.
+          </p>
+
+          <div style="background:var(--bg-secondary);padding:16px;border-radius:8px;margin-bottom:16px;">
+            <h4>📅 Lộ trình 2 giai đoạn</h4>
+            <pre style="font-size:0.8rem;margin-top:8px;overflow-x:auto;">
+GIAI ĐOẠN 1: Mobile Web nhúng Agribank (4-5 tháng)
+├── Team AgriSeco tự build Mobile Web
+├── Tích hợp nhúng vào App Agribank
+├── App AgriSeco Pro vẫn do FSS quản lý (song song)
+└── Mục tiêu: Tiếp cận 41.000 NV + KH Agribank
+
+GIAI ĐOẠN 2: Tự build lại Mobile App (6-9 tháng sau)
+├── Sau khi Mobile Web thành công
+├── Team đã có kinh nghiệm + hiểu nghiệp vụ
+├── Tự build App mới hoàn toàn
+└── Dần thay thế app FSS
+            </pre>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+            <div style="background:#d1fae5;padding:12px;border-radius:8px;">
+              <h4 style="color:#065f46;">✅ Ưu điểm</h4>
+              <ul style="margin:8px 0 0 16px;font-size:0.85rem;color:#065f46;">
+                <li><strong>Giảm rủi ro:</strong> Scope nhỏ hơn (web trước)</li>
+                <li><strong>Nhanh ra giá trị:</strong> 4-5 tháng có sản phẩm</li>
+                <li><strong>Xây team dần:</strong> Học nghiệp vụ qua thực chiến</li>
+                <li><strong>App cũ vẫn chạy:</strong> Không gián đoạn dịch vụ</li>
+                <li><strong>Chứng minh năng lực:</strong> Trước khi đầu tư lớn</li>
+                <li><strong>Tận dụng Agribank:</strong> 2.218 chi nhánh, 41K NV</li>
+              </ul>
+            </div>
+            <div style="background:#fef3c7;padding:12px;border-radius:8px;">
+              <h4 style="color:#92400e;">⚠️ Lưu ý</h4>
+              <ul style="margin:8px 0 0 16px;font-size:0.85rem;color:#92400e;">
+                <li>Vẫn trả phí FSS cho app cũ (song song)</li>
+                <li>Cần phối hợp với Agribank (nhúng SDK)</li>
+                <li>Team cần 4-5 người ngay từ đầu</li>
+                <li>Tổng thời gian dài hơn PA3 thuần</li>
+                <li>Chi phí tổng có thể cao hơn một chút</li>
+              </ul>
+            </div>
+          </div>
+
+          <table style="font-size:0.85rem;">
+            <tr>
+              <th>So sánh</th>
+              <th>PA3: Tự build App ngay</th>
+              <th>PA4: Mobile Web trước</th>
+            </tr>
+            <tr>
+              <td><strong>Thời gian ra sản phẩm đầu tiên</strong></td>
+              <td>6-9 tháng</td>
+              <td style="color:green;"><strong>4-5 tháng</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Rủi ro</strong></td>
+              <td>Cao (scope lớn)</td>
+              <td style="color:green;"><strong>Thấp hơn</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Tích hợp Agribank</strong></td>
+              <td>Sau 6-9 tháng</td>
+              <td style="color:green;"><strong>Ngay từ đầu</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Xây dựng team</strong></td>
+              <td>Áp lực cao ngay</td>
+              <td style="color:green;"><strong>Gradual</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Chứng minh ROI</strong></td>
+              <td>Chờ 6-9 tháng</td>
+              <td style="color:green;"><strong>4-5 tháng</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Tổng thời gian hoàn thiện</strong></td>
+              <td>6-9 tháng</td>
+              <td>10-14 tháng</td>
+            </tr>
+          </table>
+
+          <div style="background:var(--accent);color:white;padding:12px;border-radius:8px;margin-top:16px;">
+            <strong>💡 Khi nào chọn PA4?</strong>
+            <ul style="margin:8px 0 0 16px;">
+              <li>Ban lãnh đạo ưu tiên tích hợp Agribank là cấp bách</li>
+              <li>Muốn giảm rủi ro bằng cách làm scope nhỏ trước</li>
+              <li>Cần chứng minh năng lực trước khi đầu tư lớn</li>
+              <li>Chấp nhận timeline tổng dài hơn để đổi lấy an toàn</li>
+            </ul>
           </div>
         </div>
 
@@ -1153,39 +1263,100 @@
               </td>
             </tr>
           </table>
+
+          <h4 style="margin:20px 0 8px;color:#10b981;border-bottom:2px solid #10b981;padding-bottom:4px;">PA4: Hybrid - Mobile Web trước → App sau</h4>
+          <table style="font-size:0.85rem;">
+            <tr>
+              <th style="width:25%;">Làm được gì?</th>
+              <th style="width:25%;">Thay đổi được gì?</th>
+              <th style="width:25%;">Lợi ích?</th>
+              <th style="width:25%;">Phục vụ ai?</th>
+            </tr>
+            <tr>
+              <td>
+                <ul style="margin:0;padding-left:14px;">
+                  <li><strong>GĐ1:</strong> Build Mobile Web</li>
+                  <li>Nhúng vào App Agribank</li>
+                  <li>Tiếp cận 41K NV Agribank</li>
+                  <li><strong>GĐ2:</strong> Build App mới</li>
+                </ul>
+              </td>
+              <td>
+                <ul style="margin:0;padding-left:14px;">
+                  <li><strong>GĐ1:</strong> Kênh phân phối mới</li>
+                  <li>Tích hợp Agribank ngay</li>
+                  <li><strong>GĐ2:</strong> Thay thế app cũ</li>
+                  <li>Kiểm soát hoàn toàn</li>
+                </ul>
+              </td>
+              <td>
+                <ul style="margin:0;padding-left:14px;">
+                  <li>Ra sản phẩm nhanh (4-5 tháng)</li>
+                  <li>Rủi ro thấp (scope nhỏ)</li>
+                  <li>Xây team gradual</li>
+                  <li>Chứng minh năng lực</li>
+                  <li>App cũ vẫn chạy song song</li>
+                </ul>
+              </td>
+              <td>
+                <ul style="margin:0;padding-left:14px;">
+                  <li><strong>Agribank là ưu tiên cấp bách</strong></li>
+                  <li>Muốn giảm rủi ro</li>
+                  <li>Chưa có team mạnh sẵn</li>
+                  <li>✅ Tương tự case BSC</li>
+                </ul>
+              </td>
+            </tr>
+          </table>
         </div>
 
         <div class="card">
           <h2>✅ Khuyến nghị (Cập nhật)</h2>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            <div style="background:var(--accent-light);padding:16px;border-radius:8px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+            <div style="background:var(--accent-light);padding:12px;border-radius:8px;">
               <h4>PA2 phù hợp NẾU:</h4>
-              <ul style="margin:8px 0 0 16px;font-size:0.9rem;">
-                <li>Code audit cho kết quả tốt</li>
-                <li>Chỉ cần fix 30-40% code</li>
-                <li>Muốn ship nhanh trong 4-5 tháng</li>
-                <li>Không có team đủ mạnh để build mới</li>
+              <ul style="margin:8px 0 0 14px;font-size:0.85rem;">
+                <li>Code audit kết quả tốt</li>
+                <li>Chỉ cần fix <50% code</li>
+                <li>Không có team đủ mạnh</li>
               </ul>
             </div>
-            <div style="background:#fef3c7;padding:16px;border-radius:8px;">
+            <div style="background:#fef3c7;padding:12px;border-radius:8px;">
               <h4>PA3 phù hợp NẾU:</h4>
-              <ul style="margin:8px 0 0 16px;font-size:0.9rem;">
-                <li>Cần fix >60% code (như hiện tại)</li>
-                <li>Source code quá cũ, nhiều debt</li>
-                <li>Có budget và team đủ mạnh</li>
-                <li>Muốn kiểm soát hoàn toàn tech stack</li>
+              <ul style="margin:8px 0 0 14px;font-size:0.85rem;">
+                <li>Cần fix >60% code</li>
+                <li>Có budget + team mạnh</li>
+                <li>Muốn kiểm soát hoàn toàn</li>
               </ul>
             </div>
+            <div style="background:#d1fae5;padding:12px;border-radius:8px;border:2px solid #10b981;">
+              <h4>PA4 phù hợp NẾU:</h4>
+              <ul style="margin:8px 0 0 14px;font-size:0.85rem;">
+                <li><strong>Agribank là ưu tiên cấp bách</strong></li>
+                <li>Muốn giảm rủi ro</li>
+                <li>Chứng minh năng lực trước</li>
+                <li>Xây team dần dần</li>
+              </ul>
+            </div>
+          </div>
+
+          <div style="margin-top:16px;padding:12px;background:var(--accent);color:white;border-radius:8px;">
+            <strong>💡 Đề xuất: PA4 (Hybrid) có thể là lựa chọn tối ưu</strong>
+            <p style="margin-top:8px;font-size:0.9rem;">
+              Nếu tích hợp Agribank là chiến lược ưu tiên, PA4 cho phép:
+              ra sản phẩm nhanh (4-5 tháng), giảm rủi ro, xây team gradual,
+              và sau đó tự tin build lại app hoàn chỉnh.
+            </p>
           </div>
 
           <div style="margin-top:16px;padding:12px;background:var(--bg-secondary);border-radius:8px;">
             <strong>📋 Bước tiếp theo:</strong>
             <ol style="margin:8px 0 0 20px;font-size:0.9rem;">
-              <li>Yêu cầu FSS cung cấp code để audit</li>
-              <li>Đánh giá % code cần sửa</li>
-              <li>So sánh chi phí PA2 vs PA3</li>
-              <li>Quyết định dựa trên kết quả audit</li>
+              <li>Xác định: Tích hợp Agribank có phải ưu tiên cấp bách?</li>
+              <li>Nếu có → PA4 (Mobile Web trước)</li>
+              <li>Nếu không → Code audit để chọn PA2 vs PA3</li>
+              <li>Đàm phán quyền sử dụng API FLEX với FSS</li>
             </ol>
           </div>
         </div>
