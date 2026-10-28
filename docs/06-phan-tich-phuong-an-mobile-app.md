@@ -85,16 +85,7 @@ AGRISECO                              FSS (Vendor)
 
 ### Chi phí
 
-```
-CHI PHÍ HÀNG NĂM (ƯỚC TÍNH)
-│
-├── Bảo trì cơ bản:           500 - 800 triệu/năm
-├── CR nhỏ (5-10 CR/năm):     500 triệu - 1,5 tỷ/năm
-├── CR lớn (1-2 CR/năm):      500 triệu - 2 tỷ/năm
-├── Nâng cấp OS/SDK:          200 - 500 triệu/năm
-│
-└── TỔNG:                     1,7 - 4,8 tỷ/năm
-```
+*(Cần làm rõ với FSS về chi phí bảo trì và CR hàng năm)*
 
 ### Rủi ro
 
@@ -164,31 +155,7 @@ MUA GÌ?
 
 ### Chi phí
 
-```
-CHI PHÍ MUA SOURCE (MỘT LẦN)
-│
-├── Mua source BFF từ FSS:      ~5 tỷ VND
-├── Tài liệu + Training:        200 - 300 triệu
-├── Quyền sử dụng API FLEX:     (đàm phán với FSS)
-│
-└── TỔNG MUA:                   ~5,5 tỷ VND
-```
-
-```
-CHI PHÍ VẬN HÀNH HÀNG NĂM
-│
-├── Nhân sự (4-5 người):
-│   ├── 1 Tech Lead:            35-50 triệu/tháng
-│   ├── 2-3 Mobile Devs:        25-35 triệu/tháng × 3
-│   ├── 1 QA (part-time):       15-20 triệu/tháng
-│   └── Subtotal:               ~150 triệu/tháng = 1,8 tỷ/năm
-│
-├── Phí API FLEX:               (theo hợp đồng hiện tại)
-├── Infra (Cloud, CI/CD):       100 - 200 triệu/năm
-├── Tools:                      30 - 50 triệu/năm
-│
-└── TỔNG VẬN HÀNH:              2 - 2,5 tỷ/năm
-```
+*(Cần đàm phán với FSS về giá mua source code và quyền sử dụng API)*
 
 ### Yêu cầu nhân sự
 
@@ -292,30 +259,9 @@ TIMELINE XÂY DỰNG TỪ ĐẦU
 
 ### Chi phí
 
-```
-CHI PHÍ XÂY DỰNG (Thuê vendor build + bàn giao source)
-│
-├── Frontend Mobile App:        ~4 tỷ VND
-│   └── (Build hoàn chỉnh + bàn giao source code)
-│
-├── Backend-for-Frontend:       ~1,5 - 2 tỷ VND
-│   └── (Nếu tự build, không mua từ FSS)
-│
-├── Quyền sử dụng API FLEX:     (đàm phán với FSS)
-│
-└── TỔNG BUILD:                 ~5,5 - 6 tỷ VND
-```
+*(Cần báo giá cụ thể từ vendor và đàm phán quyền sử dụng API FLEX với FSS)*
 
-```
-CHI PHÍ VẬN HÀNH (TỪ SAU KHI BÀN GIAO)
-│
-├── Nhân sự maintain (4-5 người): 1,8 - 2,2 tỷ/năm
-├── API FLEX:                     (theo hợp đồng)
-├── Infrastructure:               100 - 200 triệu/năm
-├── Tools:                        30 - 50 triệu/năm
-│
-└── TỔNG VẬN HÀNH:                2 - 2,5 tỷ/năm
-```
+**Tham khảo:** Một dự án app chứng khoán tương tự (Frontend + BFF, xây từ đầu, bàn giao source code) có chi phí khoảng **~9 tỷ VND**.
 
 ### Yêu cầu nhân sự
 
@@ -359,16 +305,11 @@ TEAM CẦN XÂY DỰNG
 
 ## BẢNG SO SÁNH TỔNG HỢP
 
-### Chi phí 3 năm
+### Chi phí
 
-| Hạng mục | PA1: Vendor | PA2: Mua Source | PA3: Tự Build |
-|----------|:-----------:|:---------------:|:-------------:|
-| **Năm 1** | 2-4 tỷ | 7-8 tỷ (5 tỷ mua + 2 tỷ team) | 6-8 tỷ (4-6 tỷ build + 2 tỷ team) |
-| **Năm 2** | 2-4 tỷ | 2-2,5 tỷ | 2-2,5 tỷ |
-| **Năm 3** | 2-5 tỷ | 2-2,5 tỷ | 2-2,5 tỷ |
-| **TỔNG 3 NĂM** | **6-13 tỷ** | **11-13 tỷ** | **10-13 tỷ** |
+*(Chi phí cụ thể cần đàm phán với FSS và các vendor)*
 
-*Ghi chú: Chưa bao gồm phí API FLEX (cần đàm phán với FSS)*
+**Tham khảo:** Một dự án app chứng khoán tương tự (Frontend + BFF, xây từ đầu, bàn giao source code) có chi phí khoảng **~9 tỷ VND**.
 
 ### Khả năng thực hiện
 
@@ -813,7 +754,7 @@ TIMELINE: MUA SOURCE CODE
 
 | Tiêu chí | PA1: Vendor | PA2: Mua Source | PA3: Tự Build |
 |----------|:-----------:|:---------------:|:-------------:|
-| **Chi phí 3 năm** | 6-13 tỷ | 11-13 tỷ | 10-13 tỷ |
+| **Chi phí** | Cần làm rõ | Cần làm rõ | Tham khảo ~9 tỷ* |
 | **Rủi ro** | Thấp | Trung bình | Cao |
 | **Kiểm soát** | Không | Một phần | Hoàn toàn |
 | **Time to value** | Ngay | 3-6 tháng | 9-12 tháng |
