@@ -2,19 +2,6 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <script>
-    // Auth check - redirect to login if not authenticated
-    (function() {
-      var correctHash = "-1556516835";
-      try {
-        if (sessionStorage.getItem('agr_auth') !== correctHash) {
-          window.location.href = 'index.html';
-        }
-      } catch (e) {
-        window.location.href = 'index.html';
-      }
-    })();
-  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AgriSeco Research - Tổng hợp</title>
   <style>
