@@ -1178,9 +1178,9 @@ KHẢO SÁT KHẨU VỊ RỦI RO
 | 2 | **UX Improvement** | Tối ưu flow: giảm số bước, thêm shortcuts | P2 |
 | 3 | **Data Visualization** | Thêm biểu đồ danh mục, chart tăng/giảm, pie chart phân bổ | P2 |
 | 4 | **Dashboard cá nhân** | Widget tùy chỉnh: mã yêu thích, cảnh báo, tin tức | P3 |
-| 5 | **Dark mode** | Hỗ trợ giao diện tối | P3 |
 
 **Ghi chú:**
+- Dark mode đã có sẵn trong app
 - Đây là hạng mục P2/P3 - thực hiện sau các tính năng core (bảo mật, nộp tiền, trái phiếu)
 - Cần nghiên cứu UX với nhóm người dùng thực tế trước khi redesign
 - Tham khảo: TCBS, SSI có giao diện hiện đại hơn
@@ -1316,7 +1316,6 @@ KHÔNG CẦN KÝ GIẤY
 | 18 | **UI/UX Refresh** | Thiết kế lại giao diện, tối ưu flow | 5.9 |
 | 19 | **Lịch sử hiệu suất khuyến nghị** | Tỷ lệ đúng, lợi nhuận trung bình | 5.7 |
 | 20 | **Dashboard cá nhân** | Widget tùy chỉnh | 5.9 |
-| 21 | **Dark mode** | Giao diện tối | 5.9 |
 
 ### 6.3 Lợi thế cạnh tranh của AgriSeco
 
@@ -1418,8 +1417,7 @@ WAVE 4: NICE-TO-HAVE [P3]
 ├── 13. UI/UX Refresh
 ├── 14. Mở rộng ngân hàng (BIDV, VCB...)
 ├── 15. Phân tích kỹ thuật nâng cao
-├── 16. Dashboard cá nhân
-└── 17. Dark mode
+└── 16. Dashboard cá nhân
 ```
 
 ### 6.6 Tóm tắt ưu tiên
