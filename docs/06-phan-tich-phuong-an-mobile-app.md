@@ -173,7 +173,7 @@ GIAI ĐOẠN 2: Tự build lại Mobile App (6-9 tháng sau)
 | **Xây dựng team** | Áp lực cao ngay | **Gradual** ✅ |
 | **Chứng minh ROI** | Chờ 6-9 tháng | **4-5 tháng** ✅ |
 | **Tổng thời gian hoàn thiện** | 6-9 tháng | 10-14 tháng |
-| **Chi phí** | ~9 tỷ | ~4 tỷ (web) + ~9 tỷ (app sau) |
+| **Chi phí** | ~9 tỷ | ~1-2 tỷ (web FE, chưa BFF) + ~9 tỷ (app sau) |
 
 ### Ưu điểm PA4
 
