@@ -805,6 +805,50 @@
           <p style="color:var(--text-secondary);margin-bottom:16px;">
             <strong>Bối cảnh:</strong> App AgriSeco Pro hiện do FSS phát triển và nắm giữ toàn bộ mã nguồn. AgriSeco phụ thuộc hoàn toàn vào vendor.
           </p>
+
+          <div style="background:var(--bg-secondary);padding:16px;border-radius:8px;margin-bottom:16px;border-left:4px solid var(--warning);">
+            <h4 style="margin-bottom:8px;">⚠️ Đánh giá hiện trạng Mobile App</h4>
+            <table style="font-size:0.85rem;">
+              <tr><td><strong>Vấn đề P0 (Pháp lý)</strong></td><td>eKYC C06, VNeID - deadline 31/12/2026</td></tr>
+              <tr><td><strong>Vấn đề P1 (Revenue)</strong></td><td>Thiếu trái phiếu, nộp tiền thủ công, thiếu deep link Agribank</td></tr>
+              <tr><td><strong>Vấn đề P2/P3</strong></td><td>UI đã cũ, UX nhiều bước, thiếu dashboard cá nhân</td></tr>
+              <tr><td><strong>Sản phẩm</strong></td><td>Chỉ có CK cơ sở, chưa có phái sinh/trái phiếu</td></tr>
+            </table>
+          </div>
+
+          <div style="background:var(--bg-secondary);padding:16px;border-radius:8px;margin-bottom:16px;border-left:4px solid var(--danger);">
+            <h4 style="margin-bottom:8px;">❓ Phương án 2: Mua source có đáng không?</h4>
+            <p style="font-size:0.9rem;margin-bottom:12px;">Với hiện trạng app nhiều vấn đề như trên, việc mua source code để sửa cần cân nhắc:</p>
+            <table style="font-size:0.85rem;">
+              <tr>
+                <th style="width:50%;">🟢 Đáng mua NẾU</th>
+                <th style="width:50%;">🔴 KHÔNG đáng NẾU</th>
+              </tr>
+              <tr>
+                <td>
+                  <ul style="margin:0;padding-left:16px;">
+                    <li>Code base còn tốt, clean, dễ maintain</li>
+                    <li>Architecture tách biệt FE/BFF/Core rõ ràng</li>
+                    <li>Vấn đề chủ yếu ở UI/UX, logic FE</li>
+                    <li>Có thể sửa incremental, không cần rewrite</li>
+                    <li>Tiết kiệm 6-9 tháng so với build mới</li>
+                  </ul>
+                </td>
+                <td>
+                  <ul style="margin:0;padding-left:16px;">
+                    <li>Code legacy, coupling cao, khó sửa</li>
+                    <li>Technical debt lớn, sửa 1 chỗ vỡ chỗ khác</li>
+                    <li>Không có tài liệu, không có test</li>
+                    <li>Framework/library cũ, không cập nhật được</li>
+                    <li>Chi phí sửa ≈ chi phí build mới</li>
+                  </ul>
+                </td>
+              </tr>
+            </table>
+            <p style="font-size:0.85rem;margin-top:12px;color:var(--text-secondary);">
+              <strong>→ Khuyến nghị:</strong> Cần <strong>code audit</strong> trước khi quyết định mua. Nếu code quá tệ, PA3 (tự build) có thể hiệu quả hơn.
+            </p>
+          </div>
           <table>
             <tr>
               <th>#</th>

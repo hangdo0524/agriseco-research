@@ -12,6 +12,79 @@ authors:
 
 ---
 
+## Đánh giá Hiện trạng Mobile App
+
+### Các vấn đề hiện tại
+
+| Mức độ | Vấn đề | Chi tiết |
+|:------:|--------|----------|
+| **P0** | eKYC C06, VNeID | Deadline pháp lý 31/12/2026 |
+| **P1** | Thiếu sản phẩm | Không có trái phiếu Agribank trên app |
+| **P1** | Nộp tiền thủ công | Chỉ mở trang hướng dẫn, không có deep link |
+| **P1** | Thiếu tích hợp Agribank | Chưa embedded trong app Agribank |
+| **P2** | UI đã cũ | Thiết kế chưa hiện đại so với đối thủ |
+| **P2** | UX nhiều bước | Quy trình phức tạp, thiếu shortcuts |
+| **P3** | Thiếu dashboard | Không có widget cá nhân hóa |
+
+### Sản phẩm hiện có
+
+- ✅ Chứng khoán cơ sở
+- ❌ Phái sinh (chưa có)
+- ❌ Trái phiếu (chưa có trên app)
+
+---
+
+## Phương án 2: Mua Source Code - Có đáng không?
+
+Với hiện trạng app nhiều vấn đề như trên, việc mua source code để sửa cần cân nhắc kỹ:
+
+### 🟢 ĐÁNG MUA nếu:
+
+| Điều kiện | Lý do |
+|-----------|-------|
+| Code base còn tốt, clean | Dễ maintain, dễ onboard team mới |
+| Architecture tách biệt rõ (FE/BFF/Core) | Có thể sửa từng phần độc lập |
+| Vấn đề chủ yếu ở UI/UX | Chỉ cần redesign FE, không động core |
+| Có thể sửa incremental | Không cần rewrite toàn bộ |
+| Tiết kiệm 6-9 tháng so với build mới | Time-to-market nhanh hơn |
+| Có tài liệu và test coverage | Team mới hiểu được code |
+
+### 🔴 KHÔNG ĐÁNG nếu:
+
+| Điều kiện | Lý do |
+|-----------|-------|
+| Code legacy, coupling cao | Sửa 1 chỗ vỡ chỗ khác |
+| Technical debt lớn | Chi phí maintain cao |
+| Không có tài liệu, không có test | Team mất nhiều tháng để hiểu |
+| Framework/library cũ | Không cập nhật được, security risk |
+| Chi phí sửa ≈ chi phí build mới | Không có lợi về thời gian/tiền |
+
+### Khuyến nghị
+
+```
+TRƯỚC KHI QUYẾT ĐỊNH MUA SOURCE CODE:
+│
+├── 1. YÊU CẦU CODE AUDIT
+│   ├── Review architecture
+│   ├── Đánh giá code quality
+│   ├── Kiểm tra test coverage
+│   └── Xác định technical debt
+│
+├── 2. ƯỚC TÍNH CHI PHÍ SỬA
+│   ├── Effort để fix các vấn đề P0/P1
+│   ├── Effort để modernize UI/UX
+│   └── So sánh với chi phí build mới
+│
+└── 3. QUYẾT ĐỊNH
+    ├── Nếu chi phí sửa < 60% chi phí build mới → MUA
+    ├── Nếu chi phí sửa ≈ chi phí build mới → TỰ BUILD
+    └── Nếu code quá tệ, không audit được → TỰ BUILD
+```
+
+**Kết luận:** Không nên mua source code một cách mù quáng. Cần **code audit** trước để đánh giá giá trị thực sự của source code hiện tại.
+
+---
+
 ## Tổng quan 3 Phương án
 
 | # | Phương án | Mô tả |
