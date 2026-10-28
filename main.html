@@ -533,6 +533,7 @@
       <div class="subtabs">
         <div class="subtab active" onclick="showSubtab(0)">Tổng quan</div>
         <div class="subtab" onclick="showSubtab(1)">Mobile App</div>
+        <div class="subtab" onclick="showSubtab(2)">3 Phương án</div>
         <div class="subtab" style="opacity:0.5;cursor:not-allowed;">Web (sắp tới)</div>
         <div class="subtab" style="opacity:0.5;cursor:not-allowed;">Core (sắp tới)</div>
       </div>
@@ -796,6 +797,166 @@
 
       <a href="docs/05-mobile-app-agriseco-pro.md" download class="download-link">📥 Xem chi tiết</a>
       </div><!-- end subtab-1 -->
+
+      <!-- Subtab 2: 3 Phương án phát triển -->
+      <div class="subtab-content" id="subtab-2">
+        <div class="card">
+          <h2>🔀 3 Phương án Phát triển Mobile App</h2>
+          <p style="color:var(--text-secondary);margin-bottom:16px;">
+            <strong>Bối cảnh:</strong> App AgriSeco Pro hiện do FSS phát triển và nắm giữ toàn bộ mã nguồn. AgriSeco phụ thuộc hoàn toàn vào vendor.
+          </p>
+          <table>
+            <tr>
+              <th>#</th>
+              <th>Phương án</th>
+              <th>Mô tả</th>
+            </tr>
+            <tr>
+              <td><strong>1</strong></td>
+              <td>Tiếp tục Vendor</td>
+              <td>Mọi thay đổi yêu cầu FSS thực hiện. AgriSeco chỉ đặt hàng và nghiệm thu.</td>
+            </tr>
+            <tr>
+              <td><strong>2</strong></td>
+              <td>Mua Source FE + BFF</td>
+              <td>Mua source code từ FSS + quyền sử dụng API Core. Team AgriSeco tự chỉnh sửa.</td>
+            </tr>
+            <tr>
+              <td><strong>3</strong></td>
+              <td>Tự Xây dựng từ đầu</td>
+              <td>Chỉ mua quyền sử dụng API Core (FLEX). Tự xây dựng toàn bộ FE + BFF mới.</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="card">
+          <h2>⚖️ So sánh Tổng thể</h2>
+          <table>
+            <tr>
+              <th>Tiêu chí</th>
+              <th>PA1: Vendor</th>
+              <th>PA2: Mua Source</th>
+              <th>PA3: Tự Build</th>
+            </tr>
+            <tr>
+              <td><strong>Chi phí</strong></td>
+              <td>Cần làm rõ</td>
+              <td>Cần làm rõ</td>
+              <td>Tham khảo ~9 tỷ*</td>
+            </tr>
+            <tr>
+              <td><strong>Rủi ro</strong></td>
+              <td><span class="tag tag-success">Thấp</span></td>
+              <td><span class="tag tag-warning">Trung bình</span></td>
+              <td><span class="tag tag-danger">Cao</span></td>
+            </tr>
+            <tr>
+              <td><strong>Kiểm soát</strong></td>
+              <td>❌ Không</td>
+              <td>🟡 Một phần</td>
+              <td>✅ Hoàn toàn</td>
+            </tr>
+            <tr>
+              <td><strong>Time to value</strong></td>
+              <td>Ngay</td>
+              <td>3-6 tháng</td>
+              <td>9-12 tháng</td>
+            </tr>
+            <tr>
+              <td><strong>Ship nhanh feature</strong></td>
+              <td>❌</td>
+              <td>✅</td>
+              <td>✅ (sau build)</td>
+            </tr>
+            <tr>
+              <td><strong>Tích hợp Agribank</strong></td>
+              <td>❌ Khó</td>
+              <td>✅ Được</td>
+              <td>✅ Tối ưu</td>
+            </tr>
+            <tr>
+              <td><strong>Sở hữu code</strong></td>
+              <td>❌</td>
+              <td>🟡 Một phần</td>
+              <td>✅ Hoàn toàn</td>
+            </tr>
+            <tr>
+              <td><strong>Nhân sự cần</strong></td>
+              <td>0</td>
+              <td>4-5 người</td>
+              <td>8-10 người</td>
+            </tr>
+          </table>
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:8px;">
+            *Tham khảo: App tương tự (FE + BFF, xây từ đầu, bàn giao source) ~9 tỷ VND
+          </p>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3>👔 Góc nhìn CEO</h3>
+            <table style="font-size:0.85rem;">
+              <tr><th></th><th>PA1</th><th>PA2</th><th>PA3</th></tr>
+              <tr><td>ROI ngắn hạn</td><td>✅ Tốt</td><td>⚠️ TB</td><td>❌ Âm</td></tr>
+              <tr><td>ROI dài hạn</td><td>❌ Kém</td><td>✅ Khá</td><td>✅ Tốt nhất</td></tr>
+              <tr><td>Lợi thế cạnh tranh</td><td>❌ Không</td><td>🟡 Có</td><td>✅ Cao</td></tr>
+              <tr><td>Vendor lock-in</td><td>🔴 Cao</td><td>🟡 TB</td><td>🟢 Thấp</td></tr>
+            </table>
+          </div>
+          <div class="card">
+            <h3>💻 Góc nhìn Kỹ thuật</h3>
+            <table style="font-size:0.85rem;">
+              <tr><th></th><th>PA1</th><th>PA2</th><th>PA3</th></tr>
+              <tr><td>Kiểm soát code</td><td>❌</td><td>🟡 Có</td><td>✅ Full</td></tr>
+              <tr><td>Tech stack</td><td>❌ FSS chọn</td><td>🟡 Kế thừa</td><td>✅ Tự chọn</td></tr>
+              <tr><td>Technical debt</td><td>❌ Không trả được</td><td>🟡 Kế thừa</td><td>✅ Không có</td></tr>
+              <tr><td>Xây team</td><td>❌</td><td>✅</td><td>✅</td></tr>
+            </table>
+          </div>
+          <div class="card">
+            <h3>📊 Góc nhìn Kinh doanh</h3>
+            <table style="font-size:0.85rem;">
+              <tr><th></th><th>PA1</th><th>PA2</th><th>PA3</th></tr>
+              <tr><td>Time-to-market</td><td>❌ 2-6 tháng</td><td>✅ 2-4 tuần</td><td>✅ 2-4 tuần*</td></tr>
+              <tr><td>Tích hợp Agribank</td><td>❌ Khó</td><td>✅ Linh hoạt</td><td>✅ Tối ưu</td></tr>
+              <tr><td>Personalization</td><td>❌</td><td>✅</td><td>✅</td></tr>
+              <tr><td>A/B Testing</td><td>❌</td><td>✅</td><td>✅</td></tr>
+            </table>
+            <p style="font-size:0.75rem;color:var(--text-secondary);">*Sau khi build xong</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>✅ Khuyến nghị</h2>
+          <div class="highlight-box" style="background:var(--accent-light);">
+            <strong>Phương án 2 (Mua Source Code)</strong> được khuyến nghị cho đa số trường hợp:
+          </div>
+          <ul style="margin-top:12px;">
+            <li>Cân bằng giữa tốc độ, chi phí và rủi ro</li>
+            <li>Có thể ship giá trị trong 3-6 tháng</li>
+            <li>Tận dụng được hệ sinh thái Agribank</li>
+            <li>Bắt đầu xây dựng năng lực công nghệ nội bộ</li>
+            <li>Giữ option để tự build sau nếu cần</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>🧭 Ma trận Quyết định</h2>
+          <pre style="font-size:0.75rem;background:var(--bg-secondary);padding:12px;border-radius:8px;overflow-x:auto;">
+                        NGUỒN LỰC TÀI CHÍNH
+                    Thấp (&lt;5 tỷ/năm)    Cao (&gt;8 tỷ/năm)
+                    ─────────────────────────────────────
+THAM VỌNG     Thấp │   PA1: Vendor    │   PA2: Mua Source
+CÔNG NGHỆ         │                   │
+                  │─────────────────────────────────────
+              Cao │   PA2: Mua Source │   PA3: Tự Build
+                  │   (giảm scope)    │
+                    ─────────────────────────────────────
+          </pre>
+        </div>
+
+        <a href="docs/06-phan-tich-phuong-an-mobile-app.md" download class="download-link">📥 Xem chi tiết đầy đủ</a>
+      </div><!-- end subtab-2 -->
 
     </div><!-- end tab-2 -->
 
