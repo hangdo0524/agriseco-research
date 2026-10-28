@@ -849,6 +849,58 @@
               <strong>→ Khuyến nghị:</strong> Cần <strong>code audit</strong> trước khi quyết định mua. Nếu code quá tệ, PA3 (tự build) có thể hiệu quả hơn.
             </p>
           </div>
+
+          <div style="background:var(--bg-secondary);padding:16px;border-radius:8px;margin-bottom:16px;border-left:4px solid var(--accent);">
+            <h4 style="margin-bottom:8px;">🤔 PA2 còn tối ưu không khi phải fix TẤT CẢ vấn đề?</h4>
+            <p style="font-size:0.9rem;margin-bottom:12px;">Source hiện tại đã cũ. Nếu cần fix toàn bộ vấn đề trong đề xuất (P0→P3), khối lượng công việc rất lớn:</p>
+            <table style="font-size:0.85rem;">
+              <tr>
+                <th>Hạng mục cần fix</th>
+                <th>Effort ước tính</th>
+                <th>Ảnh hưởng đến code</th>
+              </tr>
+              <tr>
+                <td>eKYC C06, VNeID</td>
+                <td>1-2 tháng</td>
+                <td>Flow đăng ký, xác thực</td>
+              </tr>
+              <tr>
+                <td>Trái phiếu Agribank</td>
+                <td>1-2 tháng</td>
+                <td>Thêm module mới</td>
+              </tr>
+              <tr>
+                <td>Deep link ngân hàng</td>
+                <td>2-4 tuần</td>
+                <td>Module nộp tiền</td>
+              </tr>
+              <tr>
+                <td>Tích hợp sâu Agribank</td>
+                <td>2-3 tháng</td>
+                <td>SDK, auth, session</td>
+              </tr>
+              <tr>
+                <td>UI/UX Refresh</td>
+                <td>2-3 tháng</td>
+                <td>Gần như toàn bộ UI</td>
+              </tr>
+              <tr>
+                <td><strong>TỔNG</strong></td>
+                <td><strong>6-10 tháng</strong></td>
+                <td><strong>~70-80% code</strong></td>
+              </tr>
+            </table>
+            <div style="background:var(--danger);color:white;padding:12px;border-radius:6px;margin-top:12px;">
+              <strong>⚠️ Kết luận:</strong> Nếu phải sửa ~70-80% code, PA2 (mua source) <strong>KHÔNG còn tối ưu</strong>.
+              Lúc này PA3 (tự build) có thể hiệu quả hơn vì:
+              <ul style="margin:8px 0 0 16px;">
+                <li>Không kế thừa technical debt</li>
+                <li>Tech stack mới, clean architecture</li>
+                <li>Thời gian tương đương (6-9 tháng)</li>
+                <li>Chi phí có thể tương đương (~9 tỷ)</li>
+              </ul>
+            </div>
+          </div>
           <table>
             <tr>
               <th>#</th>
@@ -902,15 +954,15 @@
             </tr>
             <tr>
               <td><strong>Time to value</strong></td>
-              <td>Ngay</td>
-              <td>3-6 tháng</td>
-              <td>9-12 tháng</td>
+              <td>Theo CR</td>
+              <td>4-6 tháng</td>
+              <td>6-9 tháng</td>
             </tr>
             <tr>
-              <td><strong>Ship nhanh feature</strong></td>
-              <td>❌</td>
-              <td>✅</td>
-              <td>✅ (sau build)</td>
+              <td><strong>Ship feature mới</strong></td>
+              <td>❌ Chờ vendor</td>
+              <td>✅ 2-4 tuần/feature</td>
+              <td>✅ 2-4 tuần/feature*</td>
             </tr>
             <tr>
               <td><strong>Tích hợp Agribank</strong></td>
@@ -966,22 +1018,43 @@
               <tr><td>Personalization</td><td>❌</td><td>✅</td><td>✅</td></tr>
               <tr><td>A/B Testing</td><td>❌</td><td>✅</td><td>✅</td></tr>
             </table>
-            <p style="font-size:0.75rem;color:var(--text-secondary);">*Sau khi build xong</p>
+            <p style="font-size:0.75rem;color:var(--text-secondary);">*Sau khi build xong (6-9 tháng)</p>
           </div>
         </div>
 
         <div class="card">
-          <h2>✅ Khuyến nghị</h2>
-          <div class="highlight-box" style="background:var(--accent-light);">
-            <strong>Phương án 2 (Mua Source Code)</strong> được khuyến nghị cho đa số trường hợp:
+          <h2>✅ Khuyến nghị (Cập nhật)</h2>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div style="background:var(--accent-light);padding:16px;border-radius:8px;">
+              <h4>PA2 phù hợp NẾU:</h4>
+              <ul style="margin:8px 0 0 16px;font-size:0.9rem;">
+                <li>Code audit cho kết quả tốt</li>
+                <li>Chỉ cần fix 30-40% code</li>
+                <li>Muốn ship nhanh trong 4-5 tháng</li>
+                <li>Không có team đủ mạnh để build mới</li>
+              </ul>
+            </div>
+            <div style="background:#fef3c7;padding:16px;border-radius:8px;">
+              <h4>PA3 phù hợp NẾU:</h4>
+              <ul style="margin:8px 0 0 16px;font-size:0.9rem;">
+                <li>Cần fix >60% code (như hiện tại)</li>
+                <li>Source code quá cũ, nhiều debt</li>
+                <li>Có budget và team đủ mạnh</li>
+                <li>Muốn kiểm soát hoàn toàn tech stack</li>
+              </ul>
+            </div>
           </div>
-          <ul style="margin-top:12px;">
-            <li>Cân bằng giữa tốc độ, chi phí và rủi ro</li>
-            <li>Có thể ship giá trị trong 3-6 tháng</li>
-            <li>Tận dụng được hệ sinh thái Agribank</li>
-            <li>Bắt đầu xây dựng năng lực công nghệ nội bộ</li>
-            <li>Giữ option để tự build sau nếu cần</li>
-          </ul>
+
+          <div style="margin-top:16px;padding:12px;background:var(--bg-secondary);border-radius:8px;">
+            <strong>📋 Bước tiếp theo:</strong>
+            <ol style="margin:8px 0 0 20px;font-size:0.9rem;">
+              <li>Yêu cầu FSS cung cấp code để audit</li>
+              <li>Đánh giá % code cần sửa</li>
+              <li>So sánh chi phí PA2 vs PA3</li>
+              <li>Quyết định dựa trên kết quả audit</li>
+            </ol>
+          </div>
         </div>
 
         <div class="card">

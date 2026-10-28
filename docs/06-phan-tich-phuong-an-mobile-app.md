@@ -85,6 +85,48 @@ TRƯỚC KHI QUYẾT ĐỊNH MUA SOURCE CODE:
 
 ---
 
+## PA2 còn tối ưu không khi phải fix TẤT CẢ vấn đề?
+
+Source hiện tại đã cũ. Nếu cần fix toàn bộ vấn đề trong đề xuất (P0→P3), khối lượng công việc rất lớn:
+
+| Hạng mục cần fix | Effort ước tính | Ảnh hưởng đến code |
+|------------------|-----------------|-------------------|
+| eKYC C06, VNeID | 1-2 tháng | Flow đăng ký, xác thực |
+| Trái phiếu Agribank | 1-2 tháng | Thêm module mới |
+| Deep link ngân hàng | 2-4 tuần | Module nộp tiền |
+| Tích hợp sâu Agribank | 2-3 tháng | SDK, auth, session |
+| UI/UX Refresh | 2-3 tháng | Gần như toàn bộ UI |
+| **TỔNG** | **6-10 tháng** | **~70-80% code** |
+
+### ⚠️ Kết luận quan trọng
+
+```
+NẾU PHẢI SỬA ~70-80% CODE:
+│
+├── PA2 (Mua source) KHÔNG CÒN TỐI ƯU
+│   ├── Vẫn kế thừa technical debt của phần còn lại
+│   ├── Framework/library có thể đã cũ
+│   ├── Thời gian: 6-10 tháng
+│   └── Chi phí: ~5 tỷ mua + 4-5 tỷ sửa = ~9-10 tỷ
+│
+└── PA3 (Tự build) CÓ THỂ HIỆU QUẢ HƠN
+    ├── Không kế thừa technical debt
+    ├── Tech stack mới, clean architecture
+    ├── Thời gian: 6-9 tháng (tương đương)
+    └── Chi phí: ~9 tỷ (tương đương)
+```
+
+### Khi nào PA2 vẫn tối ưu?
+
+| PA2 phù hợp NẾU | PA3 phù hợp NẾU |
+|-----------------|-----------------|
+| Code audit cho kết quả tốt | Cần fix >60% code |
+| Chỉ cần fix 30-40% code | Source code quá cũ, nhiều debt |
+| Muốn ship nhanh trong 4-5 tháng | Có budget và team đủ mạnh |
+| Không có team đủ mạnh để build mới | Muốn kiểm soát hoàn toàn tech stack |
+
+---
+
 ## Tổng quan 3 Phương án
 
 | # | Phương án | Mô tả |
