@@ -851,7 +851,7 @@ SAU SUNSET MATRIX - CÁC LỰA CHỌN XÁC THỰC
 | # | Giải pháp | Mô tả | Độ ưu tiên |
 |---|-----------|-------|:----------:|
 | 1 | **Deep link Agribank** | Trong app AgriSeco → Nộp tiền → Tự mở app Agribank với thông tin điền sẵn | P0 |
-| 2 | **QR động** | Tạo QR chứa đủ thông tin (số TK, số tiền, nội dung) → Quét = xong | P1 |
+| 2 | ~~QR động~~ | ✅ Đã có QR động theo tài khoản | - |
 | 3 | **Tích hợp trong app Agribank** | Từ app Agribank → Chọn AgriSeco → Nộp thẳng | P0 |
 | 4 | **Mở rộng ngân hàng** | Deep link/tích hợp với BIDV, VCB, Techcombank, MBBank... như TCBS | P2 |
 
